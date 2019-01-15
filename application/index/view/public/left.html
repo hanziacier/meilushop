@@ -1,0 +1,77 @@
+		<div class="left_pan fl">
+				
+					<div class="fold_nav">
+						
+						<div class="fold_nav_list">
+							<div class="title_div">
+								<span class="span_01 fl img_02"></span>
+								<span class="span_02 fl f14">订单管理</span>
+							</div>
+							<ul class="fold_ul">
+								<li class="{if condition="$action eq 'order/index'"}li_cur{/if}"><a href="{:U('order/index')}">我的订单</a></li>
+								<li class="{if condition="$action eq 'score/index'"}li_cur{/if}"><a href="{:U('score/index')}">积分订单</a></li>
+								<li><a href="{:U('address/index')}">收货地址</a></li>
+							</ul>
+						</div>
+						
+						<div class="fold_nav_list">
+							<div class="title_div">
+								<span class="span_01 fl img_04"></span>
+								<span class="span_02 fl f14">我的评价</span>
+							</div>
+							<ul class="fold_ul">
+								<li  class="{if condition="$action eq 'comment/index'"}li_cur{/if}"><a href="{:U('comment/index')}">商品评价</a></li>
+							</ul>
+						</div>
+						 {present name="systems['pin']"}
+                       <div class="fold_nav_list">
+							<div class="title_div">
+								<span class="span_01 fl img_02"></span>
+								<span class="span_02 fl f14">我的拼团</span>
+							</div>
+							<ul class="fold_ul">
+								<li class="{if condition="$action eq 'pin/index'"}li_cur{/if}"><a href="{:U('pin/index')}">全部团</a></li>
+								<li  class="{if condition="$action eq 'pin/progress'"}li_cur{/if}"><a href="{:U('pin/progress')}">进行中的团</a></li>
+								<li  class="{if condition="$action eq 'pin/end'"}li_cur{/if}"><a href="{:U('pin/end')}">已成功的团</a></li>
+								<li  class="{if condition="$action eq 'pin/over'"}li_cur{/if}"><a href="{:U('pin/over')}">已退款的团</a></li>
+							</ul>
+						</div>
+						{/present}
+						<div class="fold_nav_list">
+							<div class="title_div">
+								<span class="span_01 fl img_05"></span>
+								<span class="span_02 fl f14">账户管理</span>
+							</div>
+							<ul class="fold_ul">
+								<li  class="{if condition="$action eq 'member/edit'"}li_cur{/if}"><a href="{:U('Member/edit')}">账户信息</a></li>
+								<li  class="{if condition="$action eq 'user/profile'"}li_cur{/if}"><a href="{:U('user/profile')}">密码修改</a></li>
+								<li  class="{if condition="$action eq 'collect/index'"}li_cur{/if}"><a href="{:U('collect/index')}">我的收藏</a></li>
+								
+								<li  class="{if condition="$action eq 'user/logout'"}li_cur{/if}"><a href="{:U('user/logout')}">安全退出</a></li>
+							</ul>
+						</div>  {present name="systems['fenxiao']"}
+						<div class="fold_nav_list">
+							<div class="title_div">
+								<span class="span_01 fl img_02"></span>
+								<span class="span_02 fl f14">我的分销</span>
+							</div>
+							<ul class="fold_ul">
+								<li class="{if condition="$action eq 'fenxiao/index'"}li_cur{/if}"><a href="{:U('fenxiao/index')}">我的团队</a></li>
+							     <li  class="{if condition="$action eq 'fenxiao/order'"}li_cur{/if}"><a href="{:U('fenxiao/order')}">团队订单</a></li>
+								 <li  class="{if condition="$action eq 'fenxiao/member'"}li_cur{/if}"><a href="{:U('fenxiao/member')}">成员管理</a></li>
+								<li  class="{if condition="$action eq 'fenxiao/mine'"}li_cur{/if}"><a href="{:U('fenxiao/mine')}">我的佣金</a></li>
+								<li  class="{if condition="$action eq 'fenxiao/plan'"}li_cur{/if}"><a href="{:U('fenxiao/plan')}">我的推广</a></li>
+							</ul>
+						</div>{/present}
+						<div class="fold_nav_list">
+							<div class="title_div">
+								<span class="span_01 fl img_06"></span>
+								<span class="span_02 fl f14">交易管理</span>
+							</div>
+							<ul class="fold_ul">
+							    <li  class="{if condition="$action eq 'pay/index'"}li_cur{/if}"><a href="{:U('pay/index')}">余额充值</a></li>
+								<li  class="{if condition="$action eq 'pay/lists'"}li_cur{/if}"><a href="{:U('pay/lists')}">充值记录</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>

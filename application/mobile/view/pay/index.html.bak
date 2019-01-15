@@ -1,0 +1,279 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1  maximum-scale=1 user-scalable=no">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-touch-fullscreen" content="yes">
+		<meta name="HandheldFriendly" content="True">
+		<title>微商城</title>
+
+		<link rel="stylesheet" href="__CSS__/style.css">
+		<script type="text/javascript" src="__JS__/jquery-1.10.1.min.js"></script>
+		<style>
+ body{
+     background: #f7f7f7;
+    
+     margin: 0 auto;
+}
+ .header{
+     margin: 2.2222222222222223rem 0rem 0.5555555555555556rem 0rem;
+     width: 100%;
+     height: 5.111111111111111rem;
+}
+ .header img{
+     display: block;
+     margin: 0 auto;
+     width: 5.111111111111111rem;
+     height: 5.111111111111111rem;
+}
+ .fukuan1{
+    /* border: 1px solid #000;
+     */
+     width: 100%;
+     text-align: center;
+     height: 1.3888888888888888rem;
+     line-height: 1.3888888888888888rem;
+     color: #000000;
+     font-size: 1.1111111111111112rem;
+     margin-bottom: 3.3333333333333335rem;
+}
+ .fukuan{
+    /* border: 1px solid #000;
+     */
+     width: 100%;
+     text-align: center;
+     height: 1.6666666666666667rem;
+     line-height: 1.6666666666666667rem;
+     color: #999999;
+     font-size:0.7777777777777778rem;
+}
+ .line{
+     width: 100%;
+     height: 5.555555555555555rem;
+     line-height: 2.7777777777777777rem;
+     background: #fff;
+}
+ .line .fl{
+     float: left;
+     margin-left: 0.7777777777777778rem;
+     margin-right: 0.2777777777777778rem;
+     font-size: 0.8333333333333334rem;
+     color: #999999;
+}
+ .line .fr{
+     float: left;
+     font-size: 0.8333333333333334rem;
+     color: #000000;
+}
+ .one{
+     width: 22rem;
+     height: 2.5rem;
+     line-height: 2.5rem;
+     color: #fff;
+     margin: 0 auto;
+     margin-top: 0.5555555555555556rem;
+     background: #1aad19;
+     text-align: center;
+     border-radius:0.2777777777777778rem;
+}
+ .huo{
+     background: #f00;
+}
+ .yu{
+     background:#4597a5
+}
+ .two{
+     border-radius: 0.2777777777777778rem;
+     border: 1px solid #dcdcdc;
+     width: 22rem;
+     height: 2.5rem;
+     line-height: 2.5rem;
+     color: #000000;
+     margin: 0 auto;
+     margin-top: 1.1111111111111112rem;
+     background: #f7f7f7;
+     text-align: center;
+}
+ 
+		</style>
+	</head>
+
+	<body>
+		<!--头部-->
+		<div class="top_con01">
+			<div class="fh_icon">
+				<a onClick="javascript:history.go(-1);"></a>
+			</div>
+			<div class="yc_icon" id="s_ser">
+				<a href="#"></a>
+			</div>
+			<div class="yc_icon bot_nav02" id="h_ser">
+				<a href="#"></a>
+			</div>
+			<h1>订单提交</h1>
+		</div>
+		{include file="public/menu"/}
+		<!--内容-->
+		
+<div class='header'>
+  <img src='__IMG__/oney.png'>
+</div>
+<div class='fukuan'>付款金额</div>
+<div class='fukuan1'>{$info.total_money}</div>
+<div class='line'>
+  <div class='fl'>{$info.out_trade_no}</div>
+  <div class='fr'>{$info.create_time|time_format}</div>
+</div>
+<div class="ddqr_con02 ddqr_con03">
+
+		<div class="ddqr_ad01" id="h_ps01" style="display:none"></div>
+		<div class="ddqr_con02_t">支付方式</div>
+		<div class="ddqr_con02_m" style="display:block">
+		<ul>{if condition="is_weixin()"}  
+		 <li><label class="radio"><input name="paytype"  value="2" type="radio">  <i class="icon-radio"></i>
+            </label>支付宝
+		</li>
+		
+		{/if}
+       {if condition="!is_weixin()"}  <li><label class="radio"><input name="paytype" checked="" value="3" type="radio">  <i class="icon-radio"></i>
+            </label>支付宝
+		</li>   {/if}
+         		<li><label class="radio"><input name="paytype" value="1" type="radio">  <i class="icon-radio"></i>
+            </label>余额支付</li>	
+		
+		</ul>
+		</div>
+		</div>
+        <div class='one' onclick='submit()'>提交</div>
+
+<form action='{:U("alipay/index")}' method="post"  name="myform" >
+  .
+   <input type="hidden"  name="id" class="form-control" id="tag" value="{$info.order_id}">
+</form> 
+		<script type="text/javascript">
+			$(document).ready(function() {
+
+				$("#s_ser").click(function() {
+					$(".bot_nav01").show();
+					$(".bot_nav02").show();
+				});
+				$("#h_ser").click(function() {
+					$(".bot_nav01").hide();
+					$(".bot_nav02").hide();
+				});
+			});
+		</script><script type="text/javascript">				
+		$(function(){
+			$('.zxzf_details li i').click(function(){
+				if($(this).attr('class').match('checked')){
+					$(this).attr('class','icon icon-radio');
+					$(this).parent().siblings().children('i').attr('class','icon icon-radio checked');
+				}else{
+					$(this).attr('class','icon icon-radio checked');
+					$(this).parent().siblings().children('i').attr('class','icon icon-radio');					
+				}				
+			})				
+		})	
+
+function submit(){
+        var payType="{$info.paytype}";
+	  
+      
+        if(payType=='1'){
+           orderSubmit();
+        }
+		 if(payType=='2'){
+            callpay();
+        }
+        if(payType=='3'){
+           document.myform.submit();
+        }
+        if(payType=='5'){
+            submits();
+        }
+		
+	 }
+
+ function orderSubmit(){  
+		        var id="{$info['order_id']}";
+				$.post('{:url("pay/usecount")}',{id:id},function(data){   
+					 if(data.code){ 
+						 var url = "{:url('Pay/over',array('id'=>$info['id']))}";
+						  window.location.href =url;
+					}
+					 else{
+					    alert(data.msg); 
+						
+					 }
+                });
+	       
+}
+ function submits(){  
+		        var id="{$info['order_id']}";
+				$.post('{:url("pay/huopay")}',{id:id},function(data){   
+					 if(data.code){ 
+						 var url = "{:url('Pay/over',array('id'=>$info['id']))}";
+						  window.location.href =url;
+					}
+					 else{
+					    alert(data.msg); 
+						
+					 }
+                });
+	       
+	}	
+</script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript">
+
+		//调用微信JS api 支付
+		function jsApiCall()
+		{
+			WeixinJSBridge.invoke(
+				'getBrandWCPayRequest',
+			{$jsApiParameters|default=''},
+				function(res){
+				   if(res.err_msg == "get_brand_wcpay_request:ok"){
+					   //var order_id = document.getElementById("order_id").value;
+                       //window.location.href="http://card.jrbhw.com/wap.php?s=/member/confirm/order_id/"+order_id;
+					   var url = "{:url('Pay/over',array('id'=>$info['id']))}";
+		               window.location.href =url;
+	               }else{
+	                   //返回跳转到订单详情页面
+// 	                   WeixinJSBridge.log(res.err_msg);
+	                   alert('支付失败'+res.err_msg);
+					   var url = "{:url('Pay/failure',array('sn'=>$info['out_trade_no']))}";
+		               window.location.href =url;
+	               }
+				}
+			);
+		}
+
+		function callpay()
+		{
+			if (typeof WeixinJSBridge == "undefined"){
+			    if( document.addEventListener ){
+			        document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+			    }else if (document.attachEvent){
+			        document.attachEvent('WeixinJSBridgeReady', jsApiCall); 
+			        document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+			    }
+			}else{
+			    jsApiCall();
+			}
+		}
+		
+		function lbp_close(){
+			WeixinJSBridge.call('closeWindow');
+		}
+		//setTimeout('lbp_close();', 3000);
+
+  
+ </script>
+	</body>
+
+</html>

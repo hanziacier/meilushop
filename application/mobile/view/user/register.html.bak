@@ -1,0 +1,74 @@
+﻿
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1  maximum-scale=1 user-scalable=no">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-touch-fullscreen" content="yes">
+		<meta name="HandheldFriendly" content="True">
+		<title>微商城</title>
+
+		<link rel="stylesheet" href="__CSS__/style.css">
+<script type="text/javascript" src="__JS__/jquery-1.10.1.min.js"></script>
+<script src="__JS__/checkbix.min.js"></script>
+	</head>
+
+	<body style="background:#fff;">
+		<!--头部-->
+		<div class="top_con01">
+			<div class="fh_icon"><a href="Javascript:history.go(-1);void(0);"></a></div>
+			<div class="yc_icon yc_icon01"><a href="{:U('index/index')}"></a></div>
+			<h1>注册</h1>
+		</div>
+	<!--内容--><form method="post" action="{:U('')}" name="frm_login" id="frm_login">
+		<div class="login_con01">
+			<div class="login_input"><input type="text"name="mobile" placeholder="请输入用户名"/></div>
+			<div class="login_input"><input type="text"  name="password"placeholder="请输入密码"/></div>
+			<div class="login_input"><input type="text" name="email"placeholder="请输入电子邮箱"/></div>
+			<div class="login_radio"><input id="mycheckbox" type="checkbox" class="checkbix" data-text="" checked>我已看过并接受<a href="#">《用户协议》</a></div>
+			<div class="grzl_con01_btn"><a class="login_btn">注册</a></div>
+	
+			
+		  </div>
+		<div class="login_con02" style="display:none;">
+			<div class="login_con02_t"><span>使用合作账户登录</span></div>
+		</div>
+</form>
+
+ <script type="text/javascript">
+
+	$(".login_btn").click(function(){
+    		var self =$('form');
+    		$.post(self.attr("action"), self.serialize(), success, "json");
+    		return false;
+
+    		function success(data){
+    			if(data.code){
+    				window.location.href = data.url;
+    			} else {
+    				alert(data.msg);
+    				//刷新验证码
+    				$(".reloadverify").click();
+    			}
+    		}
+    	});		
+
+$(function(){
+		var verifyimg = $(".verifyimg").attr("src");
+            $(".reloadverify,.reloadverify_a").click(function(){
+               if( verifyimg.indexOf('?')>0){
+                    $(".verifyimg").attr("src", verifyimg+'&random='+Math.random());
+                }else{
+                    $(".verifyimg").attr("src", verifyimg.replace(/\?.*$/,'')+'?'+Math.random());
+                }
+            });
+});
+	  </script><script>
+		Checkbix.init();
+	</script>
+	</body>
+
+</html>

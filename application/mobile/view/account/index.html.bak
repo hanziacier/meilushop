@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1  maximum-scale=1 user-scalable=no">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-touch-fullscreen" content="yes">
+		<meta name="HandheldFriendly" content="True">
+		<title>微商城</title>
+
+		<link rel="stylesheet" href="__CSS__/style.css">
+		<script type="text/javascript" src="__JS__/jquery-1.10.1.min.js"></script>
+
+	</head>
+
+	<body>
+		<!--头部-->
+		<div class="top_con01">
+			<div class="fh_icon"><a onClick="javascript :history.go(-1);"></a></div>
+			<div class="yc_icon" id="s_ser"><a href="#"></a></div>
+			<div class="yc_icon bot_nav02" id="h_ser"><a href="#"></a></div>
+			<h1>我的钱包</h1>
+		</div>
+		{include file="public/menu"/}
+		<!--内容-->
+		<div class="wdqb_con01">
+			<div class="wdqb_con01_t"><h2>可用余额</h2><h1>￥{$UcenterMember.account}元</h1></div>
+			<div class="wdqb_con01_m">
+				<ul>
+					<li>
+						<div class="wdqb_con01_cz"><a href="{:url('add')}">账户充值</a></div>
+					</li>
+					<li>
+						<div class="wdqb_con01_ye"><a href="{:url('out')}">余额提现</a></div>
+					</li>
+				</ul>
+			</div>
+			<div class="wdqb_con01_b">
+				<div class="grzl_con01_b">
+				<ul>
+					<li>
+						<a href="{:url('lists')}">账户明细</a>
+					</li>
+					<li>
+						<a href="{:url('logs')}">申请记录</a>
+					</li>
+				</ul>
+			</div>
+			</div>
+		
+		<div>
+		
+
+		<script type="text/javascript">
+
+			$(document).ready(function() {
+				
+				$("#s_ser").click(function() {
+					$(".bot_nav01").show();
+					$(".bot_nav02").show();
+				});
+				$("#h_ser").click(function() {
+					$(".bot_nav01").hide();
+					$(".bot_nav02").hide();
+				});
+			});
+		</script>
+	</body>
+
+</html>

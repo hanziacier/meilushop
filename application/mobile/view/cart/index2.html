@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<title>购物车</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+		<link rel="stylesheet" href="__CSS__/base.css" type="text/css">
+	<link rel="stylesheet" href="__CSS__/style.css" type="text/css">
+		<link rel="stylesheet" href="__CSS__/main.css" type="text/css">
+<script src="__JS__/jquery-2.0.3.min.js" type="text/javascript"></script>
+   <script src="__JS__/rem.js" type="text/javascript"></script>
+</head>
+   <body>
+<header style="background-color:#{$shop_config.color}">
+		<a href="Javascript:history.go(-1);void(0);"class="lft">
+		<i class="icon icon-back"></i>
+	</a>
+	<h5>购物车</h5>
+	<a class="rt down_list_con"><img src="__IMG__/down_list.png"/></a>
+</header>
+ <!-- 菜单 -->
+<include file="Public/menu"/>
+<!-- /菜单 -->
+<form  action="{:U('Order/add')}"  name="form" method="post"><section>
+	<if condition="is_login() ">    <volist name="list" id="vo">
+	 <div class="citem list_{$vo.sort}">
+	    <div class="redbox">
+	      <i class="icon icon-radio check checked" onclick='resetobj(this);'></i> 
+	    </div>
+	    <dl>
+	      <dt><a href="{:U('Article/detail?id='.$vo['goodid'])}"><img src="{$vo.goodid|get_cover_id|get_cover='path'}"/></a></dt>
+	      <dd>
+	        <h5>
+	        	<a href="{:U('Article/detail?id='.$vo['goodid'])}">{$vo.goodid|get_good_name}
+	        	</a><span class="fr"><i onclick="delgoods(this,{$vo.sort})" class="icon icon-del"></i></span>
+	        </h5>
+	        <p>
+	        	{$vo.parameters}
+	        </p>
+	        <div class="txt">
+	        	<i class='price'>￥{$vo.price}</i>
+	        	<div class="fr">
+	        		<div>
+	        			<span class="sum"><i onclick="reduceNum(this,{$vo.sort})" class="reduce">-</i><span class="num">{$vo.num}</span><i onclick="addNum(this,{$vo.sort})" class="add">+</i></span>
+	        		</div>
+	        		
+	        	</div>
+	        </div>
+	      </dd>
+	    </dl>
+	     <input type="hidden"  name="id[{$vo.sort}]" value="{$vo.goodid}">
+	     <input type="hidden" name="sort[{$vo.sort}]" id='sort' value="{$vo.sort}">
+		 <input type="hidden" name="num[{$vo.sort}]" id='num' value="{$vo.num}">
+         <input type="hidden" name="price[{$vo.sort}]" value="{$vo.price}"/>
+		 <input type="hidden" value="{$vo.parameters}" name="parameters[{$vo.sort}]"/>
+	</div>
+		 
+	</volist>
+
+ <else />
+<foreach name="usercart" item="vo"> 
+
+	 <div class="citem list_{$vo.sort}">
+	    <div class="redbox">
+	      <i class="icon icon-radio check checked" onclick='resetobj(this);'></i> 
+	    </div>
+	    <dl>
+	      <dt><a href="{:U('Article/detail?id='.$vo['id'])}"> <img src="{$vo.id|get_cover_id|get_cover='path'}"/></a></dt>
+	      <dd>
+	        <h5>
+	        	<a href="{:U('Article/detail?id='.$vo['id'])}"> {$vo.id|get_good_name}</a>
+	        	<span class="fr"><i onclick="delgoods(this,{$vo.sort})" class="icon icon-del"></i></span>
+	        </h5>
+	        <p>
+	        	{$vo.parameters}
+	        </p>
+	        <div class="txt">
+	        	<i class='price'>￥{$vo.price}</i>
+	        	<div class="fr">
+	        		<div>
+	        			<span class="sum"><i onclick="reduceNum(this,{$vo.sort})" class="reduce">-</i><span class="num">{$vo.num}</span><i onclick="addNum(this,{$vo.sort})" class="add">+</i></span>
+	        		</div>
+	        		
+	        	</div>
+	        </div>
+	      </dd>
+	    </dl>
+	     <input type="hidden"  name="id[{$vo.sort}]" value="{$vo.id}">
+	     <input type="hidden" name="sort[{$vo.sort}]" id='sort' value="{$vo.sort}">
+		 <input type="hidden" name="num[{$vo.sort}]" id='num' value="{$vo.num}">
+         <input type="hidden" name="price[{$vo.sort}]" value="{$vo.price}"/>
+		 <input type="hidden" value="{$vo.parameters}" name="parameters[{$vo.sort}]"/>
+	</div>
+</foreach>	
+</if>
+ 
+ </section>
+ <input type="hidden" name='payType' id="payType">
+ </form>
+ <div class="foot">
+	<span class="redbox"><i onclick='checkall();'id='all' class="icon icon-radio checked"></i> </span>
+	<div class="fl mt5">
+	   <p class="red">总计：￥<i class='total_price'>{$money}</i></p>
+	   <p class="ft12 gray">商品总额￥{$money}，运费{$ship_price}</p>
+	</div>
+	<span onclick='submit()' class="fr btn btn-block"style="background-color:#{$shop_config.color}">提交订单</span>
+</div>
+<script type="text/javascript">
+   function resetobj(obj){  
+       if($(obj).hasClass('checked')){
+           $(obj).removeClass( 'checked');
+        } 
+        else{
+           $(obj).addClass('checked');           
+        }  
+        var el= $('.check');
+        var arr=new Array();
+		$('.citem').each(function(index, element) {
+		       if($(this).find('.check').hasClass('checked')){
+					arr.push(index); 				
+			   }	 
+		});
+        if(arr.length!==el.length){
+           $('i#all').removeClass('checked');
+        }
+		else{
+			$('i#all').addClass('checked');  
+		}
+        totalNum();
+	    totalPrice();//重新计算数量和金额
+    }
+	//全选
+    function checkall(){  
+        if($('i#all').hasClass( 'checked')){
+           $('i#all').removeClass( 'checked');
+           $('.check').removeClass( 'checked');                  
+        } 
+        else{        
+           $('i#all').addClass('checked');
+           $('.check').addClass( 'checked');      
+        } 
+      totalNum();
+	  totalPrice();//重新计算数量和金额  
+          
+    }
+    //总数量
+	function totalNum(){
+		  var num=0;total=0;
+		    $('.citem').each(function(index, element) {
+					if($(this).find('.icon').hasClass('checked')){
+					  var num=$(this).find('.num').text();
+					  total=parseInt(num)+parseInt(total);				
+			 }	 
+		});  
+	   $('.totalNum').text(total); 
+	     
+	};
+	//总价
+	function totalPrice(){
+		var num=0;total=0;var price;
+		$('.citem').each(function(index, element) {
+			   if($(this).find('.icon').hasClass('checked')){
+					var num=$(this).find('.num').text();
+					var price=$(this).find('.price').text().split("￥")[1]; 
+					total=parseInt(price)*parseInt(num)+total;	
+				}
+		});
+		$('.total_price').text(total);
+   };
+   var is_login="{:is_login()}";
+   if(is_login>0){
+		var inc='{:U("Shopcart/incNumByuid")}';
+		var dec='{:U("Shopcart/decNumByuid")}';
+		var del='{:U("Shopcart/delItemByuid")}';
+	
+	}
+    else{
+	    var inc='{:U("Shopcart/incNum")}';
+		var dec='{:U("Shopcart/decNum")}';
+		var del='{:U("Shopcart/delItem")}';
+	}
+    //增加数量
+	function addNum(obj,sid) {
+		 var num = $(obj).parents('.citem').find('.num').text();     
+		 var price = $(obj).parents('.citem').find('.price').text().split("￥")[1];   
+		 num++;
+		  $(obj).parents('.citem').find('.num').text(num); 
+		  $(obj).parents('.citem').find('#num').val(num);
+		  $.post(inc,{sort:sid},function(data){
+				$(".total_price").text(data.price);
+				$('.totalNum').text(data.sum); 
+				
+		   });
+	}
+
+	//减少数量
+	function reduceNum(obj,sid){
+	   var num = $(obj).parents('.citem').find('.num').text();     
+	   var price = $(obj).parents('.citem').find('.price').text().split("￥")[1];  
+	   if(num>1){ 
+		    num--; 
+			$(obj).parents('.citem').find('.num').text(num); 
+	        $(obj).parents('.citem').find('#num').val(num);
+		    $.post(dec,{sort:sid},function(data){
+				$(".total_price").text(data.price);
+				$('.totalNum').text(data.sum); 
+				
+		   });
+		}	
+	}
+	//删除商品
+	function delgoods(obj,sid){
+				if(confirm("确定删除吗")){
+					$.post(del,{sort:sid},function(data){
+						$(obj).parents('.citem').remove();
+						$(".total_price").text(data.price);
+						$('.totalNum').text(data.sum); 
+                        if(data.sum=='0'){
+						    window.location.href ="{:U('shopcart/index')}";
+						}
+						  
+				   });
+				   
+			}
+	} 
+   $(".btn-block").click(function() {   
+	   submit();
+   });
+   $(".paybox .icon").click(function(e) {
+       $(this).parents('span').siblings().removeClass('checked');
+       $(this).parents('span').toggleClass('checked');
+   });
+    //提交订单
+	function submit(){
+        $('.citem').each(function(index, element) {
+			   if(!$(this).find('.icon').hasClass('checked')){
+				    //$(this).children('input').attr('name','');
+					$(this).children('input').remove();
+     			}
+
+		 });
+         var self = $('form');
+		// var payType=$(".paybox .checked").index();
+         //if(payType=='-1'){
+		   // alert('请选择支付方式');return false;
+		  //} 
+		  var username = $(':input[name=username]').val();
+		  if(username==''){
+		    alert('用户名不能为空');return false;
+		  } 
+		  var cellphone= $(':input[name=cellphone]').val();
+          if(cellphone==''){
+		     alert('联系方式不能为空');return false;
+		  } 
+		  var address= $(':input[name=address]').val();
+          if(address==''){
+		     alert('地址不能为空');return false;
+		  } 
+		  document.form.submit();
+		 // var n=parseInt(payType)+1;
+		 // $('#payType').val(n);
+		  // $.post(self.attr("action"),self.serialize(),function(data){
+		 //		  if(data.status){
+    		 //		 window.location.href =data.url;
+    		 //	} else {
+    			 //	alert(data.info);
+    		 //	}  
+		   // });
+       }  
+
+   
+    </script>
+	
+	
+
+	</body>
+</html>

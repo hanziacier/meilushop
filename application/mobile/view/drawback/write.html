@@ -1,0 +1,127 @@
+﻿
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1  maximum-scale=1 user-scalable=no">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-touch-fullscreen" content="yes">
+		<meta name="HandheldFriendly" content="True">
+		<title>微商城</title>
+
+			<link rel="stylesheet" href="__CSS__/style.css">
+		<script type="text/javascript" src="__JS__/jquery-1.10.1.min.js"></script>
+
+
+	</head>
+	<style>
+	.kffw_con01 .F_wd_top_con2_l {
+    height:8.5rem!important;
+}
+.kffw_con01 .kffw_con01_m ul li textarea{background:#f8f8f8;border-radius:6px 6px;border:1px solid #e5e5e5;text-indent:2rem;height:10rem;}
+	</style>
+
+	<body>
+		<!--头部-->
+		<div class="top_con01">
+			<div class="fh_icon">
+				<a onClick="javascript :history.go(-1);"></a>
+			</div>
+	
+			<h1>退换货</h1>
+		</div>
+
+		<!--内容-->
+		<div class="ddqr_con01 fh_con01">
+		<div class="shdz_con01_m" style="padding-bottom:1.1rem;">
+<h1>订单编号：{$info.order_sn}</h1>
+
+		</div>
+		<div class="sc_con01_main">
+		   	<ul>
+		   		<li>
+		   
+		   			<div class="sc_con01_img"><a href="#"><img src="{$info.goods_id|get_goods_cover}"/></a></div>
+		   			<div class="sc_con01_text">
+		   				<div class="sc_con01_t"><a href="#">{$info.goods_id|get_goods='title'}</a></div>
+<div class="sc_con01_pri">￥{$info.total}元</div>
+
+		   			</div>
+		   		</li>
+				</ul>
+				</div>
+		<div class="kffw_con01">
+			<!--分类-->
+		<div class="Z_con2_2">
+		
+			<div class="F_wd_top_con2">
+			<form action="{:url('add')}" name="form" id="form" method="post" >
+				<div class="F_wd_top_con2_l" id="wrapper">
+				<h1 style="font-size:1.4rem;line-height:4rem;background:#fff;padding:0 1.1rem;">服务类型</h1>
+					<div>
+					
+						<ul class="sy" style="padding-top:0;">
+						
+							<li id="1"  class="current"><span>退货</span></li>
+							<li id="2"><span>换货</span></li>
+						
+						</ul>
+					</div>
+				</div>
+				<div class="F_wd_top_con2_r" id="wrapper1">
+				
+					<div class="content by" style="display: block;">
+						<div class="kffw_con01_m">
+							<ul>
+								<li>
+									<h1 style="font-size:1.4rem;line-height:4rem;">问题描述</h1>
+								</li>
+								<li>
+									<textarea name="description" placeholder="留言内容"></textarea>
+								</li>
+							</ul>
+						</div>
+						</div>
+					<input type="hidden" name="type" id="type" value="1"/>
+			        <input type="hidden" name="sales_id"  value="{$info.sales_id|default=''}"/>
+			</div>
+		</div>
+
+			<div class="grzl_con01_btn"><a onclick="submit()">提交申请</a></div>
+		</div>
+	</form>
+
+		</div>
+	<script type="text/javascript">
+
+ function submit(){
+	   document.form.submit();
+	   }
+
+$(".sy li").click(function(){
+					if(!$(this).hasClass("current")){
+					
+						$(this).addClass("current").siblings().removeClass("current");
+						var id=$(this).attr("id");
+						$('#type').val(id);
+
+					}
+					
+				});
+			$(document).ready(function() {
+				
+				$("#s_ser").click(function() {
+					$(".bot_nav01").show();
+					$(".bot_nav02").show();
+				});
+				$("#h_ser").click(function() {
+					$(".bot_nav01").hide();
+					$(".bot_nav02").hide();
+				});
+			});
+		</script>
+	</body>
+
+</html>

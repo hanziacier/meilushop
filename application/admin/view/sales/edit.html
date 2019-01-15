@@ -1,0 +1,72 @@
+ <!-- 头部 -->
+	{include file='public/header'}
+<!-- 头部 --> 
+			<div class="content">
+			<div class="tips_msg none"><span class="tips">保存成功</span><span class="close_tips"></span></div>
+				<div class="edit_title">{$meta_title|default=""}</div>
+				<div class="edit_box">
+					<div class="edit_tab">
+						<div class="tab_option on">基础</div>
+						<div class="tab_option">高级</div>
+					</div>
+					<div class="edit_content">
+						<form class="group-form"  action="{:url('')}" method="post">
+							 <div class="edit_content_tab">
+							     
+								 <div class="form-group">
+									<label>名称<span>(标题)</span></label>
+									<div class="form-input"><input type="text" name="title" value="{$info.title|default=""}"></div>
+								  </div>
+
+								 <div class="form-group">
+									<label>订单号<span>(订单号)</span></label>
+									<div class="form-input"><input type="text" name="order_sn" value="{$info.order_sn|default=""}"></div>
+								  </div>
+								  
+								  <div class="form-group">
+									<label>商品规格<span>(商品规格)</span></label>
+									<div class="form-input"><input type="text" name="specifications" value="{$info.specifications|default=""}"></div>
+								  </div>
+								  
+								  <div class="form-group">
+									   <label>价格<span>(价格)</span></label>
+									   <div class="form-input"><input type="text" name="price" value="{$info.price|default=""}"></div>
+								  </div>
+								  
+								  <div class="form-group">
+									<label>数量<span>(数量)</span></label>
+									<div class="form-input"><input type="text" name="num" value="{$info.num|default=""}"></div>
+								  </div>
+								  
+								  <div class="form-group">
+									   <label>总金额<span>(总金额)</span></label>
+									   <div class="form-input"><input type="text" name="total" value="{$info.total|default=""}"></div>
+								  </div>
+
+				      	
+						</div>
+						<div class="edit_content_tab none">
+						
+						        <div class="form-group">
+									<label>运费<span>(运费)</span></label>
+									 <div class="form-input"><input type="text" name="spress" value="{$info.spress|default=""}"></div>
+								  </div>
+                        </div>
+					
+				
+						<div class="btn_group">
+						    <input type="hidden" name="id" value="{$info.id|default=""}">
+							<div class="confirm_btn">确认</div>
+							<div class="cancel_btn">返回</div>
+						</div></form> 
+					</div>
+				</div>
+			</div>
+		</div>
+	
+
+ <script src="__JS__/edit.js"></script>
+
+<!-- 尾部 -->
+	{include file='public/footer'}
+    <!-- 尾部 --> 

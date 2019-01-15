@@ -1,0 +1,276 @@
+<?php
+// +----------------------------------------------------------------------
+// | yershop网店管理系统
+// +----------------------------------------------------------------------
+// | Copyright (c) 2017 http://www.yershop.com All rights reserved.
+// +----------------------------------------------------------------------
+// | 版权申明：yershop网店管理系统不是一个自由软件，是贝云网络官方推出的商业源码，严禁在未经许可的情况下
+// | 拷贝、复制、传播、使用yershop网店管理系统的任意代码，如有违反，请立即删除，否则您将面临承担相应
+// | 法律责任的风险。如果需要取得官方授权，请联系官方http://www.yershop.com
+// +----------------------------------------------------------------------
+namespace app\index\model;
+use think\Model;
+use think\Db;
+/**
+ * 分类模型
+ */
+class Category extends Model{
+	/**商品分类垂直菜单调用**/
+    public function info($where){
+		$field = 'id,pid,title,types_id';
+		$data =Db::name('category')->order('sort desc')->field($field)->where($where)->find( );
+		return $data;
+	}
+
+    public function getTree($id = 0, $field = true){
+        /* 获取当前分类信息 */
+        if($id){
+            $info = $this->info($id);
+            $id   = $info['id'];
+        }
+
+        /* 获取所有商品分类 */
+        $map  = array('status' => 1,'type'=>1);
+        $list =Db::name('category')->field($field)->where($map)->order('sort desc')->select();
+        $list = list_to_tree($list, $pk = 'id', $pid = 'pid', $child = '_', $root = $id);
+         //$list =getforeach($list);
+        /* 获取返回数据 */
+        if(isset($info)){ //指定分类则返回当前分类极其子分类
+            $info['_'] = $list;
+        } else { //否则返回所有分类
+            $info = $list;
+        }
+      
+        return $info;
+    }
+   public function makeTree(){
+          $map  = array('status' => 1,'type'=>1,'pid'=>0);
+         $category =Db::name('category')->where($map)->order('sort desc')->select();
+        foreach ( $category  as &$vo){ 
+			//dump($v['id']);
+			$cid=getChild($vo["id"]);;//dump($category);
+			$arr=array();
+			array_push($cid,$vo['id']);
+			array_push($arr,$vo['id']);
+		
+			/**子分类**/
+			//$category [$k]= array ();
+			$vo['child']= array ();    
+			$condition['pid'] =$vo['id']; 
+			$list= Db::name('category')->where($condition)->limit(10)->order("id desc")->select(); 
+           $vo ['child'] = $list; 
+		   ;
+		   	/**品牌**/
+		
+			$vo['brand']= array ();    
+			$condition2[]=['category_id','in',$cid];
+			$list2= Db::name('brand')->where($condition2)->limit(10)->order("id desc")->select();  
+			
+			$vo ['brand']=$list2;
+			
+		   /**分类商品**/
+		   unset($map);
+			$vo['item'] = array ();
+			$map[]=['category_id','in',$cid];
+			$map[]=['status','=',1];
+			$vo['item'] =Db::name('goods')->where($map)->order("id desc")->limit(8)->select();   
+			
+		   /**广告**/
+			$vo ['ad']= array ();    
+			$condition3[] = ['category_id','in',$cid];
+            $condition3[]=['status','=',1];
+			$vo ['ad']=Db::name('ad')->where($condition3)->order("id desc")->select();
+			
+        }
+		
+        return $category;
+
+      }
+	
+    /**
+     * 获取指定分类的同级分类
+     * @param  integer $id    分类ID
+     * @param  boolean $field 查询字段
+     * @return array
+     * @author 麦当苗儿 <zuojiazi@vip.qq.com>         
+     */
+    public function searchInfo($cate_id){
+		$field = 'pin_price,pin_max_num,score,id,category_id,title,num,price,comments,view,sales,attributes,baoyou,has,cover_id,start_time,end_time';
+        $cate_ids=$this->getChildrenId($cate_id);	
+		$map[]=['category_id',"in",$cate_ids];
+		
+		if (input('start_price')) {
+			$start_price=safe_replace(input('start_price'));
+            $map[]=['price','egt',$start_price];
+            $info['start_price']=$_GET['start_price'];
+        }
+        if (input('end_price')) {
+			$end_price=safe_replace(input('end_price'));
+            $map[]=['price','elt',$end_price];
+            $info['end_price']=$_GET['end_price'];
+        }
+		
+		//包邮
+	    $info["baoyou"]=input('baoyou')?input('baoyou'):0;
+		//$map['baoyou']=safe_replace($info["baoyou"]);
+		//有货
+	    $info["has"]=input('has')?input('has'):1;
+		//$map['has']=safe_replace($info["has"]);
+		//品牌
+		$info["brand_id"]=input('brand_id')?input('brand_id'):0;
+		
+		//有货
+         $brands=safe_replace(input('brand_id'));
+        if($info["brand_id"]){
+		  $brands=safe_replace(input('brand_id'));
+		  $map[]=['brand_id',"in",$brands];
+          
+		 }
+		//属性查询
+		$str=input('attrs');
+	    if($str){
+			$ids=array();
+			$notins=array();
+			$info["attrs"]=$str;
+			$list=Db::name('goods')->where($map)->field($field)->select();
+			foreach($list as $n=>$v){
+			   $attributes=$v["attributes"];
+		       if(strpos($attributes,$str)){
+				  
+			   }
+			   else{
+				   $notins[]=$v["id"]; 
+			   }
+		   } 
+		   if($ids){
+			    $map[]=['id',"in",$ids];  
+				//addUserLog("ids".var_export($ids,true),5) ;
+		   }
+		   if($notins){
+			    $map[]=['id',"not in",$notins];
+				//addUserLog("ins".var_export($notins,true),5) ;
+		   }
+		}
+	    //排序类型
+	    $order=input('order')?input('order'):3;
+		//价格排序方式
+	    $range=input('range')?input('range'):"up";	
+		if(!($order && is_numeric($order)&&$order<6)){
+		    $this->error('排序错误！');
+		}
+		if($order<=4){
+		 switch ($order){
+               case 1:
+                    $orderString="view asc";
+                break;  
+               case 2:
+                    $orderString="sales desc";
+               break;
+			   case 3:
+                    $orderString="id desc";
+                break;  
+               case 4:
+                    $orderString="comments desc";
+               break;
+
+              default:
+         }
+        }
+		else{
+		   switch ($range){
+               case "up":
+                    $orderString="price asc";
+                break;  
+			    case "down":
+                    $orderString="price desc";
+                break;  
+              default: 
+           }
+		
+		}
+		$info["order"]=$order;
+		$info["range"]=$range; 
+		$page=input('page')?input('page'):1;
+		 if(!($page && is_numeric($page))){
+		   $this->error('分类ID错误！');
+		}	
+		$info["data"]=getLists('goods',$map,12,$orderString,$field);
+		$info["page"]=$info["data"]["list"]?$page:0;
+		return $info;
+    }
+
+    /**
+     * 获取指定分类子分类ID
+     * @param  string $cate 分类ID
+     * @return string       id列表
+ 
+     */
+      public function getChildrenId($id){
+      
+	    $cid=getChild($id);//	dump($catelist);
+		if($cid){
+			krsort($cid);
+		}
+		array_push($cid,$id);
+		return $cid;
+     }
+	/**
+     * 获取指定分类父分类ID
+     * @param  string $cate 分类ID
+     * @return string       id列表
+ 
+     */
+	 public function getParentId($id){
+      
+	    $cid=getParent($id);//	dump($catelist);
+		if($cid){
+			krsort($cid);
+		}
+		return $cid;
+    }
+	//动态获取指定分类商品
+    public function getDatalist($cateid){     
+        /**分类列表文档**/
+        $ids = $this->getChildrenId($cateid);    		
+		$map['category_id']=array("in",$ids);   
+		$map['status']=1;   
+		$list=Db::name( 'goods' )->where($map)->limit(8)->order("id desc")->select();         
+		if($list){
+			foreach ($list as $k => $v ) {
+			   /**重组数据**/
+				$id=$v["id"];
+				$item[$id]["id"] =$id;    
+				$item[$id]['url'] =url('goods/detail?id='.$id);
+				$item[$id]['pic'] =get_cover( $v["cover_id"], "path" );
+				$item[$id]['title'] =$v["title"];
+				$item[$id]['price'] =$v["price"];
+			}
+            return $item;
+	    }
+     }
+		/**商品分类垂直菜单调用**/
+    public function getCategory(){
+		$field = 'id,pid,title';
+	
+		$map  = array('status' => 1,'display'=>1);
+	   
+		$category = $this->field($field)->order('sort desc')->where($map)->select( );
+		$list = getforeach($category);
+		return $list;
+	}
+
+
+
+   public function getfooter(){     	
+		
+		$map['pid']=0;
+		
+        $list=Db::name( "cate" )->where($map)->order( "sort desc,id asc" )->select( );
+		   foreach( $list as $n=> $val ){
+			   $list[$n]['ids']=Db::name( "cate" )->where('pid=\''.$val['id'].'\'')->select( );
+		   }
+       return $list;
+     }
+
+
+}

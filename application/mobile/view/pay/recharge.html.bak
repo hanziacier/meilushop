@@ -1,0 +1,123 @@
+<html>
+<head>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+<title>{$meta_title|default=""}__{:C('WEB_SITE_TITLE')}</title>
+
+ <link rel="stylesheet" href="__CSS__/common_mobile.css" />
+</head>
+<body style="background: #fff;">
+	<!--头部 header-->
+	<div>
+		<header>
+			<div class="header"style="background:{:session('theme_color')}">
+				<a href="Javascript:history.go(-1);void(0);"><i class="icon icon-back"></i></a>
+				<h1>在线支付</h1>
+			<a href="{:url('index/index')}"><i class="icon icon-home"></i></a>
+			</div>
+		</header>
+		<div style="height: 2.5rem;"></div>
+	</div>
+	<!-- 购物车 -->
+	<div class="zaixian_tit">
+		<span class="dingdan_txt">订单金额</span>
+		<span class="dingdan_num">{$info.total_money}元</span>
+	</div>
+	<ul class="zxzf_details">
+		
+{if condition='isWeixinBrowser()'}
+		<li class="wx">
+			<i class="icon icon-radio" data-id='2'></i>
+			<img src="__IMG__/weixin.png"/>
+			<div>
+				<p class="txt_01">微信支付</p>
+				<p class="txt_02"></p>
+			</div>			
+		</li>
+	{/if}	
+		
+		
+	</ul>
+	<button type="button" onclick="submit();"  class="ok_btn">确认支付</button>
+<form action='{:U("alipay/index")}' method="post"  name="myform" >
+   <input type="hidden"  name="id" class="form-control" id="tag" value="{$info.id}">
+</form> <script src="__COMMON__/jquery.min.js" type="text/javascript"></script>
+	<script type="text/javascript">				
+		$(function(){
+			$('.zxzf_details li i').click(function(){
+				if($(this).attr('class').match('checked')){
+					$(this).attr('class','icon icon-radio');
+					$(this).parent().siblings().children('i').attr('class','icon icon-radio checked');
+				}else{
+					$(this).attr('class','icon icon-radio checked');
+					$(this).parent().siblings().children('i').attr('class','icon icon-radio');					
+				}				
+			})				
+		})	
+
+function submit(){
+	 var obj=$('i').hasClass('checked');
+     var payType=0;
+     $('.icon-radio').each(function(index, element) {
+		       if($(this).hasClass('checked')){
+                   payType=$(this).attr('data-id');
+
+			   }	 
+		});
+	  
+        if(payType=='2'){
+            callpay();
+        }
+      
+		
+	 
+</script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript">
+
+		//调用微信JS api 支付
+		function jsApiCall()
+		{
+			WeixinJSBridge.invoke(
+				'getBrandWCPayRequest',
+			{$jsApiParameters|default=''},
+				function(res){
+				   if(res.err_msg == "get_brand_wcpay_request:ok"){
+					   //var order_id = document.getElementById("order_id").value;
+                       //window.location.href="http://card.jrbhw.com/wap.php?s=/member/confirm/order_id/"+order_id;
+					   var url = "{:url('Pay/wx_successs',array('orderid'=>$info['id']))}";
+		               window.location.href =url;
+	               }else{
+	                   //返回跳转到订单详情页面
+// 	                   WeixinJSBridge.log(res.err_msg);
+	                   alert('支付失败'+res.err_msg);
+					   var url = "{:url('Pay/failure',array('orderid'=>$info['id']))}";
+		               window.location.href =url;
+	               }
+				}
+			);
+		}
+
+		function callpay()
+		{
+			if (typeof WeixinJSBridge == "undefined"){
+			    if( document.addEventListener ){
+			        document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+			    }else if (document.attachEvent){
+			        document.attachEvent('WeixinJSBridgeReady', jsApiCall); 
+			        document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+			    }
+			}else{
+			    jsApiCall();
+			}
+		}
+		
+		function lbp_close(){
+			WeixinJSBridge.call('closeWindow');
+		}
+		//setTimeout('lbp_close();', 3000);
+
+  
+ </script></body>
+</html>

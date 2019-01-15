@@ -1,0 +1,57 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+<title>商品分享__{:C('WEB_SITE_TITLE')}</title>
+<link rel="stylesheet" type="text/css" href="__CSS__/style.css">
+<link rel="stylesheet" type="text/css" href="__CSS__/main.css">
+ <link rel="stylesheet" href="__CSS__/common_mobile.css" />
+</head>
+
+<body>
+	<!--头部 header-->
+	<div>
+		<header>
+			<div class="header"style="background:{$config['theme_color']}">
+				<a href="Javascript:history.go(-1);void(0);"><i class="icon icon-back"></i></a>
+				<h1>分享页</h1>
+			</div>
+		</header>
+		<div style="height: 2.5rem;"></div>
+	</div>	
+	<div class="bdsharebuttonbox" data-tag="share_1">
+	<a class="bds_qzone" data-cmd="qzone" href="#">分享到qq空间</a>
+	<a class="bds_tsina" data-cmd="tsina">分享到微博</a>
+	<a class="bds_douban" data-cmd="douban">分享到豆掰</a>
+	<a class="bds_renren" data-cmd="renren">分享到人人</a>
+	<a class="bds_tqq" data-cmd="tqq">分享到腾讯微博</a>
+<a class="bds_tieba" data-cmd="tieba">分享到百度贴吧</a>
+<a class="bds_sqq" data-cmd="sqq">分享到qq好友</a>	
+<a class="bds_weixin" data-cmd="weixin">分享到微信</a>
+
+</div>
+<script>
+	window._bd_share_config = {
+		common : {
+			bdText : '{$info.title}',	
+			bdDesc : '{$info.title}',	
+			bdUrl : '{$info.url}', 	
+			bdPic : '{$info.cover_id|get_cover_path}'
+		},
+		share : [{
+			"bdSize" : 16
+		}],
+		
+		image : [{
+			viewType : 'list',
+			viewPos : 'top',
+			viewColor : 'black',
+			viewSize : '16',
+			viewList : ['qzone','tsina','huaban','tqq','renren','tieba']
+		}],
+		selectShare : [{
+			"bdselectMiniList" : ['qzone','tqq','kaixin001','bdxc','tqf']
+		}]
+	}
+	with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+</body></html>

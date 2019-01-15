@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1  maximum-scale=1 user-scalable=no">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-touch-fullscreen" content="yes">
+		<meta name="HandheldFriendly" content="True">
+		<title>微商城</title>
+
+		<link rel="stylesheet" href="__CSS__/style.css">
+		<script type="text/javascript" src="__JS__/jquery-1.10.1.min.js"></script>
+
+	</head>
+
+	<body>
+		<!--头部-->
+		<div class="top_con01">
+			<div class="fh_icon">
+				<a onClick="javascript :history.go(-1);"></a>
+			</div>
+			<div class="yc_icon" id="s_ser">
+				<a href="#"></a>
+			</div>
+			<div class="yc_icon fot_nav02" id="h_ser">
+				<a href="#"></a>
+			</div>
+			<h1>购物车</h1>
+		</div>	
+	{include file="public/menu"/}
+		<!--内容-->			<script>
+//根地址
+var url="{:root_url()}";
+//购物车删除
+var del_url=url+"{:url('cart/delItem')}";
+//购物车添加
+var post_url=url+"{:url('cart/addItem')}";	
+//购物车减少
+var dec_url=url+"{:url('cart/decNum')}";
+//购物车增加
+var inc_url=url+"{:url('cart/incNum')}";
+var img_path=url+"__IMG__";
+//提交订单
+var del_url=url+"{:url('cart/delItem')}";
+//提交订单
+var order_url=url+"{:url('Order/add')}";
+
+var del_cart_url=url+'{:url("cart/delCart")}';
+//购物车清空
+var clear_cart_url=url+'{:url("cart/clear")}';
+//添加收藏
+var collect_url=url+'{:url("collect/add")}';
+</script>
+       {empty name="cartlist"}	
+       
+         {else/}
+		<div class="cart_con01">
+		
+			<div class="cart_con01_m">
+				<ul>{foreach name="cartlist" item="vo"} 
+					<li>
+						<div class="wdpj_con01_main">
+<i class="check checked" onclick="select(this)" attr-id="{$vo.id}"></i>
+							<div class="wdpj_con01_img">
+								<a href="{:U('goods/detail?id='.$vo['goodsid'])}"><img src="{$vo.goodsid|get_goods_cover}"></a>
+							</div>
+							<div class="wdpj_con01_text">
+								<div class="sc_con01_t">
+									<a href="{:U('goods/detail?id='.$vo['goodsid'])}">{$vo.goodsid|get_goods="title"}{$vo.specifications}
+									</a>
+								</div>
+								<div class="sc_con01_pri">￥{$vo.price}元</div>
+								<div class="cart_con01_num fl">
+									<div class="cart_con01_nl fl" onclick="decNum(this,{$vo.id})">-</div>
+									<div class="cart_con01_nm fl"><input type="text"  id="num_con" class="num" value="{$vo.num}" placeholder="{$vo.num}" /></div>
+									<div class="cart_con01_nr fl" onclick="incNum(this,{$vo.id})">+</div>
+								</div>
+								<div class="cart_con01_close fr">
+									<a onclick="del(this,{$vo.id})"><img src="__IMG__/close.png" /></a>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+						</div>
+					</li>
+					{/foreach}
+				</ul>
+			</div>
+<nav class="navbar-fixed-bottom">
+		
+		  
+	    	<a  onclick="orderSubmit()" class="fr btn btn-submit" >立即结算</a>
+			  <div class="navbar-text ">		合计：￥<span id="total">{$cart.total_money}</span>	   
+		    
+	</div></nav>	</div>
+{/empty}	
+	<script>
+	
+		function select(obj){
+           if($(obj).hasClass('checked')){
+				 $(obj).removeClass('checked') ;
+	       }
+          else{
+	         $(obj).addClass('checked') ;
+	      }
+		 checkcart(); 
+     }
+	 
+function  decNum(obj,id){
+         var cur_num = $(obj).parents(".cart_con01_num").find('.num').val();
+		 if(cur_num <= 1){
+					$(obj).parents(".cart_con01_num").find('.num').val(1);
+				}else{
+					cur_num--;
+					$(obj).parents(".cart_con01_num").find('.num').val(cur_num);
+				}
+        
+	    $.post(dec_url,{id:id},function(data){
+				 
+				  $('.tSum').val("¥"+data.total);
+				 
+	   });
+		
+     }
+
+	  function  incNum(obj,id){
+         var cur_num = $(obj).parents(".cart_con01_num").find('.num').val();
+		       if(cur_num >= 99){
+					$(obj).parents(".cart_con01_num").find('.num').val(99);
+				}else{
+					cur_num++;
+					$(obj).parents(".cart_con01_num").find('.num').val(cur_num);
+				}
+        
+	    $.post(inc_url,{id:id},function(data){
+				
+				  $('.tSum').val("¥"+data.total);
+				  
+	   });
+		
+     }	
+	   function  del(obj,id){
+      
+	    $.post(del_url,{id:id},function(data){
+				
+				  $('.tSum').val("¥"+data.total);	
+				  $(obj).parents("li").remove();
+				  
+	   });
+		
+     }	
+	var ele= $('.check');
+	function getIds() {     
+		   //全选遍历
+		    var result=new Array();
+			 ele.each(function () {
+                    if($(this).hasClass('checked')){
+				          result.push($(this).attr('attr-id')); 
+				     }
+
+                });
+			return result.join(",");		
+	}
+	function  checkcart(){
+  
+        r=getIds();
+	    $.post('{:U("cart/checkcart")}',{id:r},function(data){
+				  $('.tNum').val(data.count);
+				  $('.tSum').val("¥"+data.total);
+				  $('.cart_num').val(data.sum);	
+	   });
+		
+     }
+
+//购物车删除
+ function orderSubmit(){  
+		        var ids=getIds();
+				$.post(order_url,{id:ids},function(data){   
+					 if(data.status=="1"){ 
+						 var url = "{:U('order/orderPay')}"+'?id='+data.id;
+						  window.location.href =data.url;
+					}
+					 else{
+					    alert(data.msg); 
+						if(data.url){
+						  window.location.href =data.url;
+						  }
+					 }
+                });
+	       
+	}	
+	
+
+
+			
+		</script>
+	</body>
+
+</html>

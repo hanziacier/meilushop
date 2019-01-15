@@ -1,0 +1,151 @@
+<html>
+<head>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ <meta charset="utf-8">
+<title>商品列表__{:C('WEB_SITE_TITLE')}</title>
+<link rel="stylesheet" href="__CSS__/main.css" />
+<link rel="stylesheet" type="text/css" href="__CSS__/style.css">
+<link rel="stylesheet" href="__CSS__/common_mobile.css" />
+<link rel="stylesheet" type="text/css" href="__CSS__/iconfont/iconfont.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<script type="text/javascript" src="__JS__/zepto.min.js"></script>
+</head>
+<body>
+	<!--头部 header-->
+	<div class="default">
+		<header>
+			<div class="header"style="background:{$config['theme_color']}">
+				<a href="Javascript:history.go(-1);void(0);"><i class="icon icon-back"></i></a>
+					<form method="post" action="{:url('search')}" name="searchForm" id="search">
+				<input type="text" name="keyword" class="search" value="" placeholder="请输入关键词搜索"/>
+				  </form>	
+				<a onclick="$('form').submit()"><i class="icon icon-search"></i></a>
+			</div>
+		</header>
+		<div style="height: 2.5rem;"></div>
+	</div>
+
+ <div class="pro_tab_list" >   
+       <ul>
+			<li class="{eq name='order' value='2'}current{/eq}">
+				<a href="{:url('Goods/lists',array('id'=>$cate['id'],'order'=>2,'sort'=>$see))}">默认</a>
+			</li>
+			<li class="{eq name='order' value='4'}current{/eq}">
+				<a href="{:url('Goods/lists',array('id'=>$cate['id'],'order'=>4,'sort'=>$see))}">销量</a>
+			</li>
+			{php} 
+			if($order==3){
+		      switch($see) { 
+		        case 'desc': 
+				     $class="current";
+                break;
+				case 'asc':
+				    $class="active";
+                  break;				
+		       }  	
+	        }
+      {/php}
+			<li class="{$class|default=""}">
+				<a href="{:url('Goods/lists',array('id'=>$cate['id'],'order'=>3,'sort'=>$see))}" class="price_tit">
+					价格
+					<div class="price_icon {$see}">
+					
+					</div>
+				</a>
+			</li>
+			<li {eq name='order' value='1'}class="current"{/eq}>
+				<a href="{:url('Goods/lists',array('id'=>$cate['id'],'order'=>1,'sort'=>$see))}">评分</a>
+			</li>
+	   </ul>
+	</div>
+    <div class="pro_j_list">   
+       <ul>
+			{volist name="list" id="vo"}	
+			 <li>
+				<a   class="left_pic" href="{:U('goods/detail?id='.$vo['id'])}">
+                	<img  src="{$vo.cover_id|get_cover='path'}"/>
+				</a> 
+				<div class="right_wrap">
+                    <div class="right_con">
+                    	<a href="{:U('goods/detail?id='.$vo['id'])}" class="pic_txt">{$vo.title|substr_cn="30"}</a>  
+                    </div>
+                   	<div class="bottom_div_con">
+				       <div class="num_con">
+                        <p class="good_num"><span class="price_num">¥{$vo.price}</span></p>
+						 <p>销量<span class="number">{$vo.sales}</span></p>
+                     </div>
+				
+                     
+                </div>	
+            </div>	
+			</li>
+		{/volist}	
+	   </ul>
+       <div class="to_top"><a href="Javascript:;"></a></div>
+	</div>
+ <span class="loading"><img src="__IMG__/loading.gif"/></div></span>
+<!-- 引入js资源 -->
+	<script type="text/javascript" src="__JS__/zepto.min.js"></script>
+	<script type="text/javascript">
+	function toggle(){
+	    $(".default").toggle();
+	    $(".search-active").toggle();
+	
+	}
+	
+	</script>
+ <script type="text/javascript"> 
+    $(document).ready(function(){  
+        var range =10;             //距下边界长度/单位px  
+        var maxnum ={$maxnum};            //设置加载最多次数  
+        var num = 2; 
+		var obj=$('li').hasClass('current');
+		var url=$(obj).find('a').attr('href');
+        var totalheight = 0;//主体元素  
+		var stop=true;//触发开关，防止多次调用事件   
+		$(window).scroll(function(){  
+            var srollPos = $(window).scrollTop();    //滚动条距顶部距离(页面超出窗口的高度) 
+			var height=$(document).height()-range;
+            totalheight = parseFloat($(window).height()) + parseFloat(srollPos);  
+            if(height<= totalheight) {                  
+				 if(stop==true &&maxnum>=num){
+				    stop=false;  
+                    $('.loading').show();
+				    $.post(url,{p:num},function(data){
+					
+					if(data){
+						var html = '';
+						$.each(data, function(i,n){			
+							html=html+'<li> <a href="'+n.url+'" class="left_pic" title="'+n.title+'"> <img src="'
+							+n.image+'"> </a><div class="right_wrap"><div class="right_con"><p class="pic_txt">'
+							+n.title+'</p>  </div>	<div class="bottom_div_con"> <div class="num_con"><p class="good_num"><span class="price_num">￥'
+							+n.price+'</span><p>销量<span class="number">'
+							+n.sales+'</span></p></div></div> </div></li>';
+						 });
+						  $('.loading').hide(); 
+                          $(".pro_j_list ul").append(html);
+					 }
+					
+                    stop=true;  num=num+1;//当前要加载的页码  ;
+				 });  
+                  
+                }
+             }  
+        });  
+    });  
+ $(".rt").click(function(){
+		 window.location.href ="{:U('search/lists')}"+'&keyword='+$("input").val();;
+ });
+ </script>
+   <div class="H5"></div>
+	<div class="bottom-menu order-bottom-menu">
+		<a class="" href="{:url('index/index')}"><i class="home"></i><p>首页</p></a>
+		<a class="" href="{:url('category/index')}"><i class="category"></i><p>分类</p></a>
+		<a class="" href="{:url('cart/index')}"><i class="cart"></i><p>购物车</p></a>
+		<a class="active" href="{:url('member/index')}"><i class="mine"></i><p>我的</p></a>
+	</div>
+	</body>
+</html>

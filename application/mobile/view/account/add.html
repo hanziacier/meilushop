@@ -1,0 +1,98 @@
+﻿
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1  maximum-scale=1 user-scalable=no">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-touch-fullscreen" content="yes">
+		<meta name="HandheldFriendly" content="True">
+		<title>微商城</title>
+
+		<link rel="stylesheet" href="__CSS__/style.css">
+		<script type="text/javascript" src="__JS__/jquery-1.10.1.min.js"></script>
+
+	</head>
+
+	<body>
+		<!--头部-->
+		<div class="top_con01">
+			<div class="fh_icon">
+				<a onClick="javascript :history.go(-1);"></a>
+			</div>
+			<div class="yc_icon" id="s_ser">
+				<a href="#"></a>
+			</div>
+			<div class="yc_icon bot_nav02" id="h_ser">
+				<a href="#"></a>
+			</div>
+			<h1>账户充值</h1>
+		</div>
+		{include file="public/menu"/}
+		<!--内容-->
+		<div class="shdz_con03 zhcz_con01">
+		    <ul style="padding-bottom:0;">
+		    	<li>
+<form method="post" action="{:url('')}" name="frm_login" id="frm_login">
+		    		<div class="shdz_con03_l fl">账户充值</div>
+		    		<div class="shdz_con03_r fl"><input type="text" name="money" placeholder="充值金额"/></div>
+		    		<div class="clearfix"></div>
+		    	</li>
+		    	<li id="zf_ser">
+		    		<div class="shdz_con03_l fl">支付方式</div>
+		    		<div class="shdz_con03_r shdz_con03_xz fr">请选择</div>
+		    		<div class="clearfix"></div>
+		    	</li>
+		     <input type="hidden" name="type" value="1">
+     
+	
+		    </ul>
+		</div>
+		<div class="zhcz_con02">
+			<ul>
+				<li class="act" onclick='choose(this,1)'>微信支付（0手续费）</li>
+				<li onclick='choose(this,2)'>支付宝支付（0手续费）</li>
+			</ul>
+		</div>
+<div class="grzl_con01_btn"><a onclick="submitfrm()">提交申请</a></div>
+	 </form> 
+	 
+	 <script type="text/javascript">
+		function choose(obj,n){
+	    var ele=$(".zhcz_con02 li");
+         $(".zhcz_con02 li").removeClass('act');
+		     if(!$(obj).hasClass('act')){
+	         $(obj).addClass('act') ;
+	      }
+		  $("input[name='type']").val(n); 
+		 
+     }
+
+	 function submitfrm(){
+			
+	   $("#frm_login").submit();
+ }  
+		</script>
+	<script type="text/javascript">
+			$(document).ready(function() {
+
+				$("#s_ser").click(function() {
+					$(".bot_nav01").show();
+					$(".bot_nav02").show();
+				});
+				$("#h_ser").click(function() {
+					$(".bot_nav01").hide();
+					$(".bot_nav02").hide();
+				});
+				$("#zf_ser").click(function() {
+					$(".zhcz_con02").show();
+
+				});
+			
+			});
+		</script>
+</body>
+
+</html>

@@ -1,0 +1,35 @@
+
+<html>
+<head>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+<title>{$meta_title|default=""}__{:C('WEB_SITE_TITLE')}</title>
+<link rel="stylesheet" type="text/css" href="__CSS__/bass.css">
+<link rel="stylesheet" type="text/css" href="__CSS__/style.css">
+<link rel="stylesheet" type="text/css" href="__CSS__/base.css">
+<link rel="stylesheet" type="text/css" href="__CSS__/main.css">
+ <link rel="stylesheet" href="__CSS__/common_mobile.css" />
+</head>
+
+		<script>
+//根地址
+var url="{:root_url()}";
+//购物车删除
+var del_url=url+"{:url('cart/delItem')}";
+//购物车添加
+var post_url=url+"{:url('cart/addItem')}";	
+//购物车减少
+var dec_url=url+"{:url('cart/decNum')}";
+//购物车增加
+var inc_url=url+"{:url('cart/incNum')}";
+var img_path=url+"__IMG__";
+//提交订单
+var order_url=url+"{:url('Order/add')}";
+
+var del_cart_url=url+'{:url("cart/delCart")}';
+//购物车清空
+var clear_cart_url=url+'{:url("cart/clear")}';
+//添加收藏
+var collect_url=url+'{:url("collect/add")}';
+</script>

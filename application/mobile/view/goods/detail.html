@@ -1,0 +1,441 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1  maximum-scale=1 user-scalable=no">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-touch-fullscreen" content="yes">
+		<meta name="HandheldFriendly" content="True">
+		<title>微商城</title>
+		<link href="__CSS__/swiper.min.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="__CSS__/style.css">
+		<script type="text/javascript" src="__JS__/jquery-1.10.1.min.js"></script>
+		<script type="text/javascript" src="__JS__/swiper.min.js"></script>
+	</head>
+<script>
+//根地址
+var url="{:root_url()}";
+//购物车
+var cart_url=url+"{:url('cart/index')}";
+//购物车删除
+var del_url=url+"{:url('cart/delItem')}";
+//购物车添加
+var post_url=url+"{:url('cart/addItem')}";	
+//购物车减少
+var dec_url=url+"{:url('cart/decNum')}";
+//购物车增加
+var inc_url=url+"{:url('cart/incNum')}";
+var img_path=url+"__IMG__";
+//提交订单
+var order_url=url+"{:url('Order/add')}";
+
+var del_cart_url=url+'{:url("cart/delCart")}';
+//购物车清空
+var clear_cart_url=url+'{:url("cart/clear")}';
+//添加收藏
+var collect_url=url+'{:url("collect/add")}';
+</script>
+	<body>
+		<!--头部间距-->
+		<div class="head"></div>
+		<div class="top">
+			<div class="top_con01">
+			<div class="fh_icon">
+				<a onclick="javascript&nbsp;:history.go(-1);"></a>
+			</div>
+	
+		
+			<h1><a href="#" class="a_ac">商品</a><a href="#">详情</a><a href="{:U('goods/comment?id='.$info['id'])}">评价</a></h1>
+		</div>
+		</div>
+		<div class="all_content">
+
+			<!-- 广告图轮播 -->{php}$lists= get_pictures($info['id']);{/php}	
+			<div class="all_ban all_ban01">
+				<div id="banner">
+					<div class="swiper-wrapper"> {foreach name="lists" item="vo" key="k"} 
+						<div class="swiper-slide"><img src="{$vo|get_cover='path'}" />
+						</div>
+						{/foreach}
+					</div>
+					<div class="pagination"></div>
+				</div>
+				<div class="de_con01_btn01">
+					<a onClick="javascript :history.go(-1);"><img src="__IMG__/detail_icon01.png" /></a>
+				</div>
+				<div class="de_con01_btn02" id="m_ser">
+					<a ><img src="__IMG__/detail_icon02.png" /></a>
+				</div>
+				<div class="de_con01_ul">
+					<div class="de_con01_ul_jt"></div>
+					<ul>
+						<li class="de_con01_icon01">
+							<a href="{:url('index/index')}">首页</a>
+						</li>
+						<li class="de_con01_icon02">
+							<a href="{:url('category/index')}">消息</a>
+						</li>
+						<li class="de_con01_icon03">
+							<a href="{:url('member/index')}">用户中心</a>
+						</li>
+						<li class="de_con01_icon04">
+							<a href="{:url('order/index')}">全部订单</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="de_con02">
+				<div class="de_con02_t">
+					<h1>{$info["title"]|default=''}</h1>
+					  {present name="is_collect"}
+					      <h2><a><img src="__IMG__/icon1.png" /><span>已收藏</span></a></h2>
+					{else/}
+					     <h2><a onclick="addCollect(this,{$info.id})"><img src="__IMG__/detail_icon07.png" /><span>收藏</span></a></h2>
+					 {/present}
+				</div>
+				<div class="de_con02_pri">￥{$info.price}<span>积分可抵现</span></div>
+				<div class="de_con02_pri01">会员价{$info.price}{if condition="$info['category_id'] eq 174"}
+				距结束还有<span class="endtime" value="{$info['end_time']}">
+				</span>{else/}{/if}</div>
+				<script type="text/javascript">
+var serverTime ={php}echo time();{/php} * 1000;
+$(function(){
+    var dateTime = new Date();
+    var difference = dateTime.getTime() - serverTime;
+	
+    setInterval(function(){
+      $(".endtime").each(function(){
+        var obj = $(this);
+        var endTime = new Date(parseInt(obj.attr('value')) * 1000);
+        var nowTime = new Date();
+        var nMS=endTime.getTime() - nowTime.getTime() + difference;
+        var myD=Math.floor(nMS/(1000 * 60 * 60 * 24));
+        var myH=Math.floor(nMS/(1000*60*60)) % 24;
+        var myM=Math.floor(nMS/(1000*60)) % 60;
+        var myS=Math.floor(nMS/1000) % 60;
+        var myMS=Math.floor(nMS/100) % 10;
+        if(myD>= 0){
+			var str = '<span>'+myD+'</span>天<span>'+myH+'</span>时<span>'+myM+'</span>分<span>'+myMS+'</span>秒';
+        }else{
+			var str = "0天！";	
+		}
+		obj.html(str);
+      });
+    }, 100);
+
+});
+</script>      
+				<div class="de_con02_pri02">
+					<h1>市场价<span>￥{$sku2.price}元</span></h1>
+					<h2>销量：{$info["sale"]|default='0'}<span>库存：{$info["num"]|default=''}</span></h2>
+				</div>
+
+			</div>
+			<!--div class="de_con03">
+				<div class="de_con03_t">本服务由微商城提供售后服务与产品支持</div>
+				<div class="de_con03_m">
+					<ul>
+						<li class="de_con03_i de_con03_i01"><span>正品保证</span></li>
+						<li class="de_con03_i de_con03_i02"><span>货到付款</span></li>
+						<li class="de_con03_i de_con03_i03"><span>7天退货</span></li>
+						<li class="de_con03_i de_con03_i04"><span>极速达</span></li>
+					</ul>
+				</div>
+				
+			</div-->
+			<div class="de_con03_b" onclick="show()">
+					<div class="de_con03_bl fl">已选</div>
+					<div class="de_con03_br fr"><a id="tk_xz">请选择</a></div>
+					<div class="clearfix"></div>
+				</div>
+			<div class="de_con04">
+				<div class="de_con04_t">
+					<a href="{:U('goods/comment?id='.$info['id'])}">用户评价 好评率 100%<span>{$comment.count}人评价</span></a>
+				</div>{volist name="comment.list" id="vo"}
+				<div class="de_con04_m">	
+					<div class="de_con04_tip">
+						<div class="de_con04_tip_l fl"><div class="star{$vo.score|default=""}"></div></div>
+						<div class="de_con04_tip_m fl">{$vo.username}</div>
+						<div class="de_con04_tip_r fr">{$vo.create_time|date='Y-m-d H:i'}</div>
+						<div class="clearfix"></div>
+					</div>
+				</div>
+				<div class="de_con04_b">{$vo.message|default=""}</div>
+				{/volist}
+			</div>
+			<div class="de_con05">
+				<div id="www_zzjs_net1">
+					<div class="zzjs_net member_jy_wdpj">
+						<ul>
+							<li id="w_zzjs_net1" onmousemove="setTab('w_zzjs_net',1,4)" class="hover">商品描述</li>
+							<li id="w_zzjs_net2" onmousemove="setTab('w_zzjs_net',2,4)" >规格参数</li>
+
+						</ul>
+					</div>
+					<div class="www_zzjs_net_3">
+						<div id="zzjs_w_zzjs_net_1" class="hover">
+							<div class="de_con05_m">{$info["content"]|default=''}</div>
+						</div>
+						<div id="zzjs_w_zzjs_net_2" style="display: none;">
+						</div>
+					</div>
+				</div>
+			</div>
+<div id="m_ser01"></div>
+		</div>
+		<div class="de_con06">
+			<div class="de_con06_main">
+				<div class="de_con06_t">
+					<div class="de_con06_i01 fl">客服</div>
+					<a href="{:url('cart/index')}"><div class="de_con06_i02 fl">购物车<span>{$cart["total_num"]|default='0'}</span></div></a>
+					<div class="clearfix"></div>
+				</div>
+				<div class="de_con06_m">
+					<ul>
+						<li><div class="de_con06_btn01" ><a onclick="show()" >加入购物车</a></div></li>
+						<li><div class="de_con06_btn02"><a onclick="show()">立即购买</a></div></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="d_tk_bg"></div>
+		<div class="d_tk">
+		<div class="d_tk_close" id="close"><img src="__IMG__/close_icon.png"/></div>
+		<div class="d_tk_t">
+		<div class="wdpj_con01_main">
+
+							<div class="wdpj_con01_img">
+								<a href="#"><img src="{$info.cover_id|get_cover='path'}"></a>
+							</div>
+							<div class="wdpj_con01_text">
+								<div class="sc_con01_t">
+									<a href="#">{$info["title"]|default=''}
+									</a>
+								</div>
+								<div class="sc_con01_pri">￥{$sku2.price}元</div>
+								<div class="sc_con01_kc">库存：{$info["num"]|default=''}</div>
+								
+
+							</div>
+						</div>
+		</div>
+			<div class="d_tk_m">	 {notempty name="attrlist"}
+
+					{volist name="attrlist" id="vo"}
+					<div class="d_tk_text">{$vo.title}</div>
+						<div class="sl_con01">
+								<ul>
+							{volist name="vo['sid']"  id="vo1"}
+							  <li onclick="select(this)"class="{if condition='$i eq 1'}act{/if}" attr_id="{$vo1.id}">
+								{$vo1.title}
+								
+							  </li>
+							{/volist}
+						</ul>
+					  </div>	
+					{/volist}{/notempty}
+		  <script>
+	
+		function select(obj){
+           if(!$(obj).hasClass('act')){
+	         $(obj).addClass('act').siblings().removeClass('act') ;
+	      }
+		  
+     }function show(){
+	   	$(".d_tk").show();
+					$(".d_tk_bg").show();
+		$(".de_con06_btn01 a").attr("onclick","addcart()");
+		$(".de_con06_btn02 a").attr("onclick","order()");
+	}</script>       
+		<div class="d_tk_text">数量</div>
+		<div class="cart_con01_num fl">
+									<div class="cart_con01_nl fl">-</div>
+									<div class="cart_con01_nm fl"><input type="text" class="num" value="1" placeholder="1"></div>
+									<div class="cart_con01_nr fl">+</div>
+								</div>
+								<div class="clearfix"></div>
+								
+		</div>
+		</div>
+		<script type="text/javascript">
+	
+	 $('.cart_con01_nl').click(function(){	
+				var cur_num = $('.num').val();
+				if(cur_num <= 1){
+					$('.num').val(1);
+				}else{
+					cur_num--;
+					$('.num').val(cur_num);
+				}	
+			})
+			$('.cart_con01_nr').click(function(){
+				var cur_num = $('.num').val();
+				if(cur_num >= 99){
+					$('.num').val(99);
+				}else{
+					cur_num++;
+					$('.num').val(cur_num);
+				}
+			})
+	function showtoast(){	
+	
+	$(".toast_div").toggle(); 
+    setTimeout('Function()',1000);
+ }	 
+ function Function(){
+	$(".toast_div").toggle();    
+ }	
+	 function addcart(){
+		     var result = new Array(); 
+			 //var ids=$(".caizhi .current");
+                $(".act").each(function () {
+                        result.push($(this).attr("attr_id"));
+
+                });
+
+               if(result){
+			       var id=result.sort(sortNum);
+				}
+				var id=result.join(",");
+				var num=$(".num").val();
+				
+		       $.post(post_url,{path:id,goodsid:goodsid,num:num},function(data){
+                     
+					 if(data.status){  
+					    location.href=cart_url;
+					 }
+					 else{
+					    alert(data);
+					 
+					 }
+                });
+		   
+		} 
+		function sortNum(a,b) {
+               return a - b; //升序，如降序，把“a - b”该成“b - a”
+         }
+		 var goodsid="{$info.id}";
+		function order(){
+		     var result = new Array(); 
+			 //var ids=$(".caizhi .current");
+                $(".guige .active").each(function () {
+                        result.push($(this).attr("attr_id"));
+
+                });
+
+               if(result){
+			       var id=result.sort(sortNum);
+				}
+				var id=result.join(",");
+				var num=$(".num").val();
+				var order_url="{:url("order/create")}";
+		       $.post(order_url,{path:id,goodsid:goodsid,num:num},function(data){
+                     
+					 if(data.code){  
+					     if (data.url) {
+                            location.href=data.url;
+                         }
+					 }
+					 else{
+					   alert(data.msg);
+					   if (data.url) {
+                            location.href=data.url;
+                         }
+					 }
+                });
+		}
+	
+			function addCollect(obj,goodsid){
+		     
+				var clect_url="{:url('collect/add')}";
+		        $.post(clect_url,{id:goodsid},function(data){
+                     
+					 if(data.code){  
+					    $(obj).find("img").attr("src","__IMG__/icon1.png");
+					 }
+					 else{
+					     alert(data.msg); 
+						 if (data.url) {
+                            location.href=data.url;
+                         }
+					 }
+                });
+		} 
+	    //TAB切换
+       $(".tabs li").click(function(){
+         if(!$(this).hasClass('active')){
+		     $(".tabs li").removeClass('active');
+             $(this).addClass('active');
+             $(".tab_content").toggleClass('show');
+		 }
+        });
+
+	    
+	</script>
+    
+
+		<script type="text/javascript">
+			window.onload = function() {
+				var mySwiper2 = new Swiper('#banner', {
+					autoplay: 2000,
+					visibilityFullFit: true,
+					loop: true,
+					pagination: '.pagination',
+				});
+			}
+			$(document).ready(function() {
+
+				$("#s_ser").click(function() {
+					$(".all_searchs").show();
+				});
+				$("#h_ser").click(function() {
+					$(".all_searchs").hide();
+				});
+				$("#m_ser").click(function() {
+					$(".de_con01_ul").show();
+					$("#m_ser01").show();
+				});
+				$("#m_ser01").click(function() {
+					$(".de_con01_ul").hide();
+					$("#m_ser01").hide();
+				});
+				$("#close").click(function() {
+					$(".d_tk").hide();
+					$(".d_tk_bg").hide();
+					$(".de_con06_btn01 a").attr("onclick","show()");
+		             $(".de_con06_btn02 a").attr("onclick","show()");
+				});
+			
+			});
+		</script>
+		<script>
+			<!--
+			/*第一种形式 第二种形式 更换显示样式*/
+			function setTab(name, cursel, n) {
+				for(i = 1; i <= n; i++) {
+					var menu = document.getElementById(name + i);
+					var con = document.getElementById("zzjs_" + name + "_" + i);
+					menu.className = i == cursel ? "hover" : "";
+					con.style.display = i == cursel ? "block" : "none";
+				} 
+			}
+			//-->
+		</script>
+		<div id="top"></div>
+        <script type="text/javascript">
+			var head = $(".head").height();
+			$(window).scroll(function() {
+				var topScr = $(window).scrollTop();
+				if(topScr > head) {
+					$(".top").addClass("fixed");
+				} else {
+					$(".top").removeClass("fixed");
+				}
+			})
+		</script>
+	</body>
+
+</html>

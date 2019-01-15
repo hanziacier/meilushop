@@ -1,0 +1,103 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1  maximum-scale=1 user-scalable=no">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-touch-fullscreen" content="yes">
+		<meta name="HandheldFriendly" content="True">
+		<title>微商城</title>
+
+		<link rel="stylesheet" href="__CSS__/style.css">
+		<script type="text/javascript" src="__JS__/jquery-1.10.1.min.js"></script>
+
+
+	</head>
+
+	<body>
+		<!--头部-->
+		<div class="top_con01">
+			<div class="fh_icon"><a onClick="javascript :history.go(-1);"></a></div>
+			<div class="yc_icon" id="s_ser"><a href="#"></a></div>
+			<div class="yc_icon bot_nav02" id="h_ser"><a href="#"></a></div>
+			<h1>客服服务</h1>
+		</div>
+		{include file="public/menu"/}
+		<!--内容-->
+		<div class="kffw_con01">
+			<!--分类-->
+		<div class="Z_con2_2">
+			<div class="F_wd_top_con2">
+				<div class="F_wd_top_con2_l" id="wrapper">
+					<div>
+						<ul class="sy">
+							<li class="current"><span>留言</span></li>
+							<li ><span>投诉</span></li>
+							<li><span>咨询</span></li>
+							<li><span>售后</span></li>
+							<li><span>求购</span></li>
+						</ul>
+					</div>
+				</div><form  action="{:url('')}"  name="form" method="post">
+				<div class="F_wd_top_con2_r" id="wrapper1" style="display: block;">
+					<div class="content by" style="display: block;">
+						<div class="kffw_con01_m">
+							<ul>
+								<li>
+									<input type="text" name="title" placeholder="主题"/>
+								</li>
+								<li>
+									<textarea name="content"  placeholder="留言内容"></textarea>
+								</li>
+								<input type="hidden" name="type"  id="type" value="留言"/>
+							</ul>
+						</div>
+					
+					</div>
+				
+				</div>
+			</div>
+		</div>
+
+			<div class="grzl_con01_btn"><a onclick="submit()">提交</a></div>
+	</form>	</div>
+		
+	<script type="text/javascript">
+			//购物车删除
+ function submit(){  
+		     
+		$('form').submit();
+    		  
+	}
+		
+    
+				
+				 $('.sy li').click(function(){
+					var $this = $(this);
+					var $t = $this.index();
+					$('.sy li').removeClass('current');
+					$this.addClass('current');
+					var html=$('.sy li.current').text();
+					$('#type').val(html);
+				})
+
+
+
+			$(document).ready(function() {
+				
+				$("#s_ser").click(function() {
+					$(".bot_nav01").show();
+					$(".bot_nav02").show();
+				});
+				$("#h_ser").click(function() {
+					$(".bot_nav01").hide();
+					$(".bot_nav02").hide();
+				});
+			});
+		</script>
+	</body>
+
+</html>

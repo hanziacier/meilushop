@@ -1,0 +1,698 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>{$meta_title}_{:C('WEB_SITE_TITLE')}</title>
+	<link href="__CSS__/base.css" rel="stylesheet" type="text/css"/>
+	<link href="__CSS__/style.css" rel="stylesheet" type="text/css"/>	
+
+	<script type="text/javascript" src="__JS__/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="__JS__/base.js"></script>
+	<script type="text/javascript" src="__JS__/jquery.jqzoom.js"></script>
+	<script type="text/javascript" src="__JS__/lvjing.js"></script>
+	<script type="text/javascript" src="__JS__/jquery.lazyload.js"></script>
+</head>
+
+<body>
+	<!--header start-->
+	
+	<!--/header end-->
+	<div class="top">
+<div class="topbar">
+
+
+                   
+
+              <span class="welcome" style="float:left"><a href="javascript:void(0);" onclick="SetHome(this,'{:root_url()}')">设为首页</a>
+		<a href="javascript:void(0);" onclick="AddFavorite('{:C('SITENAME')}',location.href)" title="{:C('SITENAME')}">收藏本站</a>
+		</span> 	  
+		
+  
+<div class="topnav">
+	 	  
+	
+<span class="operate_nav"> 	
+		<span  id="sell"><a  >卖家中心&nbsp;<b></b></a> </span>
+			<ul id="sellmenu" class="top_lg_info_down" style="display:none;">
+
+ <li><a target='_blank' href="{:U('shop/index')}" >管理店铺</a></li>
+<li><a  href="{:U('shop/center')}">进入店铺</a></li>
+</ul>		  
+  
+</span>
+
+  <span class="operate_nav">
+	 	
+		<span  id="userfavor"><a  ><i></i>我的收藏&nbsp;<b></b></a> </span>
+			<ul id="favormenu" class="top_lg_info_down" style="display:none;">
+ <li><a  href="{:U('collect/index',array('type'=>1))}">收藏的商品</a></li>
+ <li><a  href="{:U('collect/index',array('type'=>2))}">收藏的店铺</a></li>
+</ul>		  
+  
+</span>
+<span class="operate_nav" >	 
+
+<span id="cartbtn" ><a href="{:U('shopcart/index')}" class="shopping_cart" id="shopping_cart" ><i><img src="__IMG__/cart.png" width="10" height='10'></i>购物车<b></b></a></span>
+
+
+
+ 
+
+{empty name="cartlist"}
+
+<div id="goods" class="wdgwc_main_top sc_goods" style="display:none;">
+<ul class="sc_goods_ul">
+<p class="sc_goods_none" >您的购物车还是空的，赶紧行动吧！</p>
+
+</ul>
+<div class="sc_goods_foot" style="display:none;">
+<a  href="{:U('cart/index')}" class="my_shopping_cart_btn">查看我的购物车</a>
+</div></div>
+{else/}
+<div id="goods" class="sc_goods" style="display:none;">
+<ul class="sc_goods_ul">
+ {foreach name="cartlist" item="vo"} 
+<li class='item{$vo.id}'> <dl>
+<dt class="mini-img"><a  href="{:U('Article/detail?id='.$vo['id'])}"><img src="{$vo.goodsidget_goods_cover}" width='40' height='40'/> </a></dt>
+<dd><span class="mini_title"><a href="{:U('goods/detail?id='.$vo['goodsid'])}">{$vo.goodsidget_goods='title'}</a> </span><span class="mini-cart-count red">¥{$vo.price}<em class="num{$vo.id}">*{$vo.numdefault="无"}</em></span></dd>
+<dd><span class="mini-cart-info">{$vo.specificationsdefault="无"}</span><span class="mini-cart-del"><a onclick="cancelCart(this,{$vo.id})">删除</a></span></dd>
+</dl>
+</li>
+{/foreach}
+</ul>
+<div class="sc_goods_foot" style="display:block;">
+<a  href="{:U('cart/index')}"  class="my_shopping_cart_btn">查看我的购物车</a>
+</div></div>
+{/empty}
+
+</span>
+ 
+ <span class="operate_nav"> 	
+		<span  id="account"><a  >我是买家&nbsp;<b></b></a> </span>
+			<ul id="dbox" class="top_lg_info_down" style="display:none;">
+ <li><a  href="{:U('center/index')}">个人中心</a></li>
+<li><a  href="{:U('center/index')}">已买到宝贝</a></li>
+ <li><a  href="{:U('UserCoupon/index')}">优惠券</a></li>
+<li><a  href="{:U('comment/index')}">我的评论</a></li>
+ {if condition="is_login()"}
+ <li><a  href="{:U('User/profile')}">修改密码</a></li>
+{/if}
+</ul>		  
+  
+</span>
+
+<span class="operate_nav" >	 
+ <a  href="{:U('shop/index')}" target='_blank'>我要开店</a>
+ </span>	
+<span class="operate_nav" >	 欢迎光临{:C('SITENAME')} <if condition="is_login()">
+		<a href="" class="red">{:get_username()}</a>,<a  href="{:U('User/logout')}">退出</a><else/>
+ ,请<a href="{:U('User/login')}" >[ 登录]</a>&nbsp;<a href="{:U('User/register')}" style="padding-left:0;padding-right:10px"> [免费注册] </a> 
+</if>
+		</span> 
+</div> </div>
+ </div>
+ <script type="text/javascript">
+var A= document.getElementById('cartbtn');
+            var B= document.getElementById('goods');
+            var timer = null;//定义定时器变量
+            //鼠标移入div1或div2都把定时器关闭了，不让他消失
+            A.onmouseover = B.onmouseover = function ()
+            {
+				 //改变箭头方向
+			              
+				 //改变背景颜色
+				A.style.backgroundColor = '#fff';
+				 //显示下拉框
+               $("#goods").show();
+				//关闭定时执行
+                clearTimeout(timer);
+            }
+			
+            //鼠标移出div1或div2都重新开定时器，让他延时消失
+            A.onmouseout = B.onmouseout = function ()
+            {	
+				A.style.backgroundColor = '#F5F5F5';
+				 //开定时器，每隔200微妙下拉框消失
+                timer = setTimeout(function () { 
+                    $("#goods").hide(); }, 10);
+            }
+//头部topbar会员中心显示与隐藏
+Account;Downmenu;timer;
+var Account= document.getElementById('account');
+            var Downmenu= document.getElementById('dbox');
+            var timer = null;//定义定时器变量
+            //鼠标移入div1或div2都把定时器关闭了，不让他消失
+            Account.onmouseover = Downmenu.onmouseover = function ()
+            {
+				 //改变箭头方向
+			              
+				 //改变背景颜色
+				 Account.style.backgroundColor = '#fff';
+				 //显示下拉框
+                $("#dbox").show();
+				//关闭定时执行
+                clearTimeout(timer);
+            }
+			
+            //鼠标移出div1或div2都重新开定时器，让他延时消失
+            Account.onmouseout = Downmenu.onmouseout = function ()
+            {	
+				Account.style.backgroundColor = '#F5F5F5';
+				 //开定时器，每隔200微妙下拉框消失
+                timer = setTimeout(function () { 
+                    $("#dbox").hide(); }, 10);
+            }
+       
+	//头部topbar会员收藏显示与隐藏
+userfavor;favormenu;time;
+            var userfavor= document.getElementById('userfavor');
+            var favormenu= document.getElementById('favormenu');
+            var time = null;//定义定时器变量
+            //鼠标移入div1或div2都把定时器关闭了，不让他消失
+            userfavor.onmouseover = favormenu.onmouseover = function ()
+            {
+				 //改变箭头方向
+			              
+				 //改变背景颜色
+				 userfavor.style.backgroundColor = '#fff';
+				 //显示下拉框
+                $("#favormenu").show();
+				//关闭定时执行
+                clearTimeout(time);
+            }
+			
+            //鼠标移出div1或div2都重新开定时器，让他延时消失
+            userfavor.onmouseout = favormenu.onmouseout = function ()
+            {	
+				userfavor.style.backgroundColor = '#F5F5F5';
+				 //开定时器，每隔200微妙下拉框消失
+                time = setTimeout(function () { 
+                    $("#favormenu").hide(); }, 10);
+            }
+  //卖家中心显隐
+usersell;sellmenu;clock;
+            var usersell= document.getElementById('sell');
+            var sellmenu= document.getElementById('sellmenu');
+            var clock = null;//定义定时器变量
+            //鼠标移入div1或div2都把定时器关闭了，不让他消失
+            usersell.onmouseover = sellmenu.onmouseover = function ()
+            {
+				 //改变箭头方向
+			              
+				 //改变背景颜色
+				 usersell.style.backgroundColor = '#fff';
+				 //显示下拉框
+                $("#sellmenu").show();
+				//关闭定时执行
+                clearTimeout(clock);
+            }
+			
+            //鼠标移出div1或div2都重新开定时器，让他延时消失
+            usersell.onmouseout = sellmenu.onmouseout = function ()
+            {	
+				usersell.style.backgroundColor = '#F5F5F5';
+				 //开定时器，每隔200微妙下拉框消失
+                clock = setTimeout(function () { 
+                    $("#sellmenu").hide(); }, 10);
+            } 	
+		
+
+//设为首页 www.ecmoban.com
+
+function SetHome(obj,url){
+
+    try{
+
+        obj.style.behavior='url(#default#homepage)';
+
+       obj.setHomePage(url);
+
+   }catch(e){
+
+       if(window.netscape){
+
+          try{
+
+              netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
+
+         }catch(e){
+
+              alert("抱歉，此操作被浏览器拒绝！\n\n请在浏览器地址栏输入“about:config”并回车然后将[signed.applets.codebase_principal_support]设置为'true'");
+
+          }
+
+       }else{
+
+        alert("抱歉，您所使用的浏览器无法完成此操作。\n\n您需要手动将【"+url+"】设置为首页。");
+
+       }
+
+  }
+
+}
+
+ 
+
+//收藏本站 bbs.ecmoban.com
+
+function AddFavorite(title, url) {
+
+  try {
+
+      window.external.addFavorite(url, title);
+
+  }
+
+catch (e) {
+
+     try {
+
+       window.sidebar.addPanel(title, url, "");
+
+    }
+
+     catch (e) {
+
+         alert("抱歉，您所使用的浏览器无法完成此操作。\n\n加入收藏失败，请使用Ctrl+D进行添加");
+
+     }
+
+  }
+
+}</script>
+		<!-- 顶部工具条 结束 -->
+	<!--logo start-->
+	<div class="logo w100">
+		<div class="logo_in in_width">
+			<h1 class="logo_pic fl"><a href="{:url('index/index')}"><img title="YERSHOP" src="__IMG__/logo_pic.gif" width="201" height="59" /></a></h1>			
+			<div class="head-search-layout">
+				<div class="head-search-bar" id="head-search-bar">
+					
+                    <form class="search-form" id="top_search_form" action="{:url('search/index')}" method="post">
+						<input name="act" id="search_act" value="search" type="hidden">
+          
+                        <input name="keyword" id="keyword" type="text" class="input-text ui-autocomplete-input" value="" maxlength="60" x-webkit-speech="" lang="zh-CN" onwebkitspeechchange="foo()" placeholder="请输入您要搜索的商品的关键字" data-value="" x-webkit-grammar="builtin:search" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
+                        <input type="submit" id="button" value="搜索" class="input-submit">
+					
+                    </form>
+                  	<p>热门搜索:{foreach name="hotsearch" item="vo"}<a href="{:url('Search/index?keyword='.$vo)}">{$vo}</a>{/foreach}</p>
+				</div>
+				
+			</div>			
+					
+			
+		</div>
+	</div>
+	<!--/logo end--> 
+	<!--nav start-->
+	<div class="nav w100 nav_header">
+		<div class="nav_in in_width ">
+			<div class="sidebar_div fl">
+				<div class="title">
+					<i></i>
+					<h2 class="f16" id="all-class">全部商品分类</h2>
+				</div>
+				
+				<ul class="left_sidebar" id="all-goods"  style="display:block;">
+
+				{volist name="category" id="vo" offset="0"  length="9"}
+					<li class="left_sidebar_li">
+						<div class="product">
+							<div class="border">								
+								<div class="fl_div fl"><h3><a href="{:url('Goods/lists?id='.$vo['id'])}">{$vo.title}</a></h3>
+								</div>
+								<span class="fr pic arrow"></span>
+							</div>							
+						</div>
+						<div class="product-wrap f14">
+							<div class="menu_div">								
+								<div class="sub-class" >
+									<div class="sub-class-content">
+									
+										  {volist name="vo['child']" id="vo1"}
+										<dl>
+											<dt><h3><a href="{:url('Goods/lists?id='.$vo1['id'])}">{$vo1.title}</a></h3></dt>
+											<dd class="goods-class">
+												{notempty name="vo1['child']"}{volist name="vo1['child']" id="vo2"}<a href="{:url('Goods/lists?id='.$vo2['id'])}">{$vo2.title}</a>
+											     {/volist}{/notempty}
+											</dd>
+										</dl> {/volist}
+									</div>
+								</div>								
+							</div>
+						</div>
+					</li>{/volist}
+					
+				</ul>
+			</div>			
+			<ul class="nav_list fl">
+             {volist name="channel" id="vo"}
+				<li class="fl"><a class="f16" href="{$vo.urlget_url}">{$vo.title}</a></li>
+				
+			{/volist}
+			</ul>
+		</div>
+	</div>
+	<!--/nav end-->
+		<!--banner start-->
+	<div class="banner w_100">
+		<div class="banner_in in_width">
+			<ul class="banner_list">
+				{volist name="slidelist" id="vo"}  
+				
+				<li class="li_01"><a href="{$vo.urlget_url}"><img src="{$vo.cover_idget_cover_path}"/></a>
+				
+				
+				
+				</li>
+				
+              {/volist}
+			 
+			</ul>
+			<ol class="banner_ol">
+			    {volist name="slidelist" id="vo" key="k"}  
+				  <li {if condition="$k eq 1"}class="current"{/if}></li>
+				  {/volist}
+			</ol>
+			<div class="ads">
+			{By:ad place="0" name="vo"}
+			<a class="f{$i}" href="{$vo.urlget_url}"><img alt="" src="{$vo.cover_idget_cover_path}" width="100%" ></a>
+				
+			{/By:ad}</div>
+		</div>	
+	</div>
+	<!--/banner end-->
+	<div class="main w100 index_main in_width mofang" style="background:;">
+	<h3><img src="__IMG__/h3.png"/></h3>
+	<ul>
+	{By:ad place="5" name="vo"}
+	<li><a href="{$vo.urlget_url}"><img src="{$vo.cover_idget_cover_path}"/></a>
+				
+				
+				
+				</li>{/By:ad}
+	</ul>
+	
+	</div>
+	<!--main start-->
+	<div class="main w100 index_main" style="background:;">
+		<div class="main_in in_width index_main_in">
+
+			<div class="mid_banner6" style="display:block;height:15px;"></div>
+			{volist name="tree" id="vo"  key="k" offset='0' length='8'}
+			<div class="common_list">
+				<div class="top">
+					<div class="title f14">
+						<a href="{:url('Goods/lists?id='.$vo['id'])}" class=" f14"> {$vo.title}</a>
+						<i class="icon"></i>
+					</div>
+		                 
+				{volist name="vo.child" id="to" offset='0' length='4' key="n"}
+	 <a   href="{:url('Goods/lists?id='.$to['id'])}" title="{$to.title}" href="javascript:vod(0);"  >
+    {$to.title}</a>
+	{/volist} 
+
+				
+   		
+				</div>
+				
+				<div class="list_div">
+					<div class="lft">
+						
+						<div class="ad"><a href="{:url('Goods/lists?id='.$vo['id'])}" class=" f14"><img src="{$vo.cover_idget_cover='path'}"  /></a></div>
+					</div>
+					
+					<div class="rgt">
+						<ul id="list_{$vo.id}">
+						  {volist name="vo.item" id="article" key="k"}                      
+                            <li {if condition="$k eq 4 OR $k eq 8"}class="current"{/if}>
+                           <div class="pic" >
+							<a class="yershop_img" href="{:url('goods/detail?id='.$article['id'])}" title="{$article.title}">
+								<img src="{$article.cover_idget_cover='path'}"></a>
+						   
+						</div>
+						<div class="name"><a href="{:url('goods/detail?id='.$article['id'])}"  title="{$article.title}">{$article.title}</a></div>
+						<div class="price" style="text-align:center;">
+							<font>￥</font><span>{$article.price}</span>
+						   
+						</div>
+					   </li>  
+				   {/volist}
+			  
+						</ul>
+					</div>
+				</div>
+			</div>	
+			 <p class="adimg">
+			  {volist name="vo.brand" id="bo"} 
+			     
+				 <span  style="display:inline-block;overflow:hidden;width:{php}echo 1200/count($vo['brand']);{/php}px">  <a  href="{:U('goods/lists?brand_id='.$bo['id'].'&id='.$vo['id'])}">
+                            <img src="{$bo.cover_idget_cover='path'}" width="100%" height=
+							"40px"></a></span>
+			  {/volist}</p>	
+			  
+	         <p>
+			  {volist name="vo.ad" id="ao" offset='0' length='1'} 
+			     
+				 <span style="display:inline-block;overflow:hidden;width:100%">  <a  href="{$ao.urlget_url}">
+                            <img src="{$ao.cover_idget_cover='path'}" width="100%" ></a></span>
+			  {/volist}</p>	
+
+			{/volist} 		
+			
+		</div>
+	</div>
+	<!--/main end-->	
+{include file='public/footer'}
+
+	<script type="text/javascript">
+		$(function(){
+			//购物车
+			$(".mod_minicart").hover(function() {
+				$("#nofollow,#minicart_list").addClass("on");
+			},function() {
+				$("#nofollow,#minicart_list").removeClass("on");
+			});
+			//nav		
+			$('.nav_list li').click(function(e) {
+				$(this).addClass('current').siblings().removeClass('current');
+			});
+			//left_sidebar
+			$('.nav_in .left_sidebar .left_sidebar_li').hover(function(){		
+				$(this).find('.product').addClass('active')
+				$(this).find('.product-wrap').show();
+			},function(){
+				$(this).find('.product').removeClass('active');
+				$(this).find('.product-wrap').hide();
+
+			});
+			$('.nav_in .left_sidebar .left_sidebar_li .product-wrap .menu_oneclose').click(function(e) {				
+				$(this).parent('.menu_div').parent('.product-wrap').hide();
+			});
+			
+			//分类菜单的显示隐藏                                                                
+			var oDiv3 = document.getElementById('all-class');
+			var oDiv4 = document.getElementById('all-goods');
+			var timer2 = null;//定义定时器变量
+			//鼠标移入div1或div2都把定时器关闭了，不让他消失
+			oDiv3.onmouseover = oDiv4.onmouseover = function (){	
+				oDiv4.style.display = 'block';
+				clearTimeout(timer2);
+			}
+
+			//鼠标移出div1或div2都重新开定时器，让他延时消失
+			oDiv3.onmouseout = oDiv4.onmouseout = function (){
+				//开定时器
+				timer2 = setTimeout(function () { 
+				oDiv4.style.display = 'block'; },300);
+			}
+			
+			//banner
+				var banner_len=$('.banner_in .banner_list li').length-1;
+				var ol_len=$('.banner_in .banner_ol li').length-1;
+				var myFn_01 = function(){
+						myOl++;
+						if(myOl > banner_len){
+							myOl = 0;	
+						}
+						$('.banner_in .banner_ol li').eq(myOl).addClass('current').siblings().removeClass('current');
+						$('.banner_in .banner_list li').eq(myImg).stop().hide();
+						myImg++;
+						if(myImg > banner_len){
+							myImg = 0;	
+						}
+						$('.banner_in .banner_list li').eq(myImg).stop().show();
+					} 
+				var myOl = 0;
+				var myImg = 0;
+				$('.banner_in').hover(function(e) {
+					clearInterval(timer02);
+				},function(){	
+					clearInterval(timer02);
+					timer02 = setInterval(myFn_01,3000)
+				});	
+						
+				$('.banner_in .banner_list li').eq(0).show();		
+				
+				//ol点击
+				$('.banner_in .banner_ol li').click(function(e) {
+					$(this).addClass('current').siblings().removeClass('current');
+					$('.banner_in ul li').eq($(this).index()).stop().show().siblings().stop().hide();
+					myOl = $(this).index();
+					myImg = $(this).index();
+				});
+				
+				var timer02 = null;
+				timer02 = setInterval(myFn_01,4000);
+			
+			//侧边栏
+			$('.nc_appbar .con .kf a').hover(function(){		
+				$(this).children('.icon').addClass('cur');
+				$(this).children('.tit').show();
+			},function(){
+				$(this).children('.icon').removeClass('cur');
+				$(this).children('.tit').hide();
+			});
+			$('.nc_appbar .con .gwc a').hover(function(){		
+				$(this).children('.icon').addClass('cur');
+				$(this).children('.tit').addClass('cur');
+			},function(){
+				$(this).children('.icon').removeClass('cur');
+				$(this).children('.tit').removeClass('cur');
+			});
+			$('.nc_appbar .con .spdb a').hover(function(){		
+				$(this).children('.icon').addClass('cur');
+				$(this).children('.tit').show();
+			},function(){
+				$(this).children('.icon').removeClass('cur');
+				$(this).children('.tit').hide();
+			});
+			$('.nc_appbar .con .dl a').hover(function(){		
+				$(this).children('.icon_01').addClass('cur');
+				$(this).children('.login_div').show();
+			},function(){
+				$(this).children('.icon_01').removeClass('cur');
+				$(this).children('.login_div').hide();
+			});
+			$('.to_top').click(function(e) {
+				$('body,html').animate({'scrollTop':'0'},500);
+			});
+			$('.to_top a').hover(function(){		
+				$(this).children('.icon').addClass('cur');
+				$(this).children('.tit').addClass('cur');
+			},function(){
+				$(this).children('.icon').removeClass('cur');
+				$(this).children('.tit').removeClass('cur');
+			});
+			
+			//li hover_01
+			$('.index_main_in .tjsj_con .top_div .rgt_div ul li').hover(function(){		
+				$(this).css('opacity','1');
+				$(this).siblings().css('opacity','0.8');
+			},function(){
+				$(this).css('opacity','1');
+				$(this).siblings().css('opacity','1');
+			});
+			//li hover_02
+			$('.index_main_in .tjsj_con .bot_div ul li').hover(function(){		
+				$(this).find('img').css('opacity','1');
+				$(this).siblings().find('img').css('opacity','0.8');
+			},function(){
+				$(this).find('img').css('opacity','1');
+				$(this).siblings().find('img').css('opacity','1');
+			});
+			
+			
+			//
+			var myFn = function(){
+				olKey++;
+				if(olKey >2){
+					olKey = 0;
+				}
+				$('.index_main_in .del_con .rgt_div .con_del .lft_ul .tab_ol li').eq(olKey).addClass('current').siblings().removeClass('current');
+				imgKey++;
+				if(imgKey >3){
+					imgKey =1;
+					$('.con ul').css('left','0px');	
+				}
+				var move = imgKey * -348;
+				$('.index_main_in .del_con .rgt_div .con_del .lft_ul .conIn ul ').stop().animate({'left':move +'px'},500);			
+			}
+			
+					
+				//自动轮播2
+			var timer01 = null;
+			timer01 = setInterval(myFn,1000);
+			$('.index_main_in .del_con .rgt_div .con_del').hover(function(e) {
+				clearInterval(timer01);
+			},function(){
+				clearInterval(timer01);	
+				timer01 = setInterval(myFn,1000);
+			});
+			
+			
+			var myLi = $('.index_main_in .del_con .rgt_div .con_del .lft_ul .conIn ul li:eq(0)').clone(true);
+			var myTag = $(myLi);
+			$('.index_main_in .del_con .rgt_div .con_del .lft_ul .conIn ul').append(myTag);
+			
+			var olKey = 0;
+			var imgKey = 0;
+
+				// ol点击
+			$('.index_main_in .del_con .rgt_div .con_del .lft_ul .tab_ol li').click(function(e) {
+				$(this).addClass('current').siblings().removeClass('current');
+				var move = $(this).index() * -348;
+				$('.index_main_in .del_con .rgt_div .con_del .lft_ul .conIn ul').stop().animate({'left':move + 'px'},500);
+				olKey = $(this).index();
+				imgKey = $(this).index();
+			});
+			
+			//li hover_03
+			$('.index_main_in .del_con .rgt_div .title ul li').hover(function(){		
+				$(this).find('i').css('color','#f19715');
+				$(this).siblings().find('i').css('color','#b5b5b5');
+			});
+			
+			$('.index_main_in .del_con .rgt_div .title ul li').click(function(){		
+				$(this).find('i').css('color','#f19715');
+				$(this).siblings().find('i').css('color','#b5b5b5');
+				var this_index =$(this).index();
+				$(this).closest('.title').siblings('.con_del').find('.list_01').eq(this_index).addClass('current').siblings().removeClass('current');
+			});
+			//li hover_04
+			$('.index_main_in .del_con .rgt_div .con_del .rgt_ul .list_01 li').hover(function(){		
+				$(this).find('img').css('opacity','1');
+				$(this).siblings().find('img').css('opacity','0.8');
+			},function(){
+				$(this).find('img').css('opacity','1');
+				$(this).siblings().find('img').css('opacity','1');
+			});
+		})
+	
+function getlist(id,pid) {
+	$("#category_"+id).addClass('active').siblings().removeClass('active');
+	var url="{:url('Index/getGoodlist')}";
+	$.post(url, {id:id},function(data){
+		 if(data){
+				  var html = '';
+				 $("ul#list_"+pid).empty(); 		  
+				  $.each(data, function(i,n){			
+						 var html='<li><div class="pic" > <a class="yershop_img" href="'+n.url+'" target="_blank" title="'+n.title+'"> <img src="'+n.pic+'"width="120" height="120" ></a>  </div> <div class="name"><a href="'+n.url+'"  target="_blank" title="'+n.title
+						  +'">'+n.title+'</a></div> <div  class="price">  <font>￥</font><span>'+n.price+'</span></div></li> ';	
+					    $("ul#list_"+pid).append(html);
+				 });
+		}
+
+	})
+}
+
+</script>
+
+<script type="text/javascript" charset="utf-8">
+  $(function() {
+      $("img.lazy").lazyload({effect: "fadeIn"});
+  });
+</script>
+
+</body>
+</html>

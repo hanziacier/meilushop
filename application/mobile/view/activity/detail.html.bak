@@ -1,0 +1,401 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+<title>商品详情__{:C('WEB_SITE_TITLE')}</title>
+<link rel="stylesheet" type="text/css" href="__CSS__/style.css">
+<link rel="stylesheet" type="text/css" href="__CSS__/main.css">
+ <link rel="stylesheet" href="__CSS__/common_mobile.css" />
+<script type="text/javascript" src="__COMMON__/jquery.min.js"></script>
+	
+</head>
+
+<script>
+//根地址
+var url="{:root_url()}";
+//购物车删除
+var del_url=url+"{:url('cart/delItem')}";
+//购物车添加
+var post_url=url+"{:url('cart/addItem')}";	
+//购物车减少
+var dec_url=url+"{:url('cart/decNum')}";
+//购物车增加
+var inc_url=url+"{:url('cart/incNum')}";
+var img_path=url+"__IMG__";
+//提交订单
+var order_url=url+"{:url('Order/add')}";
+
+var del_cart_url=url+'{:url("cart/delCart")}';
+//购物车清空
+var clear_cart_url=url+'{:url("cart/clear")}';
+//添加收藏
+var collect_url=url+'{:url("collect/add")}';
+</script>
+<body>
+	<!--头部 header-->
+	<div>
+		<header>
+			<div class="header" style="background:{$config['theme_color']}">
+				<a href="Javascript:history.go(-1);void(0);"><i class="icon icon-back"></i></a>
+				<h1>产品详情</h1>
+				<!--a href="{:url('share/index')}"><i class="icon icon-share"></i></a-->
+			</div>
+		</header>
+
+
+		<div style="height: 2.5rem;"></div>
+	</div>	{php}$lists= get_pictures($info['id']);{/php}	
+							
+							
+<section id="goods_banner">
+  <div id="slider" class="slideBox">
+    <div class="wrapper"> 
+      
+      <ul>
+         
+         {foreach name="lists" item="vo" key="k"} 
+								  <li><a href="javascript:showPic()"><img alt="" bimg="{$vo|get_cover='path'}" src="{$vo|get_cover='path'}" onmousemove="preview(this);"></a></li>
+							
+								{/foreach}
+             
+                      </ul>
+    </div>
+    <div class="pointer">
+      <ul>{volist name="lists" id="vo" key="k"}  
+				  <li {if condition="$k eq 1"}class="on"{/if}></li>
+	 {/volist}
+
+         
+             </ul>
+    </div>
+  </div>
+</section>
+<script src="__JS__/TouchSlide.1.1.js"></script>
+<script type="text/javascript">
+TouchSlide({ 
+	slideCell:"#slider",
+	titCell:".pointer ul", //开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
+	mainCell:".wrapper ul", 
+	effect:"leftLoop", 
+	autoPage:true,//自动分页
+	autoPlay:true //自动播放wq
+});
+</script>
+	<article class="name">
+    	<span>{$sku2.price}</span>
+    	<span class="price">￥{$sku2.price} <s>{$info.price}</s></span>
+		<a class="collect" id="collect_box" href="javascript:collect(11)" style="display: inline;"></a>
+    </article>
+    <a id="norms" href="javascript:;" class="select-btn select-btn-s">选择规格<i class="icon icon-select"></i></a>
+    <!-- 选择规格 -->
+    <div class="norms-box" style="display: none;">
+    	<div class="norms-box-bg"></div>
+        <div class="norms-content">
+            <div class="norms-content-t norms-content-one">
+                <div class="norms-img"><img src="{$info.cover_id|get_cover='path'}"></div>
+                <div class="norms-c-text">
+                    <span>{$info.title}</span>
+                    <span class="price">￥{$sku2.price} <s>$75.00</s></span>
+					
+                </div>
+                <div class="close-btn"><img src="__IMG__/close.png"></div>
+            </div>
+            <div class="norms-content-t norms-content-two">
+                数量
+				<div class="numwrap"><a class="dec_icon reduce">-</a>
+				<span id="num_con" class="num" >1</span>
+				<a class="inc_icon add">+</span></a>
+             </div>
+            </div> {notempty name="attrlist"}
+					{volist name="attrlist" id="vo"}
+            <div class="guige">
+               {$vo.title}<br>
+                
+				{volist name="vo['sid']"  id="vo1"}
+							  <span onclick="select(this)" class="{if condition='$i eq 1'}active{/if}" attr_id="{$vo1.id}">
+								{$vo1.title}
+								
+							  </span>
+							{/volist}
+            </div>	{/volist}{/notempty}
+           
+        </div>
+    </div>
+	<script>
+	
+		function select(obj){
+           if(!$(obj).hasClass('active')){
+	         $(obj).addClass('active').siblings().removeClass('active') ;
+	      }
+		  
+     }</script>
+   
+
+    <div class="product-content">
+    	<ul id="tab_btn" class="tabs">
+    		<li class="active">
+    			<span>图文详情</span>
+    		</li>
+    		<li>
+    			<span>用户评价</span>
+    		</li>
+			
+    	</ul>
+    	<ul class="product-content-ul2">
+    		<li class="tab_content show">
+    			{$info.content|default=""}
+    		</li>
+    		<li class="tab_content">
+    			用户评价
+				{notempty name="comment.list"}
+    		   {volist name="comment.list" id="vo"}
+    			<div class="evaluate">
+    				<div class="evaluate-head">
+    					<img src="__IMG__/user-img0.jpg">
+	    				<p>{$vo.username} <span>2016-08-24</span></p>
+	    				<p><img src="__IMG__/xingxing.png"></p>
+    				</div>
+    				<p>{$vo.content|default=''}</p>
+    			</div>
+				{/volist}
+				{else/}
+              
+    				<div class="kong">
+    					<img src="__IMG__/kong.png">
+	    				
+    				</div>
+    				
+    			</div>
+				{/notempty}
+    		</li>
+    	</ul>
+    </div>
+<section id="goods-footer">
+          <div id="s-actionbar" class="action-bar mui-flex align-center">
+          
+            
+            <a class="btn_cart" onclick="show()" >加入购物车</a>
+            <a class="btn_buy" onclick="show()" style="background:{$config['theme_color']}" >立即购买</a>
+           <div class="w10"><a href="{:url('cart/index')}"> <img src="__IMG__/cart.png" width="40" height="40">
+              </a>
+            </div>
+          </div>
+        </section>
+    <!-- 加入购物车底部 -->
+    <!--div class="bottom_nav">
+    	<a href="{:url('cart/index')}" class="gouwu_btn">
+    		<em class="cartNum">{$cart.total_num|default="0"}</em>
+    		<i class="icon icon-cart"></i>
+    	</a>
+    	<a onclick="orderCreate()"  class="btn btn-red fr">立即购买</a>
+    	<a onclick="addCart()" class="btn btn-yellow fr">加入购物车</a>
+    	<div class="cl"></div>
+    </div-->
+	<!-- 引入js资源 -->
+     <div class="toast_div" style="display: none;">
+		<div class="toast_con">
+			<div class="toast_icon"><img src="__IMG__/s.png" width="50" height="50"></div>
+			<p>添加成功</p>
+		</div>		
+	</div>
+	<script type="text/javascript" src="__JS__/zepto.min.js"></script>
+	<script type="text/javascript">
+	
+	 $('.reduce').click(function(){	
+				var cur_num = $('.num').text();
+				if(cur_num <= 1){
+					$('.num').text(1);
+				}else{
+					cur_num--;
+					$('.num').text(cur_num);
+				}	
+			})
+			$('.add').click(function(){
+				var cur_num = $('.num').text();
+				if(cur_num >= 99){
+					$('.num').val(99);
+				}else{
+					cur_num++;
+					$('.num').text(cur_num);
+				}
+			})
+	function showtoast(){	
+	
+	$(".toast_div").toggle(); 
+    setTimeout('Function()',1000);
+ }	 
+ function Function(){
+	$(".toast_div").toggle();    
+ }	
+	 function addcart(){
+		     var result = new Array(); 
+			 //var ids=$(".caizhi .current");
+                $(".guige .active").each(function () {
+                        result.push($(this).attr("attr_id"));
+
+                });
+
+               if(result){
+			       var id=result.sort(sortNum);
+				}
+				var id=result.join(",");
+				var num=$(".num").text();
+				
+		       $.post(post_url,{path:id,goodsid:goodsid,num:num},function(data){
+                     
+					 if(data.status){  
+					     showtoast();
+					 }
+					 else{
+					    alert(data);
+					 
+					 }
+                });
+		   
+		} 
+		function sortNum(a,b) {
+               return a - b; //升序，如降序，把“a - b”该成“b - a”
+         }
+		 var goodsid="{$info.id}";
+		function order(){
+		     var result = new Array(); 
+			 //var ids=$(".caizhi .current");
+                $(".guige .active").each(function () {
+                        result.push($(this).attr("attr_id"));
+
+                });
+
+               if(result){
+			       var id=result.sort(sortNum);
+				}
+				var id=result.join(",");
+				var num=$(".num").text();
+				var order_url="{:url("order/create")}";
+		       $.post(order_url,{path:id,goodsid:goodsid,num:num},function(data){
+                     
+					 if(data.code){  
+					     if (data.url) {
+                            location.href=data.url;
+                         }
+					 }
+					 else{
+					   alert(data.msg);
+					   if (data.url) {
+                            location.href=data.url;
+                         }
+					 }
+                });
+		}
+	
+			function addCollect(obj){
+		     
+				var clect_url="{:url('collect/add')}";
+		        $.post(clect_url,{id:goodsid},function(data){
+                     
+					 if(data.code){  
+					    $(obj).find("img").attr("src","__IMG__/star-10-g.png");
+					 }
+					 else{
+					     alert(data.msg); 
+						 if (data.url) {
+                            location.href=data.url;
+                         }
+					 }
+                });
+		} 
+	    //TAB切换
+       $(".tabs li").click(function(){
+         if(!$(this).hasClass('active')){
+		     $(".tabs li").removeClass('active');
+             $(this).addClass('active');
+             $(".tab_content").toggleClass('show');
+		 }
+        });
+
+	    
+	</script>
+    <script type="text/javascript">
+
+	function show(){
+	    $(".norms-box").show();
+		$("#goods-footer .btn_cart").attr("onclick","addcart()");
+		$("#goods-footer .btn_buy").attr("onclick","order()");
+	}
+
+      $("#norms").click(function(){
+          $(".norms-box").toggle();
+          });
+     $(".norms-box-bg").click(function(){
+          $(".norms-box").toggle();
+       });
+    $(".close-btn").click(function(){
+          $(".norms-box").hide();
+     });
+    </script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+  /*
+   * 注意：
+   * 1. 所有的JS接口只能在公众号绑定的域名下调用，公众号开发者需要先登录微信公众平台进入“公众号设置”的“功能设置”里填写“JS接口安全域名”。
+   * 2. 如果发现在 Android 不能分享自定义内容，请到官网下载最新的包覆盖安装，Android 自定义分享接口需升级至 6.0.2.58 版本及以上。
+   * 3. 常见问题及完整 JS-SDK 文档地址：http://mp.weixin.qq.com/wiki/7/aaa137b55fb2e0456bf8dd9148dd613f.html
+   *
+   * 开发中遇到问题详见文档“附录5-常见错误及解决办法”解决，如仍未能解决可通过以下渠道反馈：
+   * 邮箱地址：weixin-open@qq.com
+   * 邮件主题：【微信JS-SDK反馈】具体问题
+   * 邮件内容说明：用简明的语言描述问题所在，并交代清楚遇到该问题的场景，可附上截屏图片，微信团队会尽快处理你的反馈。
+   */
+  wx.config({
+    debug: false,
+     appId:"{$signPackage["appId"]|default=''}",
+    timestamp:'{$signPackage["timestamp"]|default=''}',
+    nonceStr:'{$signPackage["nonceStr"]|default=''}',
+    signature:'{$signPackage["signature"]|default=''}',
+    jsApiList: [
+       'checkJsApi',
+        'onMenuShareTimeline',
+        'onMenuShareAppMessage',
+        'onMenuShareQQ',
+        'onMenuShareWeibo'// 所有要调用的 API 都要加到这个列表中
+    ]
+  });
+  wx.ready(function () {
+  // 1 判断当前版本是否支持指定 JS 接口，支持批量判断
+    wx.checkJsApi({
+      jsApiList: [
+        'getNetworkType',
+        'previewImage',
+         'onMenuShareTimeline',
+        'onMenuShareAppMessage',
+        'onMenuShareQQ',
+        'onMenuShareWeibo'
+      ],
+      success: function (res) {
+        
+      }
+    });
+  var shareData = {
+      title: '{$info.title}',
+      desc: '{$info.title}',
+      link: '{:url('goods/detail?id='.$info['id'])}',
+      imgUrl: '{:root_url()}{$info.cover_id|get_cover='path'}',
+      trigger: function (res) {
+        alert('{:get_username()}发送给朋友');
+      },
+      success: function (res) {
+        alert('已分享{$info.title}');
+      },
+      cancel: function (res) {
+        alert('已取消');
+      },
+      fail: function (res) {
+        alert(JSON.stringify(res));
+      }
+  };
+  wx.onMenuShareAppMessage(shareData);
+  wx.onMenuShareTimeline(shareData);
+  wx.onMenuShareQQ(shareData);
+  wx.onMenuShareWeibo(shareData);
+});
+ 
+</script>
+</body></html>

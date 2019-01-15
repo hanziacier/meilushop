@@ -1,0 +1,267 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1  maximum-scale=1 user-scalable=no">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-touch-fullscreen" content="yes">
+		<meta name="HandheldFriendly" content="True">
+		<title>微商城</title>
+
+	<link rel="stylesheet" href="__CSS__/style.css">
+		<script type="text/javascript" src="__JS__/jquery-1.10.1.min.js"></script>
+
+	</head>
+
+	<body>
+		<!--头部-->
+		<div class="top_con01">
+			<div class="fh_icon">
+				<a onClick="javascript :history.go(-1);"></a>
+			</div>
+			<div class="yc_icon" id="s_ser">
+				<a href="#"></a>
+			</div>
+			<div class="yc_icon bot_nav02" id="h_ser">
+				<a href="#"></a>
+			</div>
+			<h1>新增收货地址</h1>
+		</div>
+	{include file="public/menu"/}
+		<!--内容-->
+		<div class="shdz_con03">
+		    <ul><form  action="{:url('')}"  name="form" method="post">
+		    	<li>
+		    		<div class="shdz_con03_l fl">收货人姓名：</div>
+		    		<div class="shdz_con03_r fl"><input type="text" name="username" value="{$info.username|default=''}" placeholder="收货人姓名必填"/></div>
+		    		<div class="clearfix"></div>
+		    	</li>
+		    	<li>
+		    		<div class="shdz_con03_l fl">手机号：</div>
+		    		<div class="shdz_con03_r fl"><input type="text"  name="mobile" value="{$info.mobile|default=''}"placeholder="手机号必填"/></div>
+		    		<div class="clearfix"></div>
+		    	</li>
+		    	<li>
+		    		<div class="shdz_con03_l fl">选择地址：</div>
+		    		<div class="shdz_con03_r fl"  id="select" style="color:#666"> 请选择
+</div>
+		    		<div class="clearfix"></div>
+		    	</li><style type="text/css">.picker{max-width: 640px;}</style>
+	<script src="__JS__/picker.min.js"></script>
+<script src="__JS__/city.js"></script>
+<script>
+var nameEl = document.getElementById('select');
+
+var first = []; /* 省，直辖市 */
+var second = []; /* 市 */
+var third = []; /* 镇 */
+
+var selectedIndex = [0, 0, 0]; /* 默认选中的地区 */
+
+var checked = [0, 0, 0]; /* 已选选项 */
+
+function creatList(obj, list){
+  obj.forEach(function(item, index, arr){
+  var temp = new Object();
+  temp.text = item.name;
+  temp.value = index;
+  list.push(temp);
+  })
+}
+
+creatList(city, first);
+
+if (city[selectedIndex[0]].hasOwnProperty('sub')) {
+  creatList(city[selectedIndex[0]].sub, second);
+} else {
+  second = [{text: '', value: 0}];
+}
+
+if (city[selectedIndex[0]].sub[selectedIndex[1]].hasOwnProperty('sub')) {
+  creatList(city[selectedIndex[0]].sub[selectedIndex[1]].sub, third);
+} else {
+  third = [{text: '', value: 0}];
+}
+
+var picker = new Picker({
+    data: [first, second, third],
+  selectedIndex: selectedIndex,
+    title: '地址选择'
+});
+
+picker.on('picker.select', function (selectedVal, selectedIndex) {
+  var text1 = first[selectedIndex[0]].text;
+  var text2 = second[selectedIndex[1]].text;
+  var text3 = third[selectedIndex[2]] ? third[selectedIndex[2]].text : '';
+ $("#province").val(text1); 
+	 $("#city").val(text2); 
+	$("#area").val(text3);
+    document.getElementById('select').innerHTML = text1 + ' ' + text2 + ' ' + text3;
+});
+
+picker.on('picker.change', function (index, selectedIndex) {
+  if (index === 0){
+    firstChange();
+  } else if (index === 1) {
+    secondChange();
+  }
+
+  function firstChange() {
+    second = [];
+    third = [];
+    checked[0] = selectedIndex;
+    var firstCity = city[selectedIndex];
+    if (firstCity.hasOwnProperty('sub')) {
+      creatList(firstCity.sub, second);
+
+      var secondCity = city[selectedIndex].sub[0]
+      if (secondCity.hasOwnProperty('sub')) {
+        creatList(secondCity.sub, third);
+      } else {
+        third = [{text: '', value: 0}];
+        checked[2] = 0;
+      }
+    } else {
+      second = [{text: '', value: 0}];
+      third = [{text: '', value: 0}];
+      checked[1] = 0;
+      checked[2] = 0;
+    }
+
+    picker.refillColumn(1, second);
+    picker.refillColumn(2, third);
+    picker.scrollColumn(1, 0)
+    picker.scrollColumn(2, 0)
+  }
+
+  function secondChange() {
+    third = [];
+    checked[1] = selectedIndex;
+    var first_index = checked[0];
+    if (city[first_index].sub[selectedIndex].hasOwnProperty('sub')) {
+      var secondCity = city[first_index].sub[selectedIndex];
+      creatList(secondCity.sub, third);
+      picker.refillColumn(2, third);
+      picker.scrollColumn(2, 0)
+    } else {
+      third = [{text: '', value: 0}];
+      checked[2] = 0;
+      picker.refillColumn(2, third);
+      picker.scrollColumn(2, 0)
+    }
+  }
+
+});
+
+picker.on('picker.valuechange', function (selectedVal, selectedIndex) {
+  console.log(selectedVal);
+  console.log(selectedIndex);
+});
+
+nameEl.addEventListener('click', function () {
+    picker.show();
+});
+</script>			
+				
+				
+				<script>
+	$('#province').change(function(){
+					if(this.value==-1){
+						return;
+					}
+					$.post('{:url("address/change")}',{pid:this.value},
+					function(data,textStatus){
+						if(data){
+						    $('#city').empty();//清空原有的数据
+							$("<option value='-1'>选择城市</option>").appendTo("#city");
+								$.each(data, function(i,n){
+								$("<option value='"+n.id+"'>"+n.title+"</option>").appendTo("#city");
+								
+							});
+							
+						}else{
+							alert('没有子级了!');
+						}
+					},'json');
+				});
+                   $('#city').change(function(){
+					   if(this.value==-1){
+						  return;
+					   }
+				    $.post('{:url("address/change")}',{pid:this.value},
+					function(data,textStatus){
+						if(data){
+						
+					  $('#area').empty();//清空原有的数据
+					  $("<option value='-1'>选择区域</option>").appendTo("#area");
+							$.each(data, function(i,n){
+								$("<option value='"+n.id+"'>"+n.title+"</option>").appendTo("#area");
+								//$("#ltwo").append('<option value="'+n.region_id+'">'+n.region_name+'</option>');
+							});
+							$('#ltwo').show();
+						}else{
+							alert('没有子级了!');
+						}
+					},'json');
+				});
+   
+	$("select[name='province]").val("{$info.province|default='湖北'}");
+    $("select[name='city]").val("{$info.city|default='武汉'}");
+    $("select[name='area]").val("{$info.area|default='武昌区'}");
+				</script>
+		    	<li>
+		    		<div class="shdz_con03_l">详细地址：</div>
+		    		<div class="shdz_con03_r fn" style="padding-left:0;">
+		    			<textarea name="address"placeholder="详细地址必填">{$info.address|default=''}</textarea>
+		    		</div>
+		    		<div class="clearfix"></div>
+		    	</li>
+		    </ul><input type="hidden"  id="province" name="province" >
+		<input type="hidden"  id="city" name="city" >
+		<input type="hidden"  id="area" name="area" >
+		</div> <input type="hidden" name="id" value="{$info.id|default=""}"></form>
+<div class="grzl_con01_btn"><a onclick='submit();'>保存</a></div>
+
+		<script type="text/javascript">
+			//购物车删除
+ function submit(){  
+		     
+				var self =$('form');
+    		    $.post(self.attr("action"), self.serialize(),function(data){   
+					 if(data.code){ 
+						 // window.location.href ="{:url('lists')}";
+	   var url = "{:U('order/orderPay')}"+'?aid='+data.id;
+		 window.location.href =url;
+					}
+					 else{
+					    alert(data.msg); 
+						if(data.url){
+						  window.location.href =data.url;
+						  }
+					 }
+                });
+	       
+	}
+		</script>	<script type="text/javascript">
+			$(document).ready(function() {
+
+				$("#s_ser").click(function() {
+					$(".bot_nav01").show();
+					$(".bot_nav02").show();
+				});
+				$("#h_ser").click(function() {
+					$(".bot_nav01").hide();
+					$(".bot_nav02").hide();
+				});
+				$("#c_ser").click(function() {
+					$(".pj_hide").show();
+					
+				});
+			});
+		</script>
+	</body>
+
+</html>

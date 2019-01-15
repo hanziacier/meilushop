@@ -1,0 +1,78 @@
+
+ <!-- 头部 -->
+	{include file='public/header'}
+<!-- 头部 --> 
+
+<div class="content">
+				<div class="tips_msg none"><span class="tips">保存成功</span><span class="close_tips"></span></div>
+				<div class="edit_title">{$meta_title|default=""}</div>
+				<div class="edit_box">
+				
+					<div class="edit_tab">
+						<div class="tab_option on">基础</div>
+						<div class="tab_option">高级</div>
+					</div>
+					<div class="edit_content">
+					   <form class="group-form"  action="{:url('')}" method="post">
+						<div class="edit_content_tab">
+						        
+								 <div class="form-group">
+									<label>申请人uid<span>(uid)</span></label>
+									   <div class="form-input">
+									      <input type="text" name="uid" value="{$info.uid|default=""}">
+									   </div>
+								  </div> 
+
+								   <div class="form-group">
+									<label>总金额<span>(申请总金额)</span></label>
+									   <div class="form-input">
+									      <input type="text" name="total_money" value="{$info.total_money|default=""}">
+									   </div>
+								  </div> 
+                                <div class="form-group">
+									<label>状态<span>(0-申请中，1-已转账，2-拒绝)</span></label>
+									<div class="form-input">
+									   <input type="text" name="status" value="{$info.status|default="1"}"/>
+									</div>
+							   </div>
+						       <div class="form-group">
+									<label>管理员备注<span>(remark)</span></label>
+									<div class="form-input">
+									   <input type="text" name="remark" value="{$info.remark|default="1"}"/>
+									</div>
+							   </div>
+							   <div class="form-group">
+									<label>申请账户<span>(申请账户)</span></label>
+									<div class="form-input">
+									   <input type="text" name="content" value="{$info.content|default=""}">
+									</div>
+								  </div>
+
+					  	  	  
+					  	 </div>
+				         <div class="edit_content_tab none">
+						   <div class="form-group">
+									<label>排序<span>(排序)</span></label>
+									<div class="form-input">
+									   <input type="text" name="sort" value="{$info.sort|default=""}">
+									</div>
+								  </div>
+							 
+						 </div>
+						 <div class="btn_group">
+						    <input type="hidden" name="id" value="{$info.id|default=""}">
+							<div class="confirm_btn">确认</div>
+							<div class="cancel_btn">返回</div>
+						</div>
+						</form> 
+					</div>
+				</div>
+			</div>
+		</div>
+ <script src="__JS__/edit.js"></script>
+   <script type="text/javascript">
+    $("select[name='pid']").val("{$info.pid|default='0'}");
+    </script>
+<!-- 尾部 -->
+	{include file='public/footer'}
+    <!-- 尾部 --> 

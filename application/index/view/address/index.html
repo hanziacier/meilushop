@@ -1,0 +1,201 @@
+<!-- 头部 -->
+	{include file='public/header'/}
+<!-- 头部 --> 
+	<!--crumb start-->
+	<div class="crumb w100">
+		<div class="crumb_in in_width">
+			<p>您现在的位置：<a href="javascript:;" class="index_a">个人中心</a> ><span>收货地址</span></p>
+		</div>
+	</div>
+	<!--/crumb end-->	
+	<!--main start-->
+	<div class="main w100 grzx_main">
+		<div class="main_in in_width grzx_main_in">
+			<div class="main_top">
+			{include file='Public/left'/}
+				<div class="shdz_right_pan fl">	<h3 class="f12">收货地址</h3>	
+					<form class="search-form adr_form_update" id="top_search_form" action="{:U('address/update')}">
+						<p class="new_ad f14">{$address['id']?'编辑':'新增'}收货地址</p>
+						<div class="ipts f14">
+							<div class="div_01">
+								<span class="span_l">收货人：</span>
+								<input type="text" name="username" class="ipt_r fl" value="{$address.username|default=''}"/>
+							</div>
+							<div class="div_02">
+								<span class="span_l">所在地区：</span>
+							
+
+							<select id="province" name="province" > 
+<option value="-1">选择省份</option>
+  {volist name="list" id="vo" }
+  <option  value="{$vo.id}" >{$vo.title}</option>  
+  {/volist}</select> 
+   <select id="city" name="city"> <option value="-1">选择城市</option> </select>
+ <select id="area" name="area"> <option value="-1">选择地区</option> </select>
+	
+	<script>
+	$('#province').change(function(){
+					if(this.value==-1){
+						return;
+					}
+					$.post('{:url("address/change")}',{pid:this.value},
+					function(data,textStatus){
+						if(data){
+						    $('#city').empty();//清空原有的数据
+							$("<option value='-1'>选择城市</option>").appendTo("#city");
+								$.each(data, function(i,n){
+								$("<option value='"+n.id+"'>"+n.title+"</option>").appendTo("#city");
+								
+							});
+							
+						}else{
+							alert('没有子级了!');
+						}
+					},'json');
+				});
+                   $('#city').change(function(){
+					   if(this.value==-1){
+						  return;
+					   }
+				    $.post('{:url("address/change")}',{pid:this.value},
+					function(data,textStatus){
+						if(data){
+						
+					  $('#area').empty();//清空原有的数据
+					  $("<option value='-1'>选择区域</option>").appendTo("#area");
+							$.each(data, function(i,n){
+								$("<option value='"+n.id+"'>"+n.title+"</option>").appendTo("#area");
+								//$("#ltwo").append('<option value="'+n.region_id+'">'+n.region_name+'</option>');
+							});
+							$('#ltwo').show();
+						}else{
+							alert('没有子级了!');
+						}
+					},'json');
+				});
+   
+	$("select[name='province]").val("{$info.province|default='湖北'}");
+    $("select[name='city]").val("{$info.city|default='武汉'}");
+    $("select[name='area]").val("{$info.area|default='武昌区'}");
+				</script>
+							</div>
+							<div class="div_03">
+								<span class="span_l">详细地址：</span>
+								<input type="text" name="address" class="ipt_r" value="{$address.address|default=''}"/>
+							</div>
+							<div class="div_04">
+								<span class="span_l">手机号码：</span>
+									<input type="text" id="ipt_01" name="mobile" class="fl" value="{$address.mobile|default=''}"/>
+							</div>
+							<div class="div_05">
+								<span class="span_l">电话：</span>
+								<input type="text"  name="phone" value="{$address.phone|default=''}" id="ipt_02" class="fl"/>
+							</div>
+							<div class="div_05">
+								<span class="span_l">邮编：</span>
+								<input type="text"  name="zipcode" value="{$address.zipcode|default=''}" id="ipt_02" class="fl"/>
+							</div>
+							<div class="sz">
+								<input type="checkbox" name="status"/>
+								<span class="span_l">设置为默认收货地址</span>
+							</div>
+							<a onclick="adr_form_update()"  class="save">保存</a>
+						</div><input type="hidden" name="id" value="{$address.id|default=''}">
+                    </form>
+					<div class="table_div">
+						<table class="bought_table f14 table_list">
+							<tbody>
+								<tr>
+									<th>收货人</th>
+									
+									<th>详细地址</th>
+									<th>邮编</th>
+									<th>电话/手机</th>
+									<th>操作</th>
+								</tr>
+							</tbody>
+						</table>
+						<div class="addr_table">
+							{volist name="res.list" id="vo"}
+							<table class=" {eq name='vo.status' value='1'}current{/eq} ">
+								<tbody>
+									<tr>
+										<td class='tit'>{$vo.username}</td>
+										<td class='tit'> {$vo.province} {$vo.city} {$vo.area}{$vo.address}</td>
+										<td>{$vo.zipcode|default='无'}</td>
+										<td class='tit'>{$vo.mobile}</td>
+										<td class='tit'>
+											<span class="opr_box"><a href="{:U('edit?id='.$vo['id'])}" class="xg">修改</a>
+										
+											<a onclick="delAdr({$vo.id})" class="del">删除</a>
+											</span>
+										</td>
+										
+									</tr>
+								</tbody>
+							</table>
+						     {/volist}
+  							     <div class="page">
+								   {$res.page}
+								 </div>
+						</div>
+					</div>
+				</div>	
+			</div>
+			
+		</div>
+
+	</div>
+	<!--/main end-->	
+	<!--footer  start-->
+{include file='public/footer'}
+
+		<script>
+		
+		
+			function adr_form_update(){
+		      var self = $(".adr_form_update");
+			  if($("input[type='checkbox']").is(':checked')){
+			    $("input[type='checkbox']").val(1);
+			  }
+		      $.post(self.attr("action"),self.serialize(),function(data){
+  
+					 if(data.code){  
+					     opensuccess(data);
+					 }
+					 else{
+					      openerror(data);
+					 }
+              });
+		  
+		}
+		function delAdr(id){
+			 var url="{:url('address/del')}";
+		      $.post(url,{id:id},function(data){
+					 if(data.code){  
+					     opensuccess(data);
+					 }
+					 else{
+					      openerror(data);
+					 }
+              });
+		  
+	 }		
+		function setAdr(ID){
+		      var set_url ="{:U('Address/set')}";
+			  
+		      $.post(set_url,{id:ID},function(data){
+  
+					 if(data.code){  
+					     opensuccess(data);
+					 }
+					 else{
+					     openerror(data)
+					 }
+              });
+		  
+		}	
+	
+	</script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,maximum-scale=1, minimum-scale=1" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no" />
+    <title>已评价商品——订单</title>
+  
+	  <link rel="stylesheet" href="__CSS__/swiper-3.4.2.min.css" />
+    <link rel="stylesheet" href="__CSS__/common_mobile.css" />
+    <link rel="stylesheet" href="__CSS__/comment.css" />
+    <script type="text/javascript" src="__JS__/jquery-3.1.1.min.js" ></script>
+    <script type="text/javascript" src="__JS__/swiper-3.4.2.jquery.min.js" ></script>
+</head>
+<body>
+	<div>
+		<header>
+			<div class="header" style="background:{$config['theme_color']}">
+				<a href="Javascript:history.go(-1);void(0);"><i class="icon icon-back"></i></a>
+				<h1>我的评价</h1>
+				<a href="{:url('index/index')}"><i class="icon icon-home"></i></a>
+			</div>
+		</header>
+		<div style="height: 2.5rem;"></div>
+	</div>
+	<nav>
+		<div id="topNav" class="swiper-container">
+		  <div class="swiper-wrapper">
+		 
+		    <div class="swiper-slide"><a href="{:url('index')}">待评价商品</a></div>
+		    <div class="swiper-slide  active"><a href="{:url('lists')}">已评价商品</a></div>		   
+		  </div>
+		</div>
+	</nav>
+	{empty name="list"}<!-- 无评论 -->
+		<p class="pinglun_no">对不起，您没有可评论的订单！</p> 
+		{else/}
+	{volist name="list" id="vo"}
+	<div class="order-item">
+		
+		<div class="order-center" style="border-bottom: none;">
+			<img src="{$vo.image}" />
+			<div class="food-info">
+				<p><a href="{:U('goods/detail?id='.$vo['goods_id'])}">{$vo.goods_id|get_goods='title'}</a></p>
+				<a href="#">{$vo.specifications|default=""}</a>
+				
+			</div>		
+		</div>
+		<div class="order-bottom">
+			<p>{$vo.content}</p>	
+		</div>
+	</div>
+	
+	{/volist}
+	<a class="more-info">查看更多<i></i></a>	
+	{/empty}		
+	 <script type="text/javascript"> 
+    $(document).ready(function(){  
+        var range =10;             //距下边界长度/单位px  
+        var maxnum ={$maxnum};            //设置加载最多次数  
+        var num = 2; 
+		var obj=$('li').hasClass('current');
+		var url="{:url('')}";
+        var totalheight = 0;//主体元素  
+		var stop=true;//触发开关，防止多次调用事件   
+		$(window).scroll(function(){  
+            var srollPos = $(window).scrollTop();    //滚动条距顶部距离(页面超出窗口的高度) 
+			var height=$(document).height()-range;
+            totalheight = parseFloat($(window).height()) + parseFloat(srollPos);  
+            if(height<= totalheight) {                  
+				 if(stop==true &&maxnum>=num){
+				    stop=false;  
+                    $('.loading').show();
+				    $.post(url,{p:num},function(data){
+					
+					if(data){
+						var html = '';
+						$.each(data, function(i,n){			
+							html=html+'<div class="order-item"><div class="order-center" style="border-bottom: none;"><img src="'+n.image+'" /><div class="food-info"><p><a href="'+n.url+'">'+n.title+'</a></p><a href="#"></a></div>		</div><div class="order-bottom"><p>'+n.content+'</p></div></div>';
+						 });
+						  $('.loading').hide(); 
+                          $(".order-item").last().after(html);
+					 }
+					
+                    stop=true;  num=num+1;//当前要加载的页码  ;
+				 });  
+                  
+                }
+             }  
+        });  
+    });  
+
+function hidden(){
+				$('.znx_toast_div').fadeOut();
+			}	</script>
+	
+
+    <script>        
+		var mySwiper2 = new Swiper ('.swiper-container2', {
+		  loop: true,
+		  autoplay:3000,
+		  grabCursor:true,
+		  // 如果需要分页器
+		  pagination: '.swiper-pagination',
+		  paginationClickable: true,
+		  autoplayDisableOnInteraction : false
+		});    		 
+		var mySwiper = new Swiper('#topNav', {
+			freeMode: true,
+			freeModeMomentumRatio: 0.5,
+			slidesPerView: 'auto',
+		
+		});
+		
+		swiperWidth = mySwiper.container[0].clientWidth
+		maxTranslate = mySwiper.maxTranslate();
+		maxWidth = -maxTranslate + swiperWidth / 2
+		
+		$(".swiper-container").on('touchstart', function(e) {
+		//	e.preventDefault()
+		})
+		
+		mySwiper.on('tap', function(swiper, e) {
+		
+		//	e.preventDefault()
+		
+			slide = swiper.slides[swiper.clickedIndex]
+			slideLeft = slide.offsetLeft
+			slideWidth = slide.clientWidth
+			slideCenter = slideLeft + slideWidth / 2
+			// 被点击slide的中心点
+		
+			mySwiper.setWrapperTransition(300)
+		
+			if (slideCenter < swiperWidth / 2) {
+				
+				mySwiper.setWrapperTranslate(0)
+		
+			} else if (slideCenter > maxWidth) {
+				
+				mySwiper.setWrapperTranslate(maxTranslate)
+		
+			} else {
+		
+				nowTlanslate = slideCenter - swiperWidth / 2
+		
+				mySwiper.setWrapperTranslate(-nowTlanslate)
+		
+			}
+		
+			$("#topNav  .active").removeClass('active')
+		
+			$("#topNav .swiper-slide").eq(swiper.clickedIndex).addClass('active')
+		
+		})
+	</script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<?php
+// +----------------------------------------------------------------------
+// | yershop网店管理系统
+// +----------------------------------------------------------------------
+// | Copyright (c) 2017 http://www.yershop.com All rights reserved.
+// +----------------------------------------------------------------------
+// | 版权申明：yershop网店管理系统不是一个自由软件，是贝云网络官方推出的商业源码，严禁在未经许可的情况下
+// | 拷贝、复制、传播、使用yershop网店管理系统的任意代码，如有违反，请立即删除，否则您将面临承担相应
+// | 法律责任的风险。如果需要取得官方授权，请联系官方http://www.yershop.com
+// +----------------------------------------------------------------------
+namespace app\mobile\model;
+use think\Model;
+use think\Db;
+/**
+ * 文档基础模型
+ */
+class Order extends Model{
+    public function getList($order = 'id desc',$map ='',$page = 1,$num = 5){            
+		$order = 'id desc';
+		$res["count"]=db('order')->where($map)->count();
+        $res['num'] = ceil($res['count']/$num);       
+        $list = db('order')->where($map)->order($order)->page($page,$num)->select();
+        $html2="";$html1="";
+		foreach($list as &$v){
+
+         $html1='<a href="'.url('order/detail?id='.$v['id']).'"class="pay-now">查看详情</a>';
+         if($v['status']==0){
+		    $html2='<a href="'.url('pay/index?id='.$v['id']).'"class="cancel-order">立即支付</a>';
+			$v['msg']="待支付";
+		 }
+         if(($v['status']=='1')&&($v['ispay']=='-1')){
+		    $html2='<a href="javascript:void(0)" sid="'.$v['id'].'" onclick="cancel(this);"class="cancel-order">取消订单</a>';
+			$v['msg']="待支付";
+		 } 
+		 if($v['status']=='1'){
+		    $html2='<a href="javascript:void(0)" sid="'.$v['id'].'" onclick="cancel(this);"class="cancel-order">取消订单</a>';
+			$v['msg']="待发货";
+		 }
+         if($v['status']=='2'){
+		    $html2='<a href="javascript:void(0)" sid="'.$v['id'].'"onclick="confirmOrder(this);"class="cancel-order">取消订单</a>';
+		 }
+        if($v['status']=='3'){
+		    $html2='<a href="javascript:void(0)" class="cancel-order">已完成</a>';
+			$v['msg']="已完成";
+		 }
+        if($v['status']=='4'){
+		    $v['msg']="取消中";
+		 }
+        if($v['status']=='6'){
+		     $v['msg']="已取消";
+		 }
+		 //$v['time'] = date ( 'Y-m-d H:i:s', $v['create_time'] );
+         $v['info'] =$html1.$html2;
+		 $v['num'] =$this->getpriceNum($v["order_sn"]);
+        }
+        foreach($list as $n=> $val){
+          // 订单包含商品
+		  $where["order_sn"]=$val["order_sn"];
+          $list[$n]['detail']=db("sales")->where($where)->select(); 
+          foreach($list[$n]['detail'] as &$vo){
+                    $cover_id= get_goods($vo['goods_id'],"cover_id");
+                    $vo['path'] = get_cover($cover_id,'path');//商品图片
+                    $vo['title'] = get_goods($vo['goods_id'],"title");//商品图片
+					$vo['link'] =url('goods/detail?id='.$v['id']);//商品链接
+                }
+        }
+        
+	    $res['list'] =$list;
+
+        return $res;
+    } 
+	public function getpriceNum($order_sn) { 
+	   
+        $sum ='';
+		$where["order_sn"]=$order_sn;
+        $data = db("sales")->where($where)->select();
+        foreach ($data as $k=>$item) {
+			$sum+=intval($item['num']);
+         
+        }
+        return  $sum;
+    }
+   
+
+
+}

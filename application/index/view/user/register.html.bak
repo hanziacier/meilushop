@@ -1,0 +1,93 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>用户注册</title> 
+ 
+		<link href="__CSS__/base.css" rel="stylesheet" type="text/css"/>
+	<link href="__CSS__/style.css" rel="stylesheet" type="text/css"/>  
+	<link rel="stylesheet" type="text/css" href="__CSS__/common.css">
+   	<script type="text/javascript" src="__JS__/jquery-1.7.2.min.js"></script>
+  </head>
+  <body>
+      <div class="login-head">
+        <div class="logo fl"><a href="{:url('index/index')}"><img src="{:C('LOGO')}" /></a></div>
+        <div class="sign-in fr">
+         
+        </div>
+      </div>
+
+      <div class="login">
+	                 <div class="hd">
+                                    <strong>欢迎注册</strong><span>已有帐号？点击<a href="{:url('login')}">登录</a></span> 
+					</div>
+	  <div class="img"><img src="__IMG__/login.jpg"></div>
+          <form name="" id="form">
+              <div class="info">
+                <ul>  <li> <p class="lable">用户名：</p>
+                    <input type="text" name="username" placeholder="请输入用户名" class="password"/>
+                  </li>
+				<li>
+                  <p class="lable">手机号：</p><input type="text" id="" name="mobile" value="" placeholder="请输入手机号" class="name"/>
+                    <a class="cle"></a>
+                  </li>
+                  <li> <p class="lable">密码：</p>
+                    <input type="text" name="password" placeholder="请输入密码" class="password"/>
+                  </li>
+                    <li> <p class="lable">确认密码：</p>
+                    <input type="text" name="repassword" placeholder="请输入确认密码" class="password"/>
+                  </li>
+
+               
+                </ul>
+              </div>
+
+            
+
+            <div class="submit">
+              <input type="button" id="login" name="" value="注册" />
+            </div> 
+             <!--div class="san">
+              <h4>第三方登录：</h4>
+              <ul>
+                <li><a href="#"><img src="__IMG__/limg5.png"/>新浪微博</a></li>
+                <li><a href="#"><img src="__IMG__/limg6.png"/>微信</a></li>
+                <li><a href="#"><img src="__IMG__/limg7.png"/>QQ</a></li>
+              </ul>
+            </div-->
+          </form>
+      </div>
+<script type="text/javascript">
+
+	$("#login").click(function(){
+    		var self =$('#form');
+			var url="{:url('register')}"
+    		$.post(url, self.serialize(), success, "json");
+    		return false;
+
+    		function success(data){
+    			if(data.code){
+    				window.location.href = data.url;
+    			} else {
+    				  openerror(data)
+    				//刷新验证码
+    				$(".reloadverify").click();
+    			}
+    		}
+    	});		
+
+$(function(){
+		var verifyimg = $(".reloadverify").attr("src");
+            $(".reloadverify,.reloadverify_a").click(function(){
+               if(verifyimg.indexOf('?')>0){
+                    $(this).attr("src", verifyimg+'&random='+Math.random());
+                }else{
+                    $(this).attr("src", verifyimg.replace(/\?.*$/,'')+'?'+Math.random());
+                }
+            });
+});
+	  </script>
+
+    	{include file='public/footer'}
+</html>

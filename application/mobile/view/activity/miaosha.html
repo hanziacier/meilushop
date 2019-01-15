@@ -1,0 +1,224 @@
+﻿<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<title>秒杀</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="format-detection" content="telephone=no">
+	<meta http-equiv="Expires" content="-1">
+	<meta http-equiv="Cache-Control" content="no-cache">
+	<meta http-equiv="Pragma" content="no-cache">
+    <script src="__JS__/rem.js" type="text/javascript"></script>
+	<link rel="stylesheet" href="__CSS__/base.css" type="text/css">
+	<link rel="stylesheet" href="__CSS__/common.css" type="text/css">
+	<link rel="stylesheet" href="__CSS__/main.css" type="text/css">
+	<script src="__JS__/jquery-2.0.3.min.js" type="text/javascript"></script>
+	
+	<script type="text/javascript">				
+		$(function(){
+			//倒计时
+			show_time();			
+			//点击秒杀切换
+			$('.ms_time li').click(function(e) {
+				var li_index = $(this).index();
+				$('.ms_tab_con').children('ul').eq(li_index).css('display','block').siblings().css('display','none');
+				$(this).addClass('current').siblings().removeClass('current');
+			});
+			
+		})
+		function show_time(){ 
+			var time_start = new Date().getTime(); //设定当前时间
+			var time_end =  new Date("{$end}").getTime(); //设定目标时间
+			// 计算时间差 
+			var time_distance = time_end - time_start; 
+			// 时
+			var int_hour = Math.floor(time_distance/3600000) 
+			time_distance -= int_hour * 3600000; 
+			// 分
+			var int_minute = Math.floor(time_distance/60000) 
+			time_distance -= int_minute * 60000; 
+			// 秒 
+			var int_second = Math.floor(time_distance/1000) 
+			// 时分秒为单数时、前面加零 
+			if(int_hour < 10){ 
+				int_hour = "0" + int_hour; 
+			} 
+			if(int_minute < 10){ 
+				int_minute = "0" + int_minute; 
+			} 
+			if(int_second < 10){
+				int_second = "0" + int_second; 
+			} 
+			// 显示时间 
+			$("#time_h").val(int_hour); 
+			$("#time_m").val(int_minute); 
+			$("#time_s").val(int_second); 
+			// 设置定时器
+			setTimeout("show_time()",1000); 
+		}
+	</script>
+</head>
+
+<body style="background-color:#F2F0F1" class="miaosha_bd">
+	<header style="background-color:#F8515B" class="miaosha_header_con">
+	<a href="Javascript:history.go(-1);void(0);"class="lft">		
+			<i class="icon icon-back"></i>
+		</a>
+		<h5>秒杀</h5>
+		<a class="rt down_list_con"><img src="__IMG__/down_list.png"/></a>
+	</header>
+	<!-- 菜单 -->
+<include file="Public/menu"/>
+<!-- /菜单 -->
+
+<ul class="ms_time">
+		<li class='<between name="time" value="10,14">current</between>'><a><p>10:00</p><p>
+		<lt name="time" value="10">即将开抢</lt><between name="time" value="10,14">已开抢</between><gt name="time" value="14">已结束</gt></p></a></li>
+		<li class='<between name="time" value="15,19">current</between>'><a><p>15:00</p><p><lt name="time" value="15">即将开抢</lt><between name="time" value="15,19">已开抢</between><gt name="time" value="19">已结束</gt></p></a></li>
+		<li class='<between name="time" value="20,21">current</between>'><a><p>20:00</p><p><lt name="time" value="20">即将开抢</lt><between name="time" value="20,21">已开抢</between><gt name="time" value="21">已结束</gt></p></a></li>
+		<li class='<between name="time" value="22,24">current</between>'><a><p>22:00</p><p><lt name="time" value="22">即将开抢</lt><between name="time" value="22,24">已开抢</between></p></a></li>
+		<li class='<between name="time" value="0,9">current</between>'><a><p>00:00</p><p><between name="time" value="10,24">即将开抢</between><between name="time" value="0,9">已开抢</between></p></a></li>
+	</ul>
+	<div class="djs_time">
+		<div>
+			距本场结束
+			<span><input type="text" id="time_h"></span>:
+			<span><input type="text" id="time_m"></span>:
+			<span><input type="text" id="time_s"></span>
+		</div>		
+	</div>
+	<div class="ms_tab_con">
+		<ul class="ul_none" <between name="time" value="10,14">style='display:block'</between>>
+			<li>
+				<a href="<between name="time" value="10,14">{:U('Article/detail?id=56')}</between>">
+					<img class="left_pic" src="__IMG__/pro_pic.gif"/>
+					<div class="top_con">
+						<p class="pic_txt">手机手机手机手机手机手机手机手机手机手手机手机手机手机1</p> 
+						<p class="price_num">¥1999<span>¥2999</span></p>
+					</div>
+					<div class="bottom_con">
+						<div class="progress" id="progress">
+							<span class="pro" style="width: 38%;"></span>
+						</div>
+						<p class="yishou_num">已售38%;</p>
+					</div>
+					<button type="button" class="tuichu_btn">马上抢</button>				
+				</a>
+			</li>
+			<li>
+				<a href="<between name="time" value="10,14">{:U('Article/detail?id=56')}</between>">
+					<img class="left_pic" src="__IMG__/pro_pic.gif"/>
+					<div class="top_con">
+						<p class="pic_txt">手机手机手机手机手机手机手机手机手机手手机手机手机手机1</p> 
+						<p class="price_num">¥1999<span>¥2999</span></p>
+					</div>
+					<div class="bottom_con">
+						<div class="progress" id="progress">
+							<span class="pro" style="width: 38%;"></span>
+						</div>
+						<p class="yishou_num">已售38%;</p>
+					</div>
+					<button type="button" class="tuichu_btn">马上抢</button>				
+				</a>
+			</li>			
+	   </ul>
+
+	   <ul class="ul_none" <between name="time" value="15,19">style='display:block'</between>>
+			<li>
+				<a href="<between name="time" value="15,19">{:U('Article/detail?id=56')}</between>">
+					<img class="left_pic" src="__IMG__/pro_pic.gif"/>
+					<div class="top_con">
+						<p class="pic_txt">手机手机手机手机手机手机手机手机手机手手机手机手机手机2</p> 
+						<p class="price_num">¥1999<span>¥2999</span></p>
+					</div>
+					<div class="bottom_con">
+						<div class="progress" id="progress">
+							<span class="pro" style="width: 38%;"></span>
+						</div>
+						<p class="yishou_num">已售38%;</p>
+					</div>
+					<button type="button" class="tuichu_btn">马上抢</button>				
+				</a>
+			</li>
+	   </ul>
+
+	   <ul class="ul_none"<between name="time" value="20,21">style='display:block'</between>>
+			<li>
+				<a href="<between name="time" value="20,21">{:U('Article/detail?id=56')}</between>">
+					<img class="left_pic" src="__IMG__/pro_pic.gif"/>
+					<div class="top_con">
+						<p class="pic_txt">手机手机手机手机手机手机手机手机手机手手机手机手机手机3</p> 
+						<p class="price_num">¥1999<span>¥2999</span></p>
+					</div>
+					<div class="bottom_con">
+						<div class="progress" id="progress">
+							<span class="pro" style="width: 38%;"></span>
+						</div>
+						<p class="yishou_num">已售38%;</p>
+					</div>
+					<button type="button" class="tuichu_btn">马上抢</button>				
+				</a>
+			</li>
+			<li>
+				<a href="<between name="time" value="20,21">{:U('Article/detail?id=56')}</between>">
+					<img class="left_pic" src="__IMG__/pro_pic.gif"/>
+					<div class="top_con">
+						<p class="pic_txt">手机手机手机手机手机手机手机手机手机手手机手机手机手机3</p> 
+						<p class="price_num">¥1999<span>¥2999</span></p>
+					</div>
+					<div class="bottom_con">
+						<div class="progress" id="progress">
+							<span class="pro" style="width: 38%;"></span>
+						</div>
+						<p class="yishou_num">已售38%;</p>
+					</div>
+					<button type="button" class="tuichu_btn">马上抢</button>				
+				</a>
+			</li>
+	   </ul>
+	   <ul class="ul_none" <between name="time" value="22,24">style='display:block'</between>>
+			<li>
+				<a href="<between name="time" value="22,24">{:U('Article/detail?id=56')}</between>">
+					<img class="left_pic" src="__IMG__/pro_pic.gif"/>
+					<div class="top_con">
+						<p class="pic_txt">手机手机手机手机手机手机手机手机手机手手机手机手机手机4</p> 
+						<p class="price_num">¥1999<span>¥2999</span></p>
+					</div>
+					<div class="bottom_con">
+						<div class="progress" id="progress">
+							<span class="pro" style="width: 38%;"></span>
+						</div>
+						<p class="yishou_num">已售38%;</p>
+					</div>
+					<button type="button" class="tuichu_btn">马上抢</button>				
+				</a>
+			</li>
+	   </ul>
+	   <ul class="ul_none" <between name="time" value="0,9">style='display:block'</between>>
+			<li>
+				<a href="<between name="time" value="0,9">{:U('Article/detail?id=56')}</between>">
+					<img class="left_pic" src="__IMG__/pro_pic.gif"/>
+					<div class="top_con">
+						<p class="pic_txt">手机手机手机手机手机手机手机手机手机手手机手机手机手机5</p> 
+						<p class="price_num">¥1999<span>¥2999</span></p>
+					</div>
+					<div class="bottom_con">
+						<div class="progress" id="progress">
+							<span class="pro" style="width: 38%;"></span>
+						</div>
+						<p class="yishou_num">已售38%;</p>
+					</div>
+					<button type="button" class="tuichu_btn">马上抢</button>				
+				</a>
+			</li>
+	   </ul>
+	</div>
+	
+</body>
+
+</html>

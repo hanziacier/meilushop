@@ -1,0 +1,201 @@
+
+		<!--footer  start-->
+	<div class="footer w100">
+		<div class="footer_in in_width f14">
+			<div class="footer_title">
+				<ul>
+					<li class="qa">
+						<span class="left_icon">优</span>
+						<div class="right_div">
+							<div class="right_div_t_cn">品质保障</div>
+							<div class="right_div_t_en">Quality Assurance</div>
+						</div>
+					</li>
+					<li class="wr">
+						<span class="left_icon">七</span>
+						<div class="right_div">
+							<div class="right_div_t_cn">七天无理由退换货</div>
+							<div class="right_div_t_en">Without Reason</div>
+						</div>
+					</li>
+					<li class="csr">
+						<span class="left_icon">特</span>
+						<div class="right_div">
+							<div class="right_div_t_cn">特色服务体验</div>
+							<div class="right_div_t_en">Characteristic Service Experience</div>
+						</div>
+					</li>
+					<li class="hc">
+						<span class="left_icon">帮</span>
+						<div class="right_div">
+							<div class="right_div_t_cn">帮助中心</div>
+							<div class="right_div_t_en">Help Center</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="footer_site_info">
+				 {volist name="footer" id="vo"}
+				 <ul class="footer_site_info_ul">
+					<li><a href="{:U('help/index?id='.$vo['id'])}">{$vo.title}</a></li>
+					 {volist name="vo['ids']" id="vo1"} 
+					<li><a href="{:U('help/index?id='.$vo1['id'])}">{$vo1.title}</a></li>
+					{/volist}
+				</ul>
+               {/volist} 
+			   <ul class="footer_site_info_ul">
+					<img src="__IMG__/wx.jpg" WIDTH="100"><P>微信扫一扫关注</P>
+				</ul>
+				  <ul class="footer_site_info_ul">
+					<img src="__IMG__/alipay.png" WIDTH="100"><P>支付宝扫一扫关注</P>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!--/footer  end-->
+	<span class="copyright" style="">@2014-2017
+	   <a href="http://yershop.com">yershop</a> 版权所有</span>
+<script type="text/javascript" src="__COMMON__/layer/layer.js"></script>
+
+<script type="text/javascript">
+
+	function opensuccess(data){
+			  
+				   layer.alert(data.msg, {
+                            icon: 1,
+                             skin: 'layer-ext-moon' //该皮肤由layer.seaning.com友情扩展。关于皮肤的扩展规则，去这里查阅
+                     });
+				//$(".alert_success").parents(".mask").removeClass("none"); 
+			   setTimeout(function(){
+                        if (data.url) {
+                          location.href=data.url;
+                        }
+               },1000);
+				
+			}
+			function openerror(data){
+			      layer.alert(data.msg, {
+                            icon: 2,
+                             skin: 'layer-ext-moon' //该皮肤由layer.seaning.com友情扩展。关于皮肤的扩展规则，去这里查阅
+                     })  ; 
+					 setTimeout(function(){
+                        if (data.url) {
+                          location.href=data.url;
+                        }
+               },1000);
+			}
+</script>
+<div id="fullbg"></div>
+
+<div class="login_div" style="display:;"><span class="header">您尚未登录</span>
+						<i class="arrow" onclick="closeBg()"></i>
+						<form id="login_form">
+							<div class="list">
+								<div class="icon icon_02 fl"><div></div></div>
+								<input type="text" name="mobile" class="ipt_01 fl" placeholder="手机号/用户名/邮箱">
+							</div>
+							<div class="list">
+								<div class="icon icon_03 fl"><div></div></div>
+								 <input type="text" name="password" placeholder="密码" class="ipt_01 fl">
+							</div>
+							<div class="last">
+								<div class="list fl">
+									<div class="icon icon_04 fl"><div></div></div>
+									<input type="text" name="verify" placeholder="验证码" class="ipt_02 fl">
+								</div>
+								<div class="yzm fl"><img  class="verifyimg reloadverify" src="{:captcha_src()}" width="80"></div>
+							</div>
+							<p class="errmsg"></p> <input type="hidden" name="type" value="1" placeholder="密码" class="ipt_01 fl">
+							<input type="submit" id="submain" class="submit f14" value="登录">
+							<p  class="reg"><a href="{:url('user/register')}"class="f1">注册</a><a href="{:url('user/forget')}"class="fr">忘记密码?</a></p>
+						</form>
+					</div>
+<script type="text/javascript">
+
+	$("#submain").click(function(){
+    		var self =$('#login_form');
+			var url="{:url('user/login')}"
+    		$.post(url, self.serialize(), success, "json");
+    		return false;
+
+    		function success(data){
+    			if(data.code){
+    				  $(".errmsg").html(data.msg);window.location.reload();
+    			} else {
+    			     $(".errmsg").html(data.msg);$(".errmsg").css("visibility",'visible');
+    				//刷新验证码
+    				$(".reloadverify").click();
+    			}
+    		}
+    	});		
+
+//显示灰色 jQuery 遮罩层
+function showBg() { 
+	$(".login_div").fadeIn();
+    var bh = $("body").height();
+    var bw = $("body").width();
+	
+    $("#fullbg").css({
+        height:bh,
+        width:bw,
+        display:"block"
+    });
+  
+}
+var is_login="{:is_login()}";
+//关闭灰色 jQuery 遮罩
+function closeBg() {
+    $("#fullbg,.login_div").hide();
+}
+
+		    var verifyimg = $(".verifyimg").attr("src");
+            $(".reloadverify,.reloadverify_a").click(function(){
+			
+               if( verifyimg.indexOf('?')>0){
+                    $(".verifyimg").attr("src", verifyimg+'&random='+Math.random());
+                }else{
+                    $(".verifyimg").attr("src", verifyimg.replace(/\?.*$/,'')+'?'+Math.random());
+                }
+            });
+
+
+	  </script>
+	<script type="text/javascript" src="__JS__/style.js"></script>
+<script type="text/javascript" src="__JS__/parabola.js"></script>
+
+  
+<script type="text/javascript" src="__JS__/common.js"></script>
+
+<script type="text/javascript">
+	
+ function addcartlist(obj,goodsid){
+		  
+				var num =1;
+				var cart_url="{:url('cart/addlist')}";
+		       $.post(cart_url,{goodsid:goodsid,num:num},function(data){
+                     
+					 if(data.status){  
+					    
+					      if(data.isin>0){
+					          $('.span_r').text("¥"+data.price);
+						      $('.item_num_'+data.sku_id).text(data.num); 
+					     }
+                         else{					
+						    $('#carthtml ul').append(data.tpl);
+					    } 
+						
+						$('.tNum').text(data.count);
+						$('.cart_num').text(data.sum);
+						$('.tSum').text("¥"+data.total); 
+						addpaowuxian();
+					 }
+					 else{
+					     openerror(data);
+					 
+					 }
+                });
+		   
+		}
+
+
+</script>

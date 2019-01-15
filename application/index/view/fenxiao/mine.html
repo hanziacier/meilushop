@@ -1,0 +1,136 @@
+<!-- 头部 -->
+	{include file='public/header'}
+<!-- 头部 --> 
+	<!--crumb start-->
+	<div class="crumb w100">
+		<div class="crumb_in in_width">
+			<p>您现在的位置：<a href="javascript:;" class="index_a">个人中心</a> ><span>商品评价</span></p>
+		</div>
+	</div>
+	<!--/crumb end-->	
+	<!--main start-->
+	<div class="main w100 grzx_main">
+		<div class="main_in in_width grzx_main_in">
+			<div class="main_top">
+				{include file='public/left'}
+				<div class="fr sppj_right_pan">
+					<div class="top_tab">
+						<h3 class="f12">我的佣金</h3>
+					</div>
+					<div class="tab_con">						
+						
+						
+						
+					</div>
+					<div class="tab_con">						
+						
+	                
+					<table class="list_table">
+					    <tr>
+						   <th> <input class="checkbox check-all" type="checkbox"></th>
+						   <th>id</th>
+						   <th>金额 </th>
+			               <th>明细 </th> 
+						   <th>剩余金额</th>
+						   <th>类型 </th> 
+						   <th>时间 </th>
+		                   <th class="">操作</th>
+                        </tr> 
+						
+				          {volist name="res.list" id="vo"}
+                               <tr class="even gradeC">
+                                    <td><input class="ids row-selected" type="checkbox" name="id[]" value="{$vo.id}"></td>
+									<td>{$vo.id} </td>
+									<td>{$vo.money} </td>
+			                        <td>{$vo.content} </td> 
+									<td>{$vo.total} </td>
+									<td> {if condition="$vo['type'] eq 0"}消费{/if}
+					                    {if condition="$vo['type'] eq 1"}充值{/if} 
+									    {if condition="$vo['type'] eq 2"}取现{/if}
+										 {if condition="$vo['type'] eq 3"}分销提成{/if}
+									 </td>
+					                <td>{$vo.create_time||date='Y-m-d H:i:s',###} </td>
+			                        <td class="list_opr">
+                                            <span class="opr_box">
+									               <a href="{:url('edit?id='.$vo['id'])}" class="edit_btn cur">编辑</a>
+									              <a data-url="{:url('del?id='.$vo['id'])}" class="del_btn cur">删除</a>
+								
+                                        </span>          
+                                    </td>
+                                </tr>
+											
+					    {/volist}
+					</table>
+						
+						 
+							{$res.page}
+						
+						
+					</div>
+
+				</div>	
+			</div>			
+		</div>
+	</div>
+	<!--/main end-->	
+{include file='public/footer'}
+	  <div class="mask none">
+			<div class="alert_success alert_div">
+				<div class="alert_header">提示</div>
+				<div class="alert_content"><i></i><span class="sucess_msg">操作成功</span></div>
+				<div class="alert_btn">确定</div>
+				<span class="alert_close"></span>
+			</div>
+		</div>
+		<div class="mask none">
+			<div class="alert_error alert_div">
+				<div class="alert_header">提示</div>
+				<div class="alert_content"><i></i><span class="error_msg">操作失败</span></div>
+				<div class="alert_btn">确定</div>
+				<span class="alert_close"></span>
+			</div>
+		</div>
+<script>
+			
+			$(".mask .alert_div .alert_close").click(function(){
+			    $(this).parents(".mask").addClass("none");
+			});
+			$(".mask .alert_div .alert_btn").click(function(){
+			    $(this).parents(".mask").addClass("none");
+			});
+			$(".tjpj").click(function(){
+				  opensuccess();
+			})
+			function opensuccess(data){
+			    $(".sucess_msg").text(data.msg);
+				$(".alert_success").parents(".mask").removeClass("none"); 
+			   setTimeout(function(){
+                        if (data.url) {
+                            location.href=data.url;
+                        }
+               },1000);
+				
+			}
+			function openerror(data){
+			     $(".error_msg").text(data.msg);
+				$(".alert_error").parents(".mask").removeClass("none");
+			}
+	
+		function drawbackCancel(id){
+			var url="{:url('drawback/cancel')}";
+		      $.post(url,{id:id},function(data){
+  
+					 if(data.code){  
+					     opensuccess(data);
+					 }
+					 else{
+					      openerror(data);
+					 }
+              });
+		  
+		}	</script>
+
+	
+
+</body>
+</html>

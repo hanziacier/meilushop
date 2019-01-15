@@ -1,0 +1,172 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1  maximum-scale=1 user-scalable=no">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-touch-fullscreen" content="yes">
+		<meta name="HandheldFriendly" content="True">
+		<title>微商城</title>
+
+		<link rel="stylesheet" href="css/style.css">
+<script type="text/javascript" src="js/jquery-1.10.1.min.js"></script>
+
+	</head>
+
+	<body>
+		<!--头部-->
+		<div class="top_con01">
+			<div class="fh_icon"><a onClick="javascript :history.go(-1);"></a></div>
+			<div class="yc_icon" id="s_ser"><a href="#"></a></div>
+			<div class="yc_icon bot_nav02" id="h_ser"><a href="#"></a></div>
+			<h1>最新团购</h1>
+		</div>
+		<div class="bot_nav bot_nav01  bot_nav02">
+				<ul>
+					<li>
+					<div class="boot_nav_i boot_nav_i01">
+						<a href="index.html"><i></i><span>首页</span></a>
+					</div>
+				</li>
+				<li>
+					<div class="boot_nav_i boot_nav_i02">
+						<a href="category.html"><i></i><span>分类</span></a>
+					</div>
+				</li>
+				<li>
+					<div class="boot_nav_i boot_nav_i06">
+						<a href="#"><i></i><span>搜索</span></a>
+					</div>
+				</li>
+				<li>
+					<div class="boot_nav_i boot_nav_i04">
+						<a href="shopcart.html"><i></i><span>购物车</span></a>
+					</div>
+				</li>
+				<li>
+					<div class="boot_nav_i boot_nav_i05">
+						<a href="member.html"><i></i><span>我的</span></a>
+					</div>
+				</li>
+				</ul>
+			</div>
+<div class="top_menu top_menu_tg">
+				<ul>
+					<li>
+						<a href="#">默认</a>
+					</li>
+					<li>
+						<a href="#">销量<img src="images/u_jt.png" /></a>
+					</li>
+					<li>
+						<a href="#">人气<img src="images/u_jt.png" /></a>
+					</li>
+					<li>
+						<a href="#" style="border:none;">价格<img src="images/u_jt.png" /></a>
+					</li>
+				
+				</ul>
+			</div>
+		<!--内容-->
+		<div class="sc_con01">
+		   <div class="sc_con01_main">
+		   	<ul>
+		   		<li>
+		   			<div class="sc_con01_close04"><a href="#">立即抢购</a></div>
+		   			<div class="sc_con01_img"><a href="#"><img src="images/sp_ad01.jpg"/></a></div>
+		   			<div class="sc_con01_text">
+		   				<div class="sc_con01_t"><a href="#">春装2017新款女春款名媛蕾丝连
+裙春秋韩版小清新显瘦</a></div>
+<div class="sc_con01_pri">￥202.00元<span>￥202.00元</span></div>
+<div class="sc_con01_cc">销量：1280</div>
+		   			</div>
+		   		</li>
+		   		<li>
+		   			<div class="sc_con01_close04"><a href="#">立即抢购</a></div>
+		   			<div class="sc_con01_img"><a href="#"><img src="images/sp_ad01.jpg"/></a></div>
+		   			<div class="sc_con01_text">
+		   				<div class="sc_con01_t"><a href="#">春装2017新款女春款名媛蕾丝连
+裙春秋韩版小清新显瘦</a></div>
+<div class="sc_con01_pri">￥202.00元<span>￥202.00元</span></div>
+<div class="sc_con01_cc">销量：1280</div>
+		   			</div>
+		   		</li>
+				<li>
+		   			<div class="sc_con01_close04"><a href="#">立即抢购</a></div>
+		   			<div class="sc_con01_img"><a href="#"><img src="images/sp_ad01.jpg"/></a></div>
+		   			<div class="sc_con01_text">
+		   				<div class="sc_con01_t"><a href="#">春装2017新款女春款名媛蕾丝连
+裙春秋韩版小清新显瘦</a></div>
+<div class="sc_con01_pri">￥202.00元<span>￥202.00元</span></div>
+<div class="sc_con01_cc">销量：1280</div>
+		   			</div>
+		   		</li>
+				<li>
+		   			<div class="sc_con01_close04"><a href="#">立即抢购</a></div>
+		   			<div class="sc_con01_img"><a href="#"><img src="images/sp_ad01.jpg"/></a></div>
+		   			<div class="sc_con01_text">
+		   				<div class="sc_con01_t"><a href="#">春装2017新款女春款名媛蕾丝连
+裙春秋韩版小清新显瘦</a></div>
+<div class="sc_con01_pri">￥202.00元<span>￥202.00元</span></div>
+<div class="sc_con01_cc">销量：1280</div>
+		   			</div>
+		   		</li>
+		   	</ul>
+		   </div>
+		 
+		</div>
+		
+<!-- 底部栏目 -->
+			<footer>
+
+				<div class="bot_nav">
+					<ul>
+						<li>
+							<div class="boot_nav_i boot_nav_i01">
+								<a href="index.html"><i></i><span>首页</span></a>
+							</div>
+						</li>
+						<li>
+							<div class="boot_nav_i boot_nav_i02">
+								<a href="category.html"><i></i><span>分类</span></a>
+							</div>
+						</li>
+						<li>
+							<div class="boot_nav_i boot_nav_i03">
+								<a href="#"><i></i><span>店铺</span></a>
+							</div>
+						</li>
+						<li>
+							<div class="boot_nav_i boot_nav_i04">
+								<a href="shopcart.html"><i></i><span>购物车</span></a>
+							</div>
+						</li>
+						<li>
+							<div class="boot_nav_i boot_nav_i05">
+								<a href="member.html"><i></i><span>我的</span></a>
+							</div>
+						</li>
+					</ul>
+				</div>
+
+			</footer>
+		<script type="text/javascript">
+
+			$(document).ready(function() {
+				
+				$("#s_ser").click(function() {
+					$(".bot_nav01").show();
+					$(".bot_nav02").show();
+				});
+				$("#h_ser").click(function() {
+					$(".bot_nav01").hide();
+					$(".bot_nav02").hide();
+				});
+			});
+		</script>
+	</body>
+
+</html>

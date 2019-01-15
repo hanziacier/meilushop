@@ -1,0 +1,58 @@
+ <!-- 头部 -->
+	{include file='public/header'}
+<!-- 头部 -->  
+
+			<div class="content">
+			  <div class="tips_msg none"><span class="tips">保存成功</span><span class="close_tips"></span></div>
+				<div class="edit_title">{$meta_title|default=""}</div>
+				 <div class="edit_box">
+				
+					<div class="edit_content">
+						<form class="form-horizontal" action="{:url('')}" method="post" enctype="multipart/form-data">
+							 <div class="edit_content_tab">
+
+
+								   <div class="form-item ">
+									<label>sql语句<span>(sql语句)</span></label>
+									<div class="form-input w100" >
+									<textarea  name="sql" required>{$info.content|default=""}</textarea>	
+									   </div>
+                                </div>
+
+								
+								
+
+						   </div>  
+						    <div class="edit_content_tab none">
+						       
+							   <div class="form-item">
+									<label>状态<span>(0-禁用，1-正常)</span></label>
+									<div class="form-input">
+									   <input type="text" name="status" value="{$info.status|default="1"}"/>
+									</div>
+							   </div>
+		
+						  </div>
+
+
+						<div class="btn_group">
+						   
+							<div class="confirm_btn">确认</div>
+							<div class="cancel_btn">返回</div>
+						</div>
+						
+						</form> 
+
+					</div>
+				</div>
+			</div>
+		</div>
+	
+	 <script type="text/javascript">
+	  $("select[name='category_id']").val("{$info.category_id|default='0'}"); 
+	</script>
+	 <script src="__JS__/edit.js"></script>
+
+<!-- 尾部 -->
+	{include file='public/footer'}
+    <!-- 尾部 --> 

@@ -1,0 +1,59 @@
+﻿<html>
+<head>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ <meta charset="utf-8">
+<title>我的积分__{:C('WEB_SITE_TITLE')}</title>
+<link rel="stylesheet" href="__CSS__/main.css" />
+<link rel="stylesheet" type="text/css" href="__CSS__/style.css">
+<link rel="stylesheet" href="__CSS__/common_mobile.css" />
+<link rel="stylesheet" type="text/css" href="__CSS__/iconfont/iconfont.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+
+
+<body >
+		<!--头部 header-->
+	<div>
+		<header>
+			<div class="header"style="background:{$config['theme_color']}">
+				<a href="Javascript:history.go(-1);void(0);"><i class="icon icon-back"></i></a>
+				<h1>我的积分</h1>
+			<a href="{:url('index/index')}"><i class="icon icon-home"></i></a>
+			</div>
+		</header>
+		<div style="height: 2.5rem;"></div>
+	</div>
+
+
+	<ul class="header_tab">
+		<li class="current">
+			<a href="{:url('score/index')}">我的积分</a>
+		</li>
+		<li>
+			<a href="{:url('score/lists')}">积分明细</a>
+		</li>
+	</ul>
+	<div class="header_tab_con">
+		<div>
+			<div class="jifen_header">
+				<p>当前积分：<span>{$UcenterMember.score}</span></p>
+			</div>
+			<div class="miaoshu_con">
+				<p>积分有效期：<span>获得之日起至次年年底</span></p>
+				<p>积分发放：<span>积分在订单状态变为“交易成功”后第二天发放至账户</span></p>
+			</div>
+		</div>
+		
+	</div>
+<div class="H5"></div>
+	<div class="bottom-menu order-bottom-menu">
+		<a  href="{:url('index/index')}"><i class="iconfont home"></i><p>首页</p></a>
+		<a href="{:url('category/index')}"><i class="iconfont category"></i><p>分类</p></a>
+		<a class="" href="{:url('cart/index')}"><i class="iconfont cart"></i><p>购物车</p></a>
+		<a class="active" style="color:{$config['theme_color']}" href="{:url('member/index')}"><i class="iconfont mine"></i><p>我的</p></a>
+	</div>
+</body>
+
+</html>

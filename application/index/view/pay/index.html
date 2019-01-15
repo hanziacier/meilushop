@@ -1,0 +1,105 @@
+	{include file='public/header'}
+	<!--main start-->
+	<div class="main w100 tjdd_main">
+		<div class="main_in in_width tjdd_main_in">
+			<div class="tjzf_con">
+			<form class="search-form" id="fp_form" action="{:U('alipay/add')}" method="post">
+				<h3 class="f24 top_title">余额充值</h3>
+				<p class="tip f12">充值订单详情内容可通过查看<a href="{:U('pay/lists')}">我的充值记录</a>进行核对处理。</p>
+				<div class="del">
+					<div class="div_top">
+						
+					</div>				
+					<div class="ye_zf">
+						<p class="fs f16">充值金额</p>
+						<div class="bot_div f12">
+							<div class="div_l fl">
+							<ul class="paylist">
+							<li class="current"><a onclick="act(this)"><span class="money">50</span>元<i></i></a></li>
+							<li ><a onclick="act(this)"><span class="money">100</span>元<i></i></a></li>
+							<li><a onclick="act(this)"><span class="money">300</span>元<i></i></a></li>
+							<li><a onclick="act(this)"><span class="money">500</span>元<i></i></a></li>
+							<li><a onclick="act(this)"><span class="money">1000</span>元<i></i></a></li>
+								<li><input type="text" class="fl" name="account"/></li>
+								
+								
+						    </ul>
+							</div>
+							
+						</div>
+					</div>
+					<div class="zx_zf">
+						<p class="fs f16">选择在线支付</p>
+						<div class="bot_div">
+						<ul>
+								<li class="current"><a attr-id="1"><img src="__IMG__/zxzf_pic_01.jpg"/></a></li>
+								
+								<!--li><a attr-id="tenpay"><img src="__IMG__/zxzf_pic_02.jpg"/></a></li>
+								<li><a href="javascript:;"><img src="__IMG__/zxzf_pic_03.jpg"/></a></li-->
+							</ul>
+							<div class="btn_pay"><a onclick="paySubmit();" class="wrzf f20">确认支付</a></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	 <input type="hidden" name="type" value="1">
+       <input type="hidden" name="money" value="50">
+
+	<input type="hidden" name="paytype" value="1"/>
+	<input type="hidden" name="id" value="{$info.id|default=''}"/>
+	</form>
+	<!--/main end-->	
+	<script type="text/javascript">
+ function act(obj){
+	   $(".paylist li").removeClass("current");
+       $(obj).parent().addClass("current");
+	   $("input[name='account']").val($(".current .money").text());
+ }
+   function frm(){
+       var num=$("#money").val();
+  
+	   if(num>0){
+	       $("input[name='money']").val(num);
+	   
+	   }else{
+	      $("input[name='money']").val($(".current .money").text());
+	   }
+	   $("#pay").submit();
+ }     
+function select(obj){
+	    var ele=$(".service_list li i");
+         $("li i").removeClass('checked');
+		           if(!$(obj).hasClass('checked')){
+	         $(obj).addClass('checked') ;
+	      }
+		  $("input[name='type']").val($(obj).attr("attr-id")); 
+		 
+     }
+	  </script>
+
+	<script type="text/javascript">
+	
+		function paySubmit(){ 
+		     var paytype=$("li.current").find("a").attr("attr-id");
+			 var paytype=1;
+             $("input[name='paytype']").val(paytype);
+			 $("#fp_form").submit();
+			
+	       
+	}
+	</script>
+	
+	<script type="text/javascript">
+		$(function(){		
+			$('.tjdd_main .tjdd_main_in .tjzf_con .del .zx_zf .bot_div ul li').click(function(e) {
+				$(this).addClass('current').siblings().removeClass('current');
+				var id=$(this).find("a").attr("attr-id")
+				 $("input[name='paytype']").val(id);
+			});
+			
+		})
+	</script>
+{include file='public/footer'}

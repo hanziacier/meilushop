@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1  maximum-scale=1 user-scalable=no">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-touch-fullscreen" content="yes">
+		<meta name="HandheldFriendly" content="True">
+		<title>微商城</title>
+
+		<link rel="stylesheet" href="__CSS__/style.css">
+<script type="text/javascript" src="__JS__/jquery-1.10.1.min.js"></script>
+
+	</head>
+
+	<body>
+		<!--头部-->
+		<div class="top_con01">
+			<div class="fh_icon">
+				<a onClick="javascript :history.go(-1);"></a>
+			</div>
+	
+			<h1>会员红包</h1>
+		</div>
+
+		{include file="public/menu"/}
+		<!--内容-->  
+		{empty name="list"}	
+        <div class="zhmx_con01">
+			<div class="ahmx_con01_none">亲，此处没有内容~！</div>
+		<div>
+         {else/}
+	<div class="sh_con04 hb_con01">
+		<ul>
+{volist name="list" id="vo" }
+		   		   {$vo.html|default=''}
+				{/volist}
+		 
+		   	</ul>
+		   </div>
+		  
+		</div>
+		
+       {/empty}
+		<script type="text/javascript">
+
+			$(document).ready(function() {
+				
+				$("#s_ser").click(function() {
+					$(".fot_nav01").show();
+					$(".fot_nav02").show();
+				});
+				$("#h_ser").click(function() {
+					$(".fot_nav01").hide();
+					$(".fot_nav02").hide();
+				});
+			});
+		</script>
+		<script>
+//收藏
+function  cancelCollect(id){ 
+   if(confirm('确认取消吗')){
+	  $.ajax({
+		type:'post', //传送的方式,get/post
+		url:'{:url("collect/delete")}', //发送数据的地址
+		data:{id:id},
+		dataType: "json",
+		success:function(data){	
+			if(data.code){
+				//取消成功
+			    window.location.reload();
+			 }
+			else{
+				alert('删除失败！');	
+			}
+	        if(data.count==0){
+                 $('.hide').show();
+			}
+		 }
+	 })	
+	}
+}	 function addcart(obj,id){
+		     
+		var post_url="{:url('cart/addList')}";
+		var cart_url="{:url('cart/index')}";
+	     $.post(post_url,{goodsid:id,num:1},function(data){
+                     
+					 if(data.status){  
+					    location.href=cart_url;
+					 }
+					 else{
+					    alert(data);
+					 
+					 }
+                });
+		   
+		   
+			}	</script>	
+ <script type="text/javascript"> 
+    $(document).ready(function(){  
+        var range =10;             //距下边界长度/单位px  
+        var maxnum ={$maxnum};            //设置加载最多次数  
+        var num = 2; 
+		var obj=$('li').hasClass('current');
+		var url="{:url('')}";
+        var totalheight = 0;//主体元素  
+		var stop=true;//触发开关，防止多次调用事件   
+		$(window).scroll(function(){  
+            var srollPos = $(window).scrollTop();    //滚动条距顶部距离(页面超出窗口的高度) 
+			var height=$(document).height()-range;
+            totalheight = parseFloat($(window).height()) + parseFloat(srollPos);  
+            if(height<= totalheight) {                  
+				 if(stop==true &&maxnum>=num){
+				    stop=false;  
+                    $('.loading').show();
+				    $.post(url,{p:num},function(data){
+					
+					if(data){
+						var html = '';
+						$.each(data, function(i,n){			
+							html=html+n.html;
+						 });
+                           $(".sc_con01_main ul").append(html);
+					 }
+					
+                    stop=true;  num=num+1;//当前要加载的页码  ;
+				 });  
+                  
+                }
+             }  
+        });  
+    });  
+</script>
+ 
+	</body>
+
+</html>

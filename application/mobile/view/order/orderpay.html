@@ -1,0 +1,253 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1  maximum-scale=1 user-scalable=no">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-touch-fullscreen" content="yes">
+		<meta name="HandheldFriendly" content="True">
+		<title>微商城</title>
+
+		<link rel="stylesheet" href="__CSS__/style.css">
+		<script type="text/javascript" src="__JS__/jquery-1.10.1.min.js"></script>
+
+	</head>
+
+	<body>
+		<!--头部-->
+		<div class="top_con01">
+			<div class="fh_icon">
+				<a onClick="javascript :history.go(-1);"></a>
+			</div>
+			<div class="yc_icon" id="s_ser">
+				<a href="#"></a>
+			</div>
+			<div class="yc_icon bot_nav02" id="h_ser">
+				<a href="#"></a>
+			</div>
+			<h1>订单确认</h1>
+		</div>
+		{include file="public/menu"/}
+		<!--内容-->
+		<div class="ddqr_con01">
+		<div class="shdz_con01_m"><form class="search-form" id="fp_form"action="{:U('order/save')}" >
+		<a href="{:url('Choose/lists',array('id'=>$info['id']))}">
+							<h1>{$user.username|default=""} <span>{$user.mobile|default=""}</span></h1>
+							<h2>{$user.province|default=""}{$user.city|default=""}{$user.area|default=""}{$user.address|default=""}</h2>
+							</a>
+		</div>
+		<div class="ddqr_con02">
+		<div class="ddqr_ad" id="s_ps" style="display:block"></div>
+		<div class="ddqr_ad01" id="h_ps" style="display:none"></div>
+		<div class="ddqr_con02_t">配送方式<span>必填</span></div>
+		<div class="ddqr_con02_m"style="display:block">
+		<ul>
+	    <li><label class="radio">
+                <input type="radio" checked name="express" value="顺丰速递">
+                <i class="icon-radio"></i>
+            </label>顺丰速递[￥0.00元]</li>
+		<li><label class="radio">
+                <input type="radio" name="express" value="申通速递">
+                <i class="icon-radio"></i>
+            </label>申通速递[￥0.00元]</li>
+		<li><label class="radio">
+                <input type="radio" name="express" value="邮政EMS">
+                <i class="icon-radio"></i>
+            </label>邮政EMS[￥0.00元]</li>
+		</ul>
+		</div>
+		</div>
+		<div class="ddqr_con02 ddqr_con03">
+		<div class="ddqr_ad" id="s_ps01" style="display:block"></div>
+		<div class="ddqr_ad01" id="h_ps01" style="display:none" ></div>
+		<div class="ddqr_con02_t">支付方式<span>必填</span></div>
+		<div class="ddqr_con02_m"style="display:block">
+		<ul>
+        {if condition="is_weixin()"}
+		<li><label class="radio"><input name="paytype" value='2' checked type="radio"/>  <i class="icon-radio"></i>
+            </label>微信支付[￥0.00元]</li>
+        {/if}
+ 
+		 {if condition="!is_weixin()"}<li><label class="radio"><input name="paytype" checked value='3' type="radio"/>  <i class="icon-radio"></i>
+            </label>支付宝[￥0.00元]
+		</li>
+         {/if}
+		<li><label class="radio"><input name="paytype" value='1' type="radio"/>  <i class="icon-radio"></i>
+            </label>余额支付[￥0.00元]</li>	
+		
+		</ul>
+		</div>
+		</div>
+		<div class="ddqr_con04">
+		<div class="ddqr_ad" id="s_ps02"></div>
+		<div class="ddqr_ad01" id="h_ps02"></div>
+		<div class="ddqr_con02_t">使用积分</div>
+		<div class="ddqr_con04_text">
+		<h1>您当前的可用积分为：<span>{$UcenterMember.integration|default="0"}积分</span>，本订单最多可使用 {$UcenterMember.integration|default="0"}积分</h1>
+		<div class="ddqr_con04_input"><input type="text" name='score' placeholder="0"/></div>
+		</div>
+		</div>
+		<div class="ddqr_con04 ddqr_con05">
+		<div class="ddqr_ad" id="s_ps03"></div>
+		<div class="ddqr_ad01" id="h_ps03"></div>
+		<div class="ddqr_con02_t">订单附言</div>
+		<div class="ddqr_con04_text">
+		<div class="ddqr_con04_input">
+		<textarea name="message">请输入订单附言</textarea>
+		</div>
+		</div>
+		</div>
+		<div class="ddqr_con06">
+		<div class="ddqr_con06_t">商品列表<a href="{:url('cart/index')}">修改</a></div>
+		<div class="ddqr_con06_m">
+		<ul> 
+		{volist name="list" id="vo"}
+			<li>
+			<div class="ddqr_con06_ml fl">{$vo.title}</div>
+			<div class="ddqr_con06_mm fl">x{$vo.num}</div>
+			<div class="ddqr_con06_mr fr">￥{$vo.price}元</div>
+			<div class="clearfix"></div>
+			</li>
+	     {/volist} 
+		</ul>
+		</div>
+		<div class="ddqr_con06_b">
+		<p>该订单完成后，您将获得0代金券，以及价值 <span>￥0.00元</span> 的红包。 <br/>商品总价：<span>￥{$info.total_money|default=''}元</span> <br/>应付款金额：<span>￥{$info.total_money|default=''}元</span></p>
+		</div>
+		</div>	<input type="hidden" name="is_invoice" />
+							
+								<input type="hidden" name="address_id" value="{$user.id|default=''}"/>
+								<input type="hidden" name="id" value="{$info.id|default=''}"/>
+							</div>
+						</form>
+		<!--div class="grzl_con01_btn submit"><a>订单提交</a></div-->
+		<nav class="navbar-fixed-bottom">
+		
+		  
+	    	<a  onclick="orderSubmit()" class="btn btn-submit" >去结算</a>
+			  <div class="navbar-text ">		合计：￥{$info.total_money|default=''}		   
+		    
+	</div></nav>
+	</div>
+		<script type="text/javascript">
+		function updateAddress(){
+		 $(".user_add").toggle();
+		}
+
+		function adr_form_update(){
+		      var self = $("#adr_form");
+		      $.post(self.attr("action"),self.serialize(),function(data){
+  
+					 if(data.code){  
+					    $("input[name='address_id']").val(data.id); 
+						$('li.user_update').html(data.html); 
+						$('li.new_info').hide(); 
+					 }
+					 else{
+					     alert(data.msg);
+					 }
+              });
+		  
+		}	
+		function setInvoice(){
+		     // var self = $("#adr_form_add");
+		     var html=$("input[name='invoice_type']").val()+','+$("select[name='invoice_header']").val()+','+$("select[name='invoice_content']").val();
+		     $(".invoice_show").html(html); 
+			 $(".invoice").hide();
+			 $("input[name='is_invoice']").val("是");
+		}
+		function showInvoice(){
+			 $(".invoice").show();
+		}
+		function noInvoice(){
+		      $(".invoice").hide();
+		     var html="不需要发票";
+		     $(".invoice_show").html(html); 
+			 $("input[name='is_invoice']").val("否");
+			
+		}
+		function orderSubmit(){ 
+			if( !$('input[name="express"]:checked').val()){
+			  alert("请选择配送方式");return false;
+		    }	
+		    var express=$('input[name="express"]:checked').val();
+		
+		    if( !$('input[name="paytype"]:checked').val()){
+			    alert("请选择支付方式");return false;
+		    }	
+		     var save_url = "{:U('order/save')}";
+			 var self = $("#fp_form");
+				$.post(save_url,self.serialize(),function(data){   
+					 if(data.code){ 
+						  var url = "{:U('order/Pay')}"+'&id='+data.id;
+						  window.location.href =data.url;
+						  
+					}
+					 else{
+					    alert(data.msg);
+					 }
+                });
+	       
+	}
+	
+			$(document).ready(function() {
+
+				$("#s_ser").click(function() {
+					$(".bot_nav01").show();
+					$(".bot_nav02").show();
+				});
+				$("#h_ser").click(function() {
+					$(".bot_nav01").hide();
+					$(".bot_nav02").hide();
+				});
+				$("#h_ps").click(function() {
+					$(".ddqr_con02 .ddqr_con02_m").show();
+					$("#s_ps").show();
+					$("#h_ps").hide();
+				});
+				$("#s_ps").click(function() {
+					$(".ddqr_con02 .ddqr_con02_m").hide();
+					$("#h_ps").show();
+					$("#s_ps").hide();
+				});
+				$("#h_ps01").click(function() {
+					$(".ddqr_con03 .ddqr_con02_m").show();
+					$("#s_ps01").show();
+					$("#h_ps01").hide();
+				});
+				$("#s_ps01").click(function() {
+					$(".ddqr_con02 .ddqr_con02_m").hide();
+					$("#h_ps01").show();
+					$("#s_ps01").hide();
+				});
+				$("#h_ps02").click(function() {
+					$(".ddqr_con04 .ddqr_con04_input").show();
+					$("#s_ps02").show();
+					$(".ddqr_con04_text h1").show();
+					$("#h_ps02").hide();
+				});
+				$("#s_ps02").click(function() {
+					$(".ddqr_con04 .ddqr_con04_input").hide();
+					$("#h_ps02").show();
+					$("#s_ps02").hide();
+					$(".ddqr_con04_text h1").hide();
+				});
+				$("#h_ps03").click(function() {
+					$(".ddqr_con05 .ddqr_con04_input").show();
+					$("#s_ps03").show();
+					$("#h_ps03").hide();
+				});
+				$("#s_ps03").click(function() {
+					$(".ddqr_con05 .ddqr_con04_input").hide();
+					$("#h_ps03").show();
+					$("#s_ps03").hide();
+				});
+			
+			});
+		</script>
+	</body>
+
+</html>

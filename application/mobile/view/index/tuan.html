@@ -1,0 +1,133 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1  maximum-scale=1 user-scalable=no">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-touch-fullscreen" content="yes">
+		<meta name="HandheldFriendly" content="True">
+		<title>微商城</title>
+
+		<link rel="stylesheet" href="__CSS__/style.css">
+		<script type="text/javascript" src="__JS__/jquery-1.10.1.min.js"></script>
+
+	</head>
+
+	<body>
+		<!--头部-->
+		<div class="top_con01">
+			<div class="fh_icon"><a onClick="javascript :history.go(-1);"></a></div>
+			<div class="yc_icon" id="s_ser"><a href="#"></a></div>
+			<div class="yc_icon bot_nav02" id="h_ser"><a href="#"></a></div>
+			<h1>最新团购</h1>
+		</div>
+		
+		<!--内容-->
+		<div class="sc_con01">
+		   <div class="sc_con01_main">
+		   	<ul>
+		{volist name="list" id="vo"}	
+					{$vo.html}
+					{/volist}	
+		   	</ul>
+		   </div>
+		 
+		</div>
+		
+<!-- 底部栏目 -->
+			<footer>
+
+				<div class="bot_nav">
+					<ul>
+						<li>
+							<div class="boot_nav_i boot_nav_i01">
+								<a href="index.html"><i></i><span>首页</span></a>
+							</div>
+						</li>
+						<li>
+							<div class="boot_nav_i boot_nav_i02">
+								<a href="category.html"><i></i><span>分类</span></a>
+							</div>
+						</li>
+						<li>
+							<div class="boot_nav_i boot_nav_i03">
+								<a href="#"><i></i><span>店铺</span></a>
+							</div>
+						</li>
+						<li>
+							<div class="boot_nav_i boot_nav_i04">
+								<a href="shopcart.html"><i></i><span>购物车</span></a>
+							</div>
+						</li>
+						<li>
+							<div class="boot_nav_i boot_nav_i05">
+								<a href="member.html"><i></i><span>我的</span></a>
+							</div>
+						</li>
+					</ul>
+				</div>
+
+			</footer><script type="text/javascript"> 
+   
+	$(document).ready(function(){  
+        var range =10;             //距下边界长度/单位px  
+        var maxnum ={$maxnum};            //设置加载最多次数  
+        var num = 2; 
+		var obj=$('li').hasClass('active');
+		
+		var url=window.location.href;
+        var totalheight = 0;//主体元素  
+		var stop=true;//触发开关，防止多次调用事件   
+		$(window).scroll(function(){  
+            var srollPos = $(window).scrollTop();    //滚动条距顶部距离(页面超出窗口的高度) 
+			var height=$(document).height()-range;
+            totalheight = parseFloat($(window).height()) + parseFloat(srollPos);  
+            if(height<= totalheight) {                  
+				 if(stop==true &&maxnum>=num){
+				    stop=false;  
+                    $('.loading').show();
+				    $.post(url,{p:num},function(data){
+					
+					if(data){
+						var html = '';
+						$.each(data, function(i,n){			
+							html=html+n.html;
+						 });
+						 
+						  $('.loading').hide(); 
+                          $(".sc_con01_main ul").append(html); 
+						  
+					 }
+					
+                    stop=true;  num=num+1;//当前要加载的页码  ;
+				 });  
+                  
+                }
+             }  
+        });  
+    });  
+ 
+ $(".rt").click(function(){
+		 window.location.href ="{:U('search/lists')}"+'&keyword='+$("input").val();;
+ });
+ </script>
+		<script type="text/javascript">
+
+			$(document).ready(function() {
+				
+				$("#s_ser").click(function() {
+					$(".bot_nav01").show();
+					$(".bot_nav02").show();
+				});
+				$("#h_ser").click(function() {
+					$(".bot_nav01").hide();
+					$(".bot_nav02").hide();
+				});
+			});
+		</script>
+	</body>
+
+</html>

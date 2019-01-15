@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,maximum-scale=1, minimum-scale=1" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no" />
+    <title>个人资料</title>
+    <link rel="stylesheet" href="__CSS__/common_mobile.css" />
+    <link rel="stylesheet" href="__CSS__/huiyuan.css" />
+    <script type="text/javascript" src="__JS__/jquery-3.1.1.min.js" ></script>
+    
+</head>
+<body>
+	<div>
+		<header>
+			<div class="header">
+				<a href="#"><i class="icon icon-return"></i></a>
+				<h1>个人资料</h1>
+				<a href="#" class="save">保存</a>
+			</div>
+		</header>
+		<div style="height: 2.5rem;"></div>
+	</div>
+	<div class="container">
+		<ul class="member-list">
+			<li>
+				<p>头像</p>
+				<img src="__IMG__/default.png" />
+			</li>
+			<li>
+				<a href="#">
+					<p>昵称</p>
+					<i></i>
+					<span class="info">微微一笑</span>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<p>性别</p>
+					<label class="active">
+						<i class="radio"></i>
+						<span>女</span>
+					</label>
+					<label>
+						<i class="radio"></i>
+						<span>男</span>
+					</label>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<p>生日</p>
+					<i></i>
+					<span class="info">1996-10-27</span>
+				</a>
+			</li>
+			<li>
+				<p>手机</p>
+				<span style="color: #0692ff;" class="info">修改</span>
+				<span class="info">159****1542</span>
+			</li>
+			<li style="margin-top: 1rem;">
+				<a href="#">
+					<p>密码</p>
+					<span style="color: #0692ff;" class="info">修改</span>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<p>地址</p>
+					<i></i>
+					<span class="info">湖北省   武汉市   武昌区</span>
+				</a>
+			</li>
+			<li>
+				<p>邮箱</p>
+				<span style="color: #0692ff;" class="info">验证</span>
+			</li>
+		</ul>
+	</div>
+	
+	<div class="H5"></div>
+	<div class="bottom-menu order-bottom-menu">
+		<a class="" href="{:url('index/index')}"><i class="home"></i><p>首页</p></a>
+		<a class="" href="{:url('category/index')}"><i class="category"></i><p>分类</p></a>
+		<a class="" href="{:url('cart/index')}"><i class="cart"></i><p>购物车</p></a>
+		<a class="active" href="{:url('member/index')}"><i class="mine"></i><p>我的</p></a>
+	</div>
+</body>
+<script>
+	$(function(){
+		$('.member-list label').click(function(){
+			if($(this).hasClass('active')){
+				
+			}else{
+				$('.member-list label').removeClass('active');
+				$(this).addClass('active');
+			}
+		})
+	})
+</script>
+</html>

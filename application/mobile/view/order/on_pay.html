@@ -1,0 +1,155 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1  maximum-scale=1 user-scalable=no">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-touch-fullscreen" content="yes">
+		<meta name="HandheldFriendly" content="True">
+		<title>微商城</title>
+		<link rel="stylesheet" href="__CSS__/style.css">
+		<script type="text/javascript" src="__JS__/jquery-1.10.1.min.js"></script>
+
+	</head>
+
+	<body>
+		<!--头部-->
+		<div class="top_con01">
+			<div class="fh_icon">
+				<a onClick="javascript :history.go(-1);"></a>
+			</div>
+			<div class="yc_icon" id="s_ser">
+				<a href="#"></a>
+			</div>
+			<div class="yc_icon bot_nav02" id="h_ser">
+				<a href="#"></a>
+			</div>
+			<h1>全部订单</h1>
+		</div>
+		<div class="bot_nav bot_nav01">
+			<ul>
+				<li>
+					<div class="boot_nav_i boot_nav_i01">
+						<a href="{:url('index/index')}"><i></i><span>首页</span></a>
+					</div>
+				</li>
+				<li>
+					<div class="boot_nav_i boot_nav_i02">
+						<a href="{:url('category/index')}"><i></i><span>分类</span></a>
+					</div>
+				</li>
+				<li>
+					<div class="boot_nav_i boot_nav_i06">
+						<a href="{:url('cart/index')}"><i></i><span>搜索</span></a>
+					</div>
+				</li>
+				<li>
+					<div class="boot_nav_i boot_nav_i04">
+						<a href="{:url('cart/index')}"><i></i><span>购物车</span></a>
+					</div>
+				</li>
+				<li>
+					<div class="boot_nav_i boot_nav_i05">
+						<a href="{:url('member/index')}"><i></i><span>我的</span></a>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<!--内容-->	{empty name="res.list"}<!-- 无评论 -->
+		<div class="zhmx_con01">
+			<div class="ahmx_con01_none">亲，此处没有内容~！</div>
+		<div> 
+		{else/}
+	 
+		<div class="order_con01">
+			<ul>{volist name="res.list" id="vo"} 
+			
+				<li>
+					<div class="wdpj_con01_main">
+
+							<div class="wdpj_con01_img">
+							{volist name="vo['detail']" id="vo1" offset="0" length="1"}	<a href="{:U('order/detail?id='.$vo['id'])}"><img src="{$vo1.path}"></a>{/volist}
+							</div>
+							<div class="order_con01_text">
+								<a href="{:U('order/detail?id='.$vo['id'])}">
+								<p>订单号：{$vo.order_sn}</p>
+<p>订单状态：  {if condition="$vo.status eq 0"}待支付{/if}
+										{if condition="$vo.status eq 1"}待发货{/if}
+									    {if condition="$vo.status eq 2"}已发货{/if}
+										{if condition="$vo.status eq 3"}已确认{/if}
+									    {if condition="$vo.status eq 4"}申请取消中{/if}
+										{if condition="$vo.status eq 5"}取消订单被拒绝{/if}
+									    {if condition="$vo.status eq 6"}订单已取消{/if}</p>
+<p>订单总金额：<span>￥{$vo.total_money}元</span></p>
+<p>下单时间：{$vo.create_time|date='Y-m-d H:i:s'}</p></a>
+							</div>
+						
+						</div>
+				</li>
+				{/volist}
+			</ul>
+		</div>
+		
+		{/empty}
+		<script type="text/javascript">
+			$(document).ready(function() {
+
+				$("#s_ser").click(function() {
+					$(".bot_nav01").show();
+					$(".bot_nav02").show();
+				});
+				$("#h_ser").click(function() {
+					$(".bot_nav01").hide();
+					$(".bot_nav02").hide();
+				});
+			});
+		</script>
+ <script type="text/javascript"> 
+    $(document).ready(function(){  
+        var range =10;             //距下边界长度/单位px  
+        var maxnum ={$maxnum};            //设置加载最多次数  
+        var num = 2; 
+		var obj=$('li').hasClass('current');
+		var url=$(obj).find('a').attr('href');
+        var totalheight = 0;//主体元素  
+		var stop=true;//触发开关，防止多次调用事件   
+		$(window).scroll(function(){  
+            var srollPos = $(window).scrollTop();    //滚动条距顶部距离(页面超出窗口的高度) 
+			var height=$(document).height()-range;
+            totalheight = parseFloat($(window).height()) + parseFloat(srollPos);  
+            if(height<= totalheight) {                  
+				 if(stop==true &&maxnum>=num){
+				    stop=false;  
+                    $('.loading').show();
+				    $.post(url,{p:num},function(data){
+					
+					if(data){
+						var html = '';
+						$.each(data, function(i,n){			
+							html=html+'<li> <a href="'+n.url+'" class="left_pic" title="'+n.title+'"> <img src="'
+							+n.image+'"> </a><div class="right_wrap"><div class="right_con"><p class="pic_txt">'
+							+n.title+'</p>  </div>	<div class="bottom_div_con"> <div class="num_con"><p class="good_num"><span class="price_num">￥'
+							+n.price+'</span><p>销量<span class="number">'
+							+n.sales+'</span></p></div></div> </div></li>';
+						 });
+						  $('.loading').hide(); 
+                          $(".pro_j_list ul").append(html);
+					 }
+					
+                    stop=true;  num=num+1;//当前要加载的页码  ;
+				 });  
+                  
+                }
+             }  
+        });  
+    });  
+ $(".rt").click(function(){
+		 window.location.href ="{:U('search/lists')}"+'&keyword='+$("input").val();;
+ });
+ </script>
+	</body>
+
+</html>

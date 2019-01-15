@@ -1,0 +1,1274 @@
+.comwidth {
+  width: 1152px;
+  margin: 0 auto;
+}
+body {
+    font-family: "Microsoft YaHei",sans-serif;
+}
+a:hover {
+    text-decoration: none;
+    color: #3e6ed4;
+}
+
+a {
+    outline: none;
+    text-decoration: none;
+}
+a {
+    color: #5d5d5e;
+    transition: all 0.3s ease-in-out 0s;
+}
+.bg-eee {
+  background: #eee;
+  width: 1200px;
+  margin: 0 auto;
+}
+
+a:hover {
+  text-decoration: none;
+}
+li {
+    list-style: none;
+}
+.pt-30 {
+  padding-top: 30px;
+}
+
+.fl {
+  float: left;
+}
+.login form .info ul li .code {
+    width: 210px;
+    padding: 0 10px;
+}
+.login form .info input {
+    width: 319px;
+    height: 38px;
+    margin-bottom: 19px;
+    padding-left: ;
+    border: 1px solid #ddd;
+    font-size: 14px;
+}
+.fr {
+  float: right;
+}
+
+.login .img {
+    margin: 20px 2px 2px 120px;
+    overflow: hidden;
+    display: block;
+	float:left;
+    text-align: center;
+}
+.lable{line-height:30px;}
+.hd{    
+    height: 36px;
+    line-height: 36px;
+    padding-left: 130px;
+    margin: 50px 0 20px 120px;
+}
+.hd strong {
+    font-size: 30px;
+    font-weight: bold;
+    color: #000;
+    margin-right: 30px;
+}
+.hd a {
+    margin-left: 6px;
+    color: rgba(239, 72, 36, 1);
+    vertical-align: -1px;font-size:16px;
+}
+.login form{padding-left:177px;border-left:1px solid #e8e8e8;}
+
+
+/*登录页*/
+
+.login-head {
+  width: 1150px;
+  height: 66px;
+  line-height: 76px;
+  margin: 0 auto;
+  padding: 5px 25px;
+  font-size: 16px;
+}
+
+.login-head .logo {
+  width: 168px;
+  height: 40px;
+  margin: 18px 0 0 10px;
+  background: url(../images/login_logo.png);
+}
+
+.login-head .sign-in ul li {
+  float:left;margin-left: 8px;color: #989898;
+}
+
+.login-head .sign-in ul li a {
+  font-size: 14px;
+}
+
+.login {
+  position: relative;
+  width: 1150px;
+  height: 600px;
+  margin: 0 auto;
+  background: url(../images/limg1.jpg) no-repeat;
+  padding: 0px 25px;
+}
+
+.login form {
+  position: absolute;
+  right: 25px;
+  top: 25px;
+  width: 324px;
+  background: #fff;
+  padding: 20px 28px 15px 155px;
+}
+
+.login form h2 {
+  font-size: 24px;
+  font-family: "Microsoft YaHei";
+  font-weight: bold;
+  color: #666666;
+  margin-bottom: 19px;
+}
+
+
+
+.login form .info input:-ms-input-placeholder {
+  font-size: 14px;
+  color: #979797;
+}
+
+.login form .info input::-moz-placeholder {
+  font-size: 14px;
+  color: #979797;
+}
+
+.login form .info input::-webkit-input-placeholder {
+  font-size: 14px;
+  color: #979797;
+}
+
+.login form .info ul li .name {
+   /*background: url(../images/limg2.png)left center no-repeat;*/
+}
+
+.login form .info ul li:first-child {
+  position: relative;
+}
+
+.login form .info ul li .password {
+ /*background: url(../images/limg3.png)left center no-repeat;*/
+}
+
+.login form .info ul li .code {
+  width: 165px;
+  padding: 0 10px;
+}
+.login form .info ul li span.yanz{
+  width: 148px;height:40px;
+  padding: 0px;overflow:hidden; 
+  line-height:40px;position:absolute;
+  }
+
+
+.login form .info ul li img{
+  width: 136px;
+   vertical-align: center;
+}
+.login li{
+       position:relative;
+}
+ .smscode{
+   width:133px;
+   height: 39px;line-height:39px;text-align:center;
+   margin-top:0px;
+   color:#fff;
+  background:#FF0036;position:absolute;right:0
+  display:inline-block;
+
+ }
+ .smscode:hover{
+  
+   color:#fff;
+
+
+ }
+.login form .info ul li i img {
+  vertical-align: top;
+}
+
+.login form .info ul li .cle {
+  display: inline-block;
+  width: 21px;  
+  height: 21px;
+  position: absolute;
+  top: 10px;
+  right: 5px;
+  background: url(../images/limg4.png);
+  cursor: pointer;
+}
+
+.tips {
+  margin-top: -10px;
+  font-size: 14px;
+  margin-bottom: 28px;
+}
+
+.tips #check {
+  display: none;
+}
+
+.tips .check-lable {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 1px;
+  border: 1px solid #cdcdcd;
+  position: relative;
+  margin-right: 3px;
+  top: 1px;
+}
+
+#check:checked+label:after {
+  content: '\2714';
+  font-size: 12px;
+  position: absolute;
+  top: -3px;
+  left: 1px;
+  color: #99a1a7;
+}
+
+.tips ul {
+  float: right;
+}
+
+.tips ul li {
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.submit input {
+  width: 323px;
+  height: 40px;
+  text-align: center;
+  border: none;
+  background:#FF0036;
+  font-size: 16px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.submit input:hover {
+  opacity: 0.9;
+}
+
+.san {
+  margin-top: 28px;
+  font-size: 14px;
+  color: #666666;
+}
+
+.san ul li {
+  margin-top: 10px;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.san ul li a {
+  display: inline-block;
+}
+
+.san ul li a img {
+  width: 30px;
+  height: 30px;
+  vertical-align: middle;
+  padding-right: 2px;
+}
+
+
+/*注册*/
+.register{
+  position: relative;
+  width: 1150px;
+  height: 620px;
+  margin: 0 auto;
+  background: url(../images/img130.jpg) no-repeat;
+  padding: 0px 25px;
+}
+
+.register form {
+  position: absolute;
+  right: 25px;
+  top: 25px;
+  width: 324px;
+  background: #fff;
+  padding: 20px 28px 15px;
+}
+
+.register form h2 {
+  font-size: 24px;
+  font-family: "Microsoft YaHei";
+  font-weight: bold;
+  color: #666666;
+  margin-bottom: 19px;
+}
+
+.register form .info input {
+  width: 289px;
+  height: 38px;
+  margin-bottom: 19px;
+  padding-right: 35px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.register form .info input:-ms-input-placeholder {
+  font-size: 14px;
+  color: #979797;
+}
+
+.register form .info input::-moz-placeholder {
+  font-size: 14px;
+  color: #979797;
+}
+
+.register form .info input::-webkit-input-placeholder {
+  font-size: 14px;
+  color: #979797;
+}
+
+.register form .info ul li .name {
+ /* background: url(../images/limg2.png)left center no-repeat;*/
+}
+
+.register form .info ul li:first-child {
+  position: relative;
+}
+.register form .info ul li .password {
+  	/*background: url(../images/limg3.png)left center no-repeat;*/
+}
+.register form .info ul li .sure-word{
+	/*background: url(../images/img131.png)left center no-repeat;*/
+}
+.register form .info ul li .email{
+		/*background: url(../images/img132.png)left center no-repeat;*/
+}
+.register form .info ul li .code {
+  width: 210px;
+  padding: 0 10px;
+}
+
+.register form .info ul li i img {
+  vertical-align: top;
+}
+
+.register form .info ul li .cle {
+  display: inline-block;
+  width: 21px;
+  height: 21px;
+  position: absolute;
+  top: 10px;
+  right: 5px;
+  background: url(../images/limg4.png);
+  cursor: pointer;
+}
+.register .agree{
+	font-size: 14px;color: #4D4D4D;margin-bottom: 30px;
+}
+.register .agree label{
+	line-height: 1;
+}
+/***********找回密码******/
+
+.head{
+  height:85px;
+  width: 1150px;
+  padding:0 25px;
+  margin: 0 auto;
+  }
+/*.head img{margin-top: 20px;}*/
+.head  .head-r{
+  float: right;
+  margin-top:42px;}
+.head  .head-r ul li{
+  float: left;
+  padding:0px 17px;
+  border-right: 1px solid #4d4d4d; }
+.head  .head-r ul li:last-child{
+  border: none;
+  padding-right: 0px;}
+.head  .head-r ul li a{
+  font-size: 12px;
+  color: #4d4d4d;}
+.nav-find{
+  width: 1200px;
+  height: 100px;
+  line-height: 100px;
+  margin: 0 auto;
+  background: linear-gradient(to right, #F54343 ,#FF9392);}
+.nav-find h5{
+  font-size: 20px;
+  color: #FFFFFF;
+  text-align: center
+}
+.password-list{
+  height: 130px;
+  width:1200px;
+  margin:0 auto;
+}
+.password-list ul{margin-left: 200px;}
+.password-list ul li{
+  float: left;
+  width: 250px;position: relative;
+}
+.password-list ul li .list-sub{
+  width: 70px;
+  text-align: center;
+
+}
+.password-list ul li h5{
+  display: block;
+  width:200px;
+  height: 2px;
+  background: linear-gradient(to right, #F54343 ,#FFF9F9);
+  position: absolute;top:55px;left: 60px;
+}
+.password-list ul li.active h5{background:#F54343}
+.password-list ul li .list-sub a{
+  display: block;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  font-size: 18px;
+  border-radius: 30px;
+  text-align: center;
+  margin: 40px auto 10px;
+  background: #E6E6E6;
+  color: #FFFEFF;
+}
+.password-list ul li.active a{background: #F54343;}
+.password-list ul li h4{
+  font-size: 14px;
+  color: #4d4d4d;
+}
+
+.e-mail{width: 1200px;margin: 0 auto;}
+.e-mail ul{width: 370px;margin: 0px auto;}
+.e-mail ul li{ width: 370px;box-sizing: border-box; }
+.e-mail ul li h3{
+  font-size: 12px;
+  color: #4C4C4C;
+  margin: 22px 0 10px;
+}
+.e-mail ul li p{
+  text-indent:24px;
+  color: #8C8C8C;
+  font-size: 12px;
+}
+.e-mail ul li input.accounts,.e-mail ul li input.password{
+  width: 370px;
+  height: 40px;
+  box-sizing: border-box;
+  padding: 0 10px;
+}
+.e-mail ul li input.code{
+  width:260px;
+  height: 40px;
+  box-sizing: border-box;border: 1px solid #cdcdcd;padding: 0 10px;
+  float: left;
+}
+.e-mail ul li i img{
+  vertical-align:top;
+  margin: 0px;
+  padding: 0px;
+}
+.e-mail ul li input.security{
+  width: 260px;
+  height: 40px;
+  box-sizing: border-box;float: left;
+  border: 1px solid #cdcdcd;padding: 0 10px;
+}
+.e-mail ul li input.code-btn{
+  width: 106px;
+  height: 40px;
+  box-sizing: border-box;border: 1px solid #cdcdcd;
+}
+.e-mail ul li input.next,.e-mail ul li input.enter{
+  margin:50px 0 90px;
+  width: 370px;
+  height: 40px;
+  border: none;
+  background: #F54343;
+  color: #FFFFFF;
+  font-size: 15px;
+}
+.reset{
+	width: 1200px;margin: 75px  auto 170px;
+}
+.reset .reset-success{
+  width: 100px;margin: 0 auto;
+}
+.reset .reset-success h3{font-size:16px;color: #4D4D4D;margin-top: 20px; }
+.copyleft{
+  background: #FFFFFF;
+  color: #676767;
+  text-align: center;
+  height: 100px;
+  border-top:1px solid #E6E6E6;
+}
+.copyleft h3{font-size:14px;margin: 34px 0 8px;}
+.copyleft li {
+  display: inline-block;
+  margin: 0 3px;
+}
+
+.copyleft li a {
+  font-size: 14px;
+}
+/*会员中心我的投稿*/
+.vipheader{
+   		height: 70px;
+   	}
+   		.vipheader .vip{
+   			height: 40px;line-height: 40px;padding-top: 30px;
+   		}
+   	.vipheader .vip li{
+   		float: left;color:#4d4d4d;font-size: 14px;
+   		margin-left: 35px;
+   	}
+   	.vipheader .vip li a{
+   		color:#4d4d4d;font-size: 14px;display: block;
+   	}
+   	.vipcenter{
+   		height: auto;overflow: hidden;
+   		margin-top: 20px;margin-bottom: 65px;
+   	}
+   	.vipcenter .vipinfo{
+   		width: 210px;
+   	}
+   	.vipcenter .vipinfo .name{
+   		font-size: 15px;height: 35px;line-height: 35px;
+   		color: #F54343;
+   	}
+   	.vipcenter .vipinfo .toper{
+   		height: auto;overflow: hidden;
+   		padding-top: 40px;padding-bottom: 25px;
+      text-align: center;
+   	}
+   	.vipcenter .vipinfo .toper li{
+   		font-size: 14px;display: inline-block;
+   		color: #8C8C8C;margin: 0 12px 20px;
+   	}
+   	.vipcenter .vipinfo .toper .changeavatar{
+   		display: inline-block;width: 140px;
+   		height: 37px;background: #F54343;color: #fff;
+   		font-size: 14px;text-align: center;
+   		border-radius: 5px;line-height: 37px;
+   	}
+   	.vipcenter .vipinfo .naver li{
+      position: relative;
+   	padding: 0 40px;
+   		line-height: 60px;
+   		border-bottom: 1px solid #e6e6e6;
+      font-size: 14px;
+   	}
+   	.vipcenter .vipinfo .naver li dl{
+   		display: none;
+   	}
+   	.vipcenter .vipinfo .naver li dl dd{
+   		text-align: center;
+   	}
+    .vipcenter .vipinfo .naver .on:before{
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 4px;
+      height: 40px;
+      background:#f54343;
+    }
+   	.vipcenter .vipinfo .toper li a{
+   		display: block;color: #4d4d4d;
+   		font-size: 14px;
+   	}
+    .contributions{
+      width: 920px;
+      height: auto;
+      overflow: hidden;
+      padding-bottom: 108px;
+    }
+    .contributions_head{
+      height: 60px;
+      line-height: 60px;
+      border-bottom: 1px solid #bbb;
+    }
+    .contributions_head h5{
+      float: left;
+      font-size: 16px;
+      color: #4d4d4d;
+      margin-top: -1px;
+      border-bottom: 2px solid #4d4d4d;
+    }
+    .contributions_btn {
+      float: right;
+      width: 80px;
+      height: 30px;
+      line-height: 30px;
+      border-radius: 3px;
+      text-align: center;
+      color: #fff;
+      margin-right: 38px;
+      background:#f54343;
+      margin-top: 15px;
+    }
+    .table_list{
+      padding:20px 38px 0px 30px;
+    }
+    .table_list table{
+      width: 850px;
+      border-collapse:collapse;
+    }
+    .table_list table tbody tr:first-child{
+      border:1px solid #ccc;
+      height: 48px;
+      background:#f7f7f7;
+    }
+    .table_list table tbody td{
+      padding: 18px 20px 13px 20px;
+    }
+    .table_list table tbody th{
+      padding: 0px 20px 0px 20px;
+      min-width: 130px;
+      text-align: center;
+      font-size: 14px;
+      line-height: 22px;
+    }
+    .table_list table tbody td{
+    	 padding: 0px 20px 0px 20px;
+      min-width: 130px;
+      text-align: center;
+      font-size: 14px;
+      line-height: 22px;
+    }
+    .table_list .paging{
+      float: right;
+      margin-top: 55px;
+      margin-right: 50px;
+    }
+    .table_list .paging ul li{
+      display:inline-block;
+      width: 28px;
+      height: 24px;
+      line-height: 26px;
+      text-align: center;
+      border:1px solid #dadada;
+    }
+    .table_list .paging ul .on{
+      background: #f54343;
+      border:1px solid #f54343;
+    }
+    .table_list .paging ul .on a{
+    	color: #fff;
+    }
+    .table_list .paging ul .f_paging{
+      width: 58px;     
+     }
+      .table_list .paging ul .num{
+        width: 58px;
+      }
+      
+/*会员中心--修改密码*/
+ .contributions{
+      width: 920px;
+      height: auto;
+      overflow: hidden;
+      padding-bottom: 108px;
+    }
+    .contributions_head{
+      height: 60px;
+      border-bottom: 1px solid #bbb;
+      line-height: 35px;
+      padding-left: 20px;
+    }
+    .contributions_head ul li{
+      display: inline-block;
+      width: 80px;
+      color: #8c8c8c;
+      font-size: 16px;
+      line-height: 60px;
+      padding:0px 10px;
+      text-align: center;
+      margin-right: 70px;
+    }
+    .contributions_head ul .active{
+      color: #4d4d4d;
+      border-bottom: 2px solid #4d4d4d;
+    }
+    .contributions_head ul .active a{
+      color: #4d4d4d;
+    }
+    .modify{
+      width: 376px;
+      padding-top: 30px;
+      padding-left: 20px;
+      font-size: 14px;
+      color: #4d4d4d;
+      text-align: right;      
+    }
+    .modify .modify_prompt{
+      text-align: left;
+    }
+    .modify_form .modify_input{
+      position: relative;
+      margin-top: 25px;
+    }
+    .modify_form .modify_input_m{
+      float: left;
+      width: 72px;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+    }
+    
+    .modify .modify_form input{
+      width:280px;
+      height: 40px;     
+      padding: 0 10px; 
+    }
+    .modify .modify_form button{
+      width:100%;
+      height: 40px;
+      border-radius: 5px;
+      background:#f54343;
+      border:none;
+      margin-top: 70px;
+      color: #fff;
+      font-size: 14px;
+    }
+	
+
+    /*会员中心--修改密码1*/
+   
+    .contributions{
+      width: 920px;
+      height: auto;
+      overflow: hidden;
+      padding-bottom: 108px;
+    }
+    .contributions_head{
+      height: 60px;
+      border-bottom: 1px solid #bbb;
+      line-height: 35px;
+      padding-left: 20px;
+    }
+    .contributions_head ul li{
+      display: inline-block;
+      width: 80px;
+      color: #8c8c8c;
+      font-size: 16px;
+      line-height: 60px;
+      padding:0px 10px;
+      text-align: center;
+      margin-right: 70px;
+    }
+    .contributions_head ul .active{
+      color: #4d4d4d;
+      border-bottom: 2px solid #4d4d4d;
+    }
+    .contributions_head ul .active a{
+      color: #4d4d4d;
+    }
+    .modify{
+      width: 376px;
+      padding-top: 30px;
+      padding-left: 20px;
+      font-size: 14px;
+      color: #4d4d4d;
+      text-align: right;      
+    }
+    .modify .modify_prompt{
+      text-align: left;
+    }
+    .modify_form .modify_input{
+      position: relative;
+      margin-top: 25px;
+    }
+    .modify_form .modify_input_m{
+      float: left;
+      width: 72px;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+    }
+    
+    .modify .modify_form input{
+     width: 280px;
+      height: 40px;      
+    }
+    .modify .modify_form button{
+      width:100%;
+      height: 40px;
+      border-radius: 5px;
+      background:#f54343;
+      border:none;
+      margin-top: 70px;
+      color: #fff;
+      font-size: 14px;
+    }
+    .modify .modify_form .modify_input .modify_check{
+      position: absolute;
+      right: -240px;
+      top: -25px;
+      width: 208px;
+      height: 88px;
+      text-align: left;
+      font-size: 12px;
+      border: 1px solid #c1c1c1;
+      background:#eeeeee;
+    }
+    .modify .modify_form .modify_input .modify_check:before{
+    content: ' ';
+    position: absolute;
+    top: 30px;
+    left: -11px;
+    width: 20px;
+    height: 20px;
+    background: #eee;
+    border-left: 1px solid #c1c1c1;
+    border-bottom: 1px solid #c1c1c1;
+    transform: rotate(45deg);
+    }
+    .modify .modify_form .modify_input .modify_check_s{
+      position: absolute;
+      right: -170px;
+      top: 0px;
+      width: 138px;
+      height: 38px;
+      line-height: 38px;
+      text-align: center;
+      font-size: 12px;
+      border: 1px solid #c1c1c1;
+      background:#eeeeee;
+    }
+    .modify .modify_form .modify_input .modify_check ul li{
+      line-height: 20px;
+    }
+    .modify .modify_form .modify_input .modify_check ul li img{
+      width: 12px;
+      height: 12px;
+      margin: 0 8px;
+    }
+    /*会员中心--修改手机*/
+     .safe{
+      width: 1200px;
+      height: 100px;
+      margin:0 auto;
+      background:linear-gradient(to right,#f54343,#ff9393);
+      text-align: center;
+      line-height: 100px;
+      font-size: 20px;
+      color: #fff;
+    }
+    .change-tel{
+      text-align: center;
+      font-size: 18px;
+      color: #4d4d4d;
+      margin-top:50px;
+      margin-bottom: 68px;
+    }
+    .change_phone{
+      margin:0 auto;
+      width: 370px;
+      font-size: 14px;
+    }
+    .change_phone ul li{
+      margin:5px 0 10px 0;
+    }
+    .change_phone ul li input{
+      width: 350px;
+      height: 40px;
+      border:1px solid #cdcdcd;
+      padding: 0 10px;
+    }
+    .change_phone ul li:last-child input{
+      width: 230px;
+      border-right: 1px solid transparent;
+    }
+    .change_phone ul li i{
+      display: inline-block;
+      width: 118px;
+      height: 42px;
+      line-height: 40px;
+      background:#e4dffd;
+      vertical-align: middle;
+      cursor: pointer;
+      text-align: center;
+      color:#4d4d4d;
+    }
+    .change_phone button{
+      width: 370px;
+      height: 40px;
+      line-height: 40px;
+      border-radius: 5px;
+      margin-top: 20px;
+      border: none;
+      background:#f54343;
+      color: #fff;
+      font-size: 16px;
+      margin-bottom: 60px;
+    }
+    .success{
+      margin:0 auto;
+      width: 300px;
+      height: 300px;
+      text-align: center;
+      margin-top: 140px;
+    }
+   
+    .success span{
+      line-height: 45px;
+      font-size: 18px;
+    }
+   	  .change_phone{
+      margin:0 auto;
+      width: 370px;
+      font-size: 14px;
+    }
+    .change_phone ul li{
+      margin:5px 0 10px 0;
+    }
+    .change_phone ul li input{
+      width: 350px;
+      height: 40px;
+      border:1px solid #cdcdcd;
+    }
+    .change_phone ul li:last-child input{
+      width: 210px;
+      border-right: 1px solid transparent;
+    }
+    .change_phone ul li i{
+      display: inline-block;
+      position:relative;
+      top:-1px;
+      width: 118px;
+      height: 42px;
+      line-height: 40px;
+      background:#e4dffd;
+      vertical-align: middle;
+      cursor: pointer;
+      text-align: center;
+      color:#4d4d4d;
+    }
+
+    .change_phone button{
+     
+      width: 170px;
+      height: 40px;
+      line-height: 40px;
+      border-radius: 5px;
+      margin-top: 20px;
+      border: none;
+      background:#f54343;
+      color: #fff;
+      font-size: 16px;
+      margin-bottom: 115px;
+    }
+    .change_phone .span{
+      width: 22px;
+    display: inline-block;
+    }
+    .change_phone .btn_back{
+      color: #4d4d4d;
+      background: #e6e6e6;
+    }
+    
+     .change_phone ul li{
+      margin:5px 0 10px 0;
+    }
+    .change_phone ul li input{
+      width: 368px;
+      height: 40px;
+      border:1px solid #cdcdcd;
+    }
+    .change_phone ul li:last-child input{
+      width: 230px;
+      border-right: 1px solid transparent;
+    }
+    .change_phone ul li:nth-child(2){
+      text-indent: 28px;
+      color: #8c8c8c;
+      margin-bottom: 30px;
+    }
+    .change_phone ul li:nth-child(2) span{
+      margin-left: 10px;
+    }
+    .change_phone ul li i{
+      display: inline-block;
+      position:relative;
+      top:-1px;
+      width: 118px;
+      height: 42px;
+      line-height: 40px;
+      background:#e6e6e6;
+      vertical-align: middle;
+      cursor: pointer;
+      text-align: center;
+      color:#4d4d4d;
+    }
+
+   .change_phone button{
+     width: 370px;
+      height: 40px;
+      line-height: 40px;
+      margin-top: 20px;
+      border: none;
+      background:#f54343;
+      color: #fff;
+      font-size: 16px;
+      margin-bottom: 60px;
+    }
+    .change_phone .span{
+      width: 22px;
+    display: inline-block;
+    }
+    .change_phone .btn_back{
+      color: #4d4d4d;
+      background: #e6e6e6;
+    }
+   	 .change_phone ul li i:before{
+      content: '验证码已经发送';
+      position: absolute;
+      left: 120px;
+      top: 0px;
+      font-size: 12px;
+      color: #8c8c8c;
+      width: 100px;
+      height: 40px;
+    } 
+    
+    
+     .modify .modify_form input{
+      position: relative;
+      width:280px;
+      height: 40px;
+      text-indent: 10px;  
+      font-size: 14px;
+      color:#8c8c8c;    
+    }
+    .modify .modify_form .modify_input_autograph{
+          position: relative;
+          left: 70px;
+          bottom: 45px;
+          padding:10px;
+          width: 723px;
+          height: 90px;
+          text-indent: 10px;
+          font-size: 14px;
+          color: #8c8c8c;
+          resize:none
+    }
+     .modify .modify_form .modify_input_m_s{
+      position: absolute;
+      right: -460px;
+      top: 10px;
+      width: 450px;
+      text-align: left;
+      color: #8c8c8c;
+      font-size: 14px;
+     }
+    .modify .modify_form .red{
+      color:#f54343;
+    }
+    .modify .modify_form .radio_d{
+      float: left;
+      height: 40px;
+      line-height: 40px;
+      margin-right: 20px;
+      margin-left: 20px;
+      font-size: 14px;
+      color: #8c8c8c;
+    }
+    .modify .modify_form .radio_d input[type="radio"]{
+        display: none;
+     }
+    .modify .modify_form .radio_d input[type="radio"]+label{
+        position:relative;  
+       }
+    .modify .modify_form .radio_d input[type="radio"]+label::before {
+        content: "";
+        width: 14px;
+        height: 14px;
+        border-radius: 20px;
+        border: 1px solid #cecece;
+        position: absolute;
+        left: -20px;
+        top: 3px;
+      }
+    .modify .modify_form .radio_d input[type="radio"]:checked+label::after {
+        top:4px;
+        left:-19px;
+        content:"";
+        background-color:#f54343;
+        width:14px;
+        height:14px;
+        border-radius:14px;
+        position:absolute;
+        vertical-align:middle;
+      }
+    .modify .modify_form .radio_d .modify_radio{
+      width: 14px;
+      height: 14px;
+      vertical-align: middle;
+    }
+    .modify .modify_form button{
+       width: 100%;
+      height: 40px;
+      border-radius: 5px;
+      background: #f54343;
+      border: none;
+      margin-top: 50px;
+      margin-left: 50%;
+      color: #fff;
+      font-size: 14px;
+    }
+    /*下载详情页*/
+   .download .naver-bar{
+		border-bottom: 1px dashed #e6e6e6;
+		height: 30px;
+	}
+	.download .naver-bar ul li{
+		float: left;margin-right: 5px;
+		font-size: 14px;color: #666;
+	}
+	.download .down-safeware .head{
+		height: 85px;line-height: 85px;overflow: hidden;
+	}
+	.download .down-safeware .head .logo-img{
+		float: left;margin-right: 25px;
+	}
+	.download .down-safeware .head h2{
+		font-size: 18px;color: #666;margin-right: 45px;
+	   float: left;
+	}
+	.download .down-safeware .head ul li{
+		float: left;margin-right: 5px;margin-top: 5px;
+	}
+	.download .down-safeware .head .sort{
+		color: #666666;font-size: 14px;
+	}
+	.download .down-safeware .infomation ul{
+		height: 45px;line-height: 45px;
+		border-bottom: 1px dashed #e6e6e6;
+	}
+	.download .down-safeware .infomation li{
+		float: left;font-size: 14px;color: #666666;
+		width: 210px;
+	}
+	.download .down-safeware .infomation p{
+		font-size: 14px;color: #666666;height: 45px;line-height: 45px;
+		border-bottom: 1px dashed #e6e6e6;
+	}
+	.download .down-safeware .download-sort{
+		height: 36px;padding-top: 30px;overflow: hidden;
+		text-align: right;
+	}
+	.download .down-safeware .download-sort button{
+		width: 120px;height: 35px;border-radius: 3px;border: none;
+		font-size: 14px;cursor: pointer;margin-left: 5px;
+	}
+	.download .down-safeware .download-sort .fast{
+		color: #fff;background: #F54343;
+	}
+	.download .down-safeware .download-sort .fast img{
+		vertical-align: middle;margin: 0 5px;
+	}
+	.download .down-safeware .download-sort .nomarl{
+		color: #4897ff;background: #e6e6e6;
+	}
+	.download .down-safeware .soft-tit{
+		background: url(../images/img136.png) no-repeat left center;
+		font-size: 18px;color: #666666;padding-left: 30px;
+		margin-bottom: 35px;
+	}
+	.download .down-safeware .cut .slideBox1{
+		position: relative;margin-bottom: 50px
+	}
+	.download .down-safeware .cut .slideBox1 .bd{
+		width: 610px;height:350px ;margin: 0 auto;
+	}
+	.download .down-safeware .cut .slideBox1 a{
+		position: absolute;display: block;width: 43px;
+		height: 70px;top: 140px;cursor: pointer;
+	}
+	.download .down-safeware .cut .slideBox1 a.prev{
+		background: url(../images/img138.png) no-repeat center;
+		left: 30px;
+	}
+	.download .down-safeware .cut .slideBox1 a.next{
+		background: url(../images/img139.png) no-repeat center;
+		right: 30px;
+	}
+	.download .down-safeware .cut dd{
+		font-size: 14px;color: #666666;line-height: 30px;
+	}
+	.download .down-safeware .close-up{
+		color:#FF0036;font-size: 14px;text-align: right;
+		cursor: pointer;
+	}
+	.download .down-l .txt-top {
+  position: relative
+}
+
+.download .down-l .comment .txt-top i {
+  position: absolute;
+  top: 18px;
+  right: 10px;
+  font-size: 14px;
+  color: #9B9B9B;
+}
+
+.download .down-l .comment .txt-top textarea {
+  width: 810px;
+  height: 57px;
+  margin-bottom: 20px;
+  padding: 17px 15px 17px 15px;
+  background: #F1F1F1;
+  outline: none;
+  border-radius: 7px;
+  color: #989898;
+  border: 1px solid #DADADA;
+}
+
+.download .down-l .comment-btn {
+  height: 40px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #DADADA;
+}
+.download .down-l .comment{
+	margin-top: 115px
+}
+.comment-btn .fl a {
+  display: inline-block;
+  line-height: 40px;
+  color: #151515;
+}
+
+.comment-btn .fl img {
+  margin-right: 10px;
+  vertical-align: middle
+}
+
+.comment-btn input {
+  border: none;
+  width: 100px;
+  height: 40px;
+  outline: none;
+  border-radius: 7px;
+  color: #ffffff;
+  font-size: 14px;
+  background: #F54343;
+}
+/*参数规格*/
+

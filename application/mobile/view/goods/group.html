@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>团购</title>
+	<link rel="stylesheet" href="__CSS__/base.css" type="text/css">
+	<link rel="stylesheet" href="__CSS__/main.css" type="text/css">
+	<script src="__JS__/jquery-2.0.3.min.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		$(function(){
+			//下拉菜单
+			$('.down_con').click(function(){
+				$('.down_list').toggle();
+				if($('.down_con').children('a').children('img').attr('src').match('down_icon')){
+					$('.down_con').children('a').children('img').attr('src','__IMG__/down.gif');					
+				}else{
+					$('.down_con').children('a').children('img').attr('src','__IMG__/down_icon.gif');		
+				}
+			});
+			//点击导航切换
+			$('.tit_list li').click(function(e) {
+				$(this).addClass('current').siblings().removeClass('current');
+				var nav_index = $(this).index();
+				$('.pro_list ul').eq(nav_index).addClass('show_ul').siblings().removeClass('show_ul');
+			});				
+			//回到顶部
+			$(window).scroll(function(e) {
+				if($(window).scrollTop() > $(window).height()){
+					$('.to_top').show();		
+				}else{
+					$('.to_top').hide();		
+				}
+			});	
+			$('.to_top').click(function(e) {
+				$('body,html').animate({'scrollTop':'0'},500);
+			});
+					
+		})
+	</script>
+</head>
+
+<body class="tuangou_con">
+	<header style="background-color:#F8515B" class="tuangou_header_con">
+<a href="Javascript:history.go(-1);void(0);"class="lft">						<i class="icon icon-back"></i>
+		</a>
+		<h5>团购</h5>
+		<a class="rt">
+			<img src="__IMG__/gouwuche.gif"/>
+		</a>
+	</header>
+   <div class="tg_nav_list">   
+        <ul class="tit_list">
+			<li class="current">
+				<a href="Javascript:;">全部</a>
+			</li>
+			<li>
+				<a href="Javascript:;">品牌</a>
+			</li>
+			<li>
+				<a href="Javascript:;">家电</a>
+			</li>
+			<li>
+				<a href="Javascript:;">服装</a>
+			</li>
+			<li>
+				<a href="Javascript:;">生鲜</a>
+			</li>
+			<li class="down_con">
+				<a href="Javascript:;"><img src="__IMG__/down_icon.gif"/></a>
+			</li>
+			
+		</ul>
+		<ul class="down_list">
+			<li  class="list_currnet">
+				<a href="Javascript:;">全部</a>
+			</li>
+			<li>
+				<a href="Javascript:;">品牌</a>
+			</li>
+			<li>
+				<a href="Javascript:;">家电</a>
+			</li>
+			<li>
+				<a href="Javascript:;">服装</a>
+			</li>
+			<li>
+				<a href="Javascript:;">生鲜</a>
+			</li>
+<li >
+				<a href="Javascript:;">生鲜</a>
+			</li>
+			<li>
+				<a href="Javascript:;">品牌</a>
+			</li>
+			<li>
+				<a href="Javascript:;">家电</a>
+			</li>
+			<li>
+				<a href="Javascript:;">服装</a>
+			</li>
+			<li>
+				<a href="Javascript:;">生鲜</a>
+			</li>				
+		</ul>
+	</div>
+	<div class="banner">
+		<a href="{:U('Article/detail?id=56')}">
+			<img src="__IMG__/banner.gif"/>
+			<div class="pic_right">
+				<div class="logo"><img  src="__IMG__/logo.gif"/></div>				
+				<div class="zhekou">
+					<div class="num_con"><span>3</span>折起</div>
+					<div class="bottom_txt">2月10开售</div>
+				</div>
+				
+			</div>
+		</a>
+		<div class="tit_txt">
+			<span class="left_txt">品牌女装</span>
+			<button class="right_txt_btn">开售提醒</button>
+			<span class="right_txt"><span style="color:#F8515B">100人</span>想买</span>
+		</div>
+	</div>
+	<div class="pro_tit">
+		<h4>今日团购</h4><span>每天9:30上新</span>
+	</div>
+	<div class="pro_list">
+		<ul class="show_ul">
+			<volist name="list" id="vo"><li>
+				<a href="{:U('Article/detail?id='.$vo['id'])}">
+					<div class="top_pic">
+                    	<img src="{$vo.cover_id|get_cover='path'}"/>
+                    	<div class="zhezhao"></div>
+                    </div>
+					<p class="pro_h">全部</p>
+					<p><span class="price">¥{$vo.price}</span><span class="count">{$vo.id|get_discount}折</span>
+					</p>
+					<p><span class="price_old">¥{$vo.id|get_marketprice}</span><span class="poe_count">{$vo.sale}人已买</span></p>
+				</a>
+			</li>
+		   </volist>        
+		</ul>
+        <div class="to_top"><a href="Javascript:;"></a></div>
+	</div>
+ <script type="text/javascript"> 
+    $(document).ready(function(){  
+        var range =10;             //距下边界长度/单位px  
+        var maxnum ={$maxnum};            //设置加载最多次数  
+        var num = 2; 
+		var obj=$('li').hasClass('current');
+		var url="{:U('')}";
+        var totalheight = 0;//主体元素  
+		var stop=true;//触发开关，防止多次调用事件   
+		$(window).scroll(function(){  
+            var srollPos = $(window).scrollTop();    //滚动条距顶部距离(页面超出窗口的高度) 
+			var height=$(document).height()-range;
+            totalheight = parseFloat($(window).height()) + parseFloat(srollPos);  
+            if(height<= totalheight) {                  
+				 if(stop==true &&maxnum>=num){
+				    stop=false;  
+                    $('.loading').show();
+				    $.getJSON(url,{p:num},function(data){
+					var html = '';
+					$.each(data, function(i,n){			
+						html=html+'<li> <a href="'+n.url+'" class="left_pic" title="'+n.title+'"> <img src="'+n.image+'"> </a><div class="right_con"><p class="pic_txt">'+n.title+'</p>  </div>	<div class="bottom_div_con"> <div class="num_con"><p class="good_num"><span class="price_num">￥'+n.price+'</span>（'+n.comment+'人评）</p></div><a href="Javascript:;"></a></div> ';
+					 });
+					 $('.loading').hide(); 
+                     $(".pro_j_list ul").append(html);
+                    stop=true;  num=num+1;//当前要加载的页码  ;
+				 });  
+                  
+                }
+             }  
+        });  
+    });  
+
+ </script>    
+</body>
+
+</html>

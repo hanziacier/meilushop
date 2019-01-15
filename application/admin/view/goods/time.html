@@ -1,0 +1,197 @@
+ <!-- 头部 -->
+	{include file='public/header'}
+<!-- 头部 --> 
+
+
+			<div class="content">
+			<div class="tips_msg none"><span class="tips">保存成功</span><span class="close_tips"></span></div>
+					<div class="edit_title">{$meta_title|default=""}[{$cate["title"]}]</div>
+				<div class="edit_box">
+					
+					<div class="edit_tab">
+						<div class="tab_option on">基本信息</div>
+						
+						<div class="tab_option">相册</div>
+					</div>
+					<div class="edit_content">
+						 <form class="group-form"  action="{:url('')}" method="post">
+ <!-------------------------------- 基本信息 ---------------------------------------------------------------------------> 
+							 <div class="edit_content_tab">
+
+						           <div class="form-group">
+									  <label>名称<span>(标题)</span></label>
+									  <div class="form-input">
+									   <input type="text" name="title" value="{$info.title|default=""}">
+									   </div>
+								    </div>
+
+								     <div class="form-group">
+												<label>图片<span>(图片名称)</span></label> 
+												<div id="cover_id" class="container">
+													<div id="file_cover_id">你的浏览器不支持flash,Silverlight或者HTML5！</div>
+													<input type="hidden" name="cover_id"  value="{$info.cover_id|default=''}">
+													<a id="select_cover_id" href="javascript:void(0);" class='btn'>选择文件</a>
+													<a id="post_cover_id" href="javascript:void(0);" class='btn'>开始上传</a>
+												</div>
+		
+											    <div class="uploader_preview">
+													  {notempty name="info['cover_id']"}
+															  <div class="uploader-pre-item"> <img src="{$info.cover_id|get_cover_path}"/>
+															 </div>
+														{/notempty}
+												</div>
+
+												<script type="text/javascript">  
+													var field="cover_id";
+													upload(field);
+												</script>	
+                                      </div>
+						        	
+                               
+                                    <div class="form-group">
+									    <label>内容<span>(详细内容)</span></label>
+										<div class="form-input w100">
+												<textarea class="am-validate" id="content" name="content" required>{$info.content|default=""}</textarea>	
+												<link rel="stylesheet" href="__COMMON__/kindeditor/default/default.css" />
+												<script charset="utf-8" src="__COMMON__/kindeditor/kindeditor-min.js"></script>
+												<script charset="utf-8" src="__COMMON__/kindeditor/zh_CN.js"></script>
+												<script type="text/javascript">
+													var editor_content;
+													KindEditor.ready(function(K) {
+														editor_content = K.create('textarea[name="content"]', {
+															allowFileManager : false,
+															themesPath: K.basePath,
+															width: '90%',
+															height: '350',
+															resizeType:1,
+															pasteType : 2,
+															urlType : 'absolute',
+															fileManagerJson : '{:url('fileManagerJson')}',
+															uploadJson : '{:url("Uploads/ke_upimg")}'
+														});
+													});
+
+													$(function(){
+														$('textarea[name="content"]').closest('form').submit(function(){
+															editor_content.sync();
+														});
+													})
+											    </script> 
+										</div>
+                                   </div>
+
+                                    <div class="form-group">
+										 <label>价格<span>(商品价格)</span></label>
+										 <div class="form-input">
+										      <input type="text" name="price" value="{$info.price|default=''}">
+										 </div>
+									 </div>
+
+                                   <div class="form-group">
+									<label>结束时间<span>(秒杀或抢购结束时间)</span></label>
+									<div class="form-input">
+										<input type="text" name="end_time" id="end_time" class="laydate-icon" value="{notempty name='info.end_time'}{$info.end_time|time_format}{/notempty}"/>				
+											<script>
+											laydate({
+											  elem: '#end_time', 
+											  format: 'YYYY-MM-DD hh:mm:ss', 
+											//设定最小日期为当前日期//目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
+											  event: 'focus' //响应事件。如果没有传入event，则按照默认的click
+											});
+											</script>
+									</div>
+							  </div>
+
+						            <div class="form-group">
+										<label>库存数量<span>(库存)</span></label>
+										<div class="form-input">
+											 <input type="text" name="num" value="{$info.num|default=''}">
+										</div>
+							        </div>
+							
+							 
+	  
+						</div>
+
+ <!-----------------------------------------------相册 --------------------------------------------------------------------------->	
+			     <div class="edit_content_tab none">
+                              
+							  <div class="form-group">
+									<label>相册<span>(图片)</span></label>
+									<input type="hidden" name="covers"  value="{$info.covers|default=""}"	>
+									<div id="covers" class="container">
+													<div id="file_covers">你的浏览器不支持flash,Silverlight或者HTML5！</div>
+													<input type="hidden" name="covers"  value="{$info.covers|default=''}">
+													<a id="select_covers" href="javascript:void(0);" class='btn'>选择文件</a>
+													<a id="post_covers" href="javascript:void(0);" class='btn'>开始上传</a>
+									</div>
+									  <div class="uploader_preview">
+											    {notempty name="info['covers']"}
+											     {php}$list=explode(",",$info['covers']);{/php}
+												{foreach name="list" item="vo" }  
+												<div class="upload-pre-item"> <img src="{$vo|get_cover_path}" data-id="{$vo}"/>
+												   <span class="close"  onclick="delimage(this,'covers');"></span>
+											 	</div>
+												 {/foreach}	
+												{/notempty} 
+									   </div>
+									 <script type="text/javascript">  
+								             var field="covers";
+						     	             uploads(field);
+                                       </script>
+							</div>
+
+				    </div>	
+						<div class="btn_group"> 
+						    <input type="hidden" name="category_id" value="{$info.category_id|default=""}">
+						    <input type="hidden" name="id" value="{$info.id|default=""}">
+							<div class="confirm_btn">确认</div>
+							<div class="cancel_btn">返回</div>
+						</div>
+						</form> 
+					</div>
+				</div>
+			</div>
+		</div>
+	
+	   <script type="text/javascript">
+		 $("select[name='brand_id']").val("{$info.brand_id|default=''}");
+		 $("select[name='has']").val("{$info.has|default=''}");
+		 $("select[name='baoyou']").val("{$info.baoyou|default=''}");
+		 $("select[name='position']").val("{$info.position|default='0'}");
+		 var group = [{$info.attrs|default=''}];
+			$('.attrs').each(function(){
+				if( $.inArray( parseInt(this.value,10),group )>-1 ){
+					$(this).prop('checked',true);
+				}
+		});
+		 var attributes = [{$info.attributes|default=''}];
+		$('.attributes').each(function(){
+				if( $.inArray( parseInt(this.value,10),attributes )>-1 ){
+					$(this).prop('checked',true);
+				}
+		});
+		$(function(){
+			var specs ="{$info.specs|default=''}";
+			$('.specs').each(function(){
+				if( specs.indexOf(this.value)>=0){
+				   $(this).prop('checked',true);
+				}
+			});
+			if(specs){
+			 $(".div_contentlist label").change();
+		   }
+		});
+		$(".tab_option").click(function(){
+					if(!$(this).hasClass("on")){
+						var index = $(".tab_option").index($(this));
+						$($(".edit_content_tab").get(index)).removeClass("none").siblings(".edit_content_tab").addClass("none");
+						$(this).addClass("on").siblings().removeClass("on");
+					}
+					
+		});
+				
+	</script>	
+ <!-- 头部 -->
+	{include file='public/footer'}
+<!-- 头部 --> 

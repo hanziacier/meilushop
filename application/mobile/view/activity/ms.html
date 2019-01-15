@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<title>秒杀</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="format-detection" content="telephone=no">
+	<meta http-equiv="Expires" content="-1">
+	<meta http-equiv="Cache-Control" content="no-cache">
+	<meta http-equiv="Pragma" content="no-cache">
+   
+	<link rel="stylesheet" href="__CSS__/base.css" type="text/css">
+	<link rel="stylesheet" href="__CSS__/common.css" type="text/css">
+	<link rel="stylesheet" href="__CSS__/main.css" type="text/css">
+	<script src="__COMMON__/jquery.min.js" type="text/javascript"></script>
+	 <link rel="stylesheet" href="__CSS__/common_mobile.css" />
+	<script type="text/javascript" src="__JS__/zepto.min.js"></script>
+	<script type="text/javascript">				
+		$(function(){
+			//倒计时
+			show_time();			
+			//点击秒杀切换
+			$('.ms_time li').click(function(e) {
+				var li_index = $(this).index();
+				$('.ms_tab_con').children('ul').eq(li_index).css('display','block').siblings().css('display','none');
+				$(this).addClass('current').siblings().removeClass('current');
+			});
+			
+		})
+		function show_time(){ 
+			var time_start = new Date().getTime(); //设定当前时间
+			var time_end =  new Date("{$end}").getTime(); //设定目标时间
+			// 计算时间差 
+			var time_distance = time_end - time_start; 
+			// 时
+			var int_hour = Math.floor(time_distance/3600000) 
+			time_distance -= int_hour * 3600000; 
+			// 分
+			var int_minute = Math.floor(time_distance/60000) 
+			time_distance -= int_minute * 60000; 
+			// 秒 
+			var int_second = Math.floor(time_distance/1000) 
+			// 时分秒为单数时、前面加零 
+			if(int_hour < 10){ 
+				int_hour = "0" + int_hour; 
+			} 
+			if(int_minute < 10){ 
+				int_minute = "0" + int_minute; 
+			} 
+			if(int_second < 10){
+				int_second = "0" + int_second; 
+			} 
+			// 显示时间 
+			$("#time_h").val(int_hour); 
+			$("#time_m").val(int_minute); 
+			$("#time_s").val(int_second); 
+			// 设置定时器
+			setTimeout("show_time()",1000); 
+		}
+	</script>
+</head>
+
+<body style="background-color:#F2F0F1" class="miaosha_bd">
+	<!--头部 header-->
+	<div>
+		<header>
+			<div class="header" style="background:{$config['theme_color']}">
+				<a href="Javascript:history.go(-1);void(0);"><i class="icon icon-back"></i></a>
+				<h1>产品详情</h1>
+			</div>
+		</header>
+
+
+		<div style="height: 2.5rem;"></div>
+	</div>
+
+<ul class="ms_time">
+		<li class='{between name="time" value="10,14"}current{/between}'><a><p>10:00</p><p>
+		{lt name="time" value="10"}即将开抢{/lt}{between name="time" value="10,14"}已开抢{/between}{gt name="time" value="14"}已结束{/gt}</p></a></li>
+		<li class='{between name="time" value="15,19"}current{/between}'><a><p>15:00</p><p>{lt name="time" value="15"}即将开抢{/lt}{between name="time" value="15,19"}已开抢{/between}{gt name="time" value="19"}已结束{/gt}</p></a></li>
+		<li class='{between name="time" value="20,21"}current{/between}'><a><p>20:00</p><p>{lt name="time" value="20"}即将开抢{/lt}{between name="time" value="20,21"}已开抢{/between}{gt name="time" value="21"}已结束{/gt}</p></a></li>
+		<li class='{between name="time" value="22,24"}current{/between}'><a><p>22:00</p><p>{lt name="time" value="22"}即将开抢{/lt}{between name="time" value="22,24"}已开抢{/between}</p></a></li>
+		<li class='{between name="time" value="0,9"}current{/between}'><a><p>00:00</p><p>{between name="time" value="10,24"}即将开抢{/between}{between name="time" value="0,9"}已开抢{/between}</p></a></li>
+	</ul>
+	<div class="djs_time">
+		<div>
+			距本场结束
+			<span><input type="text" id="time_h"></span>:
+			<span><input type="text" id="time_m"></span>:
+			<span><input type="text" id="time_s"></span>
+		</div>		
+	</div>
+	<div class="ms_tab_con">
+		<ul>{volist name="list" id="vo"}
+			<li>
+			<a href="{$vo.url}">
+					<img class="left_pic" src="{$vo.image}"/>
+					<div class="top_con">
+						<p class="pic_txt">{$vo.title}</p> 
+						<p class="price_num">¥{$vo.price}<span>¥2999</span></p>
+					</div>
+					<div class="bottom_con">
+						<div class="progress" id="progress">
+							<span class="pro" style="width:{$vo.percent};"></span>
+						</div>
+						<p class="yishou_num">已售{$vo.percent};</p>
+					</div>
+					<button type="button" class="tuichu_btn">马上抢</button>				
+				</a>
+			</li>
+			{/volist}		
+	   </ul>
+	</div>
+	<script type="text/javascript"> 
+    $(document).ready(function(){  
+        var range =10;             //距下边界长度/单位px  
+        var maxnum ={$maxnum};            //设置加载最多次数  
+        var num = 2; 
+		var url="{:url('')}";
+        var totalheight = 0;//主体元素  
+		var stop=true;//触发开关，防止多次调用事件   
+		$(window).scroll(function(){  
+            var srollPos = $(window).scrollTop();    //滚动条距顶部距离(页面超出窗口的高度) 
+			var height=$(document).height()-range;
+            totalheight = parseFloat($(window).height()) + parseFloat(srollPos);  
+            if(height<= totalheight) {                  
+				 if(stop==true &&maxnum>=num){
+				    stop=false;  
+                    $('.loading').show();
+				    $.post(url,{p:num},function(data){
+					
+					if(data){
+						var html = '';
+						$.each(data, function(i,n){			
+							html=html+'<li><a href="'+n.url+'"><img class="left_pic" src="'+n.image+'"/><div class="top_con"><p class="pic_txt">'+n.title+'</p> <p class="price_num">¥'+n.price+'<span></span></p></div><div class="bottom_con"><div class="progress" id="progress"><span class="pro" style="width:'+n.percent+';"></span></div><p class="yishou_num">已售'+n.percent+';</p></div><button type="button" class="tuichu_btn">马上抢</button></a></li>';
+						 });
+						  $('.loading').hide(); 
+                          $(".ms_tab_con ul").append(html);
+					 }
+					
+                    stop=true;  num=num+1;//当前要加载的页码  ;
+				 });  
+                  
+                }
+             }  
+        });  
+    });  
+
+ </script>
+</body>
+
+</html>

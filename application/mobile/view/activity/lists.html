@@ -1,0 +1,273 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1  maximum-scale=1 user-scalable=no">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-touch-fullscreen" content="yes">
+		<meta name="HandheldFriendly" content="True">
+		<title>微商城</title>
+		<link rel="stylesheet" href="__CSS__/style.css">
+		<script type="text/javascript" src="__JS__/jquery-1.10.1.min.js"></script>
+		<script type="text/javascript" src="__JS__/common.js"></script>
+
+	</head>
+
+	<body>
+
+		<!--头部-->
+		<div class="top_con01">
+			<div class="fh_icon">
+				<a onClick="javascript :history.go(-1);"></a>
+			</div>
+			<div class="yc_icon" id="s_ser">
+				<a href="#"></a>
+			</div>
+			<div class="yc_icon bot_nav02" id="h_ser">
+				<a href="#"></a>
+			</div>
+			<h1>促销活动</h1>
+		</div>
+		{include file="public/menu"/}
+			<div id="products" class="list_con01">
+				<ul>
+				{volist name="list" id="vo"}	
+					<li class="item">
+						<div class="in_con03_main">
+							<div class="in_con03_img">
+								<a href="{:U('goods/detail?id='.$vo['id'])}"><img  src="{$vo.cover_id|get_cover='path'}"/></a>
+							</div>
+							<div class="in_con03_text">
+								<a href="{:U('goods/detail?id='.$vo['id'])}">{$vo.title|substr_cn="40"}</a>
+							</div>
+							<div class="in_con03_pri">￥{$vo.price}元</div>
+						</div>
+					</li>
+					{/volist}	
+				</ul>
+			</div>
+
+		</div>
+
+		<div class="all_searchs" style="display:none;">
+				<div class="all_search1">
+					<div class="top_fh">
+					<a id="h_sers"></a>
+				</div>
+					<div class="all_search_i1">
+					   <form id="form" action="{:url('search/lists')}" method="get">
+						<input type="text" name="keyword" placeholder="请输入您搜索的关键词！">
+						<a  onclick="$('#form').submit()">搜索</a>
+						</form>
+					</div>
+				</div>
+				<div class="search_main">
+					<div class="rnss_con">
+						<h1>热门搜索</h1>
+						<ul>
+								{volist name="slist" id="vo"  empty=''}
+						<li>
+							<a href="{:url('search/lists?keyword='.$vo['title'])}">{$vo.title}</a>
+						</li>
+					{/volist}
+						</ul>
+					</div>
+					<div class="zjss_con">
+						<div class="ser_close">
+							<a href="#"></a>
+						</div>
+						<h1>最近搜索</h1>
+						<ul>
+								{volist name="recent" id="vo" empty=''}
+						<li>
+							<a href="{:url('search/lists?keyword='.$vo['title'])}">{$vo.title}</a>
+						</li>
+					{/volist}
+						</ul>
+					</div>
+				</div>
+				<div class="search_close" id="h_ser">
+					<a id="h_sers">点击关闭</a>
+				</div>
+			</div>
+		<script type="text/javascript">
+			$(document).ready(function() {
+
+				$("#s_ser .top_search_i").click(function() {
+					$(".all_searchs").show();
+				});
+				$("#h_ser .top_search_i,#h_sers").click(function() {
+					$(".all_searchs").hide();
+				});
+			});
+		</script>
+		<script src="__JS__/bootstrap.min.js" type="text/javascript"></script>
+		<script type="text/javascript">
+	function toggle(){
+	    $(".default").toggle();
+	    $(".search-active").toggle();
+	
+	}
+	
+	</script>
+ <script type="text/javascript"> 
+   
+	$(document).ready(function(){  
+        var range =10;             //距下边界长度/单位px  
+        var maxnum ={$maxnum};            //设置加载最多次数  
+        var num = 2; 
+		var obj=$('li').hasClass('active');
+		
+		var url=window.location.href;
+        var totalheight = 0;//主体元素  
+		var stop=true;//触发开关，防止多次调用事件   
+		$(window).scroll(function(){  
+            var srollPos = $(window).scrollTop();    //滚动条距顶部距离(页面超出窗口的高度) 
+			var height=$(document).height()-range;
+            totalheight = parseFloat($(window).height()) + parseFloat(srollPos);  
+            if(height<= totalheight) {                  
+				 if(stop==true &&maxnum>=num){
+				    stop=false;  
+                    $('.loading').show();
+				    $.post(url,{p:num},function(data){
+					
+					if(data){
+						var html = '';
+						$.each(data, function(i,n){			
+							html=html+n.html;
+						 });
+						 
+						  $('.loading').hide(); 
+                          $("#products ul").append(html); 
+						  var attr=$("#products ul li").eq(0).attr("class");
+                          $("#products ul li").attr("class",attr);
+					 }
+					
+                    stop=true;  num=num+1;//当前要加载的页码  ;
+				 });  
+                  
+                }
+             }  
+        });  
+    });  
+ 
+ $(".rt").click(function(){
+		 window.location.href ="{:U('search/lists')}"+'&keyword='+$("input").val();;
+ });
+ </script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('#grid').click(function(event) {
+					event.preventDefault();
+					$('#products .item').addClass('grid-group-item');
+					$(".cat_i02").show();
+					$(".cat_i01").hide();
+				});
+				$('#list').click(function(event) {
+					event.preventDefault();
+					$('#products .item').removeClass('grid-group-item');
+					$('#products .item').addClass('list-group-item');
+					$(".cat_i03").show();
+					$(".cat_i02").hide();
+
+				});
+				$('#big').click(function(event) {
+					event.preventDefault();
+					$('#products .item').removeClass('list-group-item');
+					$('#products .item').addClass('big-group-item');
+					$(".cat_i01").show();
+					$(".cat_i03").hide();
+				});
+			});
+		</script>
+		<script src="__JS__/sidenav.min.js"></script>
+		<script>
+			$('[data-sidenav]').sidenav();
+		</script>
+		<script type="text/javascript" src="__JS__/slider.js"></script>
+		<script type="text/javascript">
+			$(function() {
+				$("#price-range").slider({
+						unit: "元",
+						beyondMax: true,
+						beyondMin: true,
+						firstWidth: 34,
+						lastWidth: 23,
+						scale: [{
+								key: 0,
+								value: [1, 1, 1]
+							},
+							{
+								key: 5,
+								value: [1, 1, 1, 1, 1]
+							},
+							{
+								key: 10,
+								value: [1, 1, 1, 1, 1]
+							},
+							{
+								key: 15,
+								value: [1, 1, 1, 1, 1]
+							},
+							{
+								key: 20,
+								value: [1, 1, 1, 1, 1]
+							},
+							{
+								key: 25,
+								value: [1, 1, 1, 1, 1]
+							},
+							{
+								key: 30,
+								value: [1, 1, 1, 1, 1]
+							},
+							{
+								key: 35,
+								value: [3, 2, 5, 3, 2]
+							},
+							{
+								key: 50,
+								value: [5, 5, 5, 5]
+							},
+							{
+								key: 70,
+								value: [10, 10, 10]
+							},
+							{
+								key: 100,
+								value: 0.5
+							},
+							{
+								key: 110
+							}
+						]
+					})
+					.on("changed", function(e, args) {
+						var min = args.value.leftValue,
+							max = args.value.rightValue;
+						// if (min == 0) min = 1;
+						// if (6680 > 110) {
+						//     if (max == 6680) max = 1;
+						// } else {
+						//     if (max == 110) max = 1;
+						// }
+						// if (max == 10000) max = 1;
+						// if (min + '_' + max == '2_6680') {
+						//     min = 0;
+						//     max = 0;
+						// }
+						console.log(min, max);
+						// location.href = '/car/' + min + '_' + max + '-0.0_0.0-0-0-0-0-0-0-0-0/';
+					});
+				$("#price-range").data("slider").setRange({
+					leftValue: 0,
+					rightValue: 110
+				});
+			});
+		</script>
+	</body>
+
+</html>

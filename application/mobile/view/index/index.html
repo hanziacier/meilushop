@@ -1,0 +1,279 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1  maximum-scale=1 user-scalable=no">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-touch-fullscreen" content="yes">
+		<meta name="HandheldFriendly" content="True">
+		<title>微商城</title>
+		<link href="__CSS__/swiper.min.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="__CSS__/style.css">
+		<script type="text/javascript" src="__JS__/jquery-1.10.1.min.js"></script>
+		<script type="text/javascript" src="__JS__/swiper.min.js"></script>
+	</head>
+
+	<body>
+		<div class="all_content">
+			<!--div class="all_top">
+				<div class="all_top_l fl">
+					欢迎进入<span>微商城</span><br/>关注公众号,享专属服务
+				</div>
+				<div class="all_top_r fr">
+
+					<a href="#">立即关注</a>
+
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			<!-- 头部-->
+			<header>
+				<div class="in_head">
+					<div class="all_cate in_h">
+						<a href="#"><img src="__IMG__/cate.png" /></a>
+					</div>
+					<div class="all_search in_h" id="s_ser">
+						<div class="all_search_i">
+							<a href="#">请输入您搜索得关键词！</a>
+						</div>
+					</div>
+					<div class="all_message in_h">
+						<a href="#"><img src="__IMG__/message.png" /></a>
+					</div>
+				</div>
+			</header>
+			<!-- 广告图轮播 -->
+			<div class="all_ban">
+				<div id="banner">
+					<div class="swiper-wrapper">	{volist name="slidelist" id="vo"}  
+     
+				<div class="swiper-slide">	<a  href="{$vo.url|get_url}"><img  src="{$vo.cover_id|get_cover='path'}"/></a>
+						</div>
+      {/volist}  
+						
+					</div>
+					<div class="pagination"></div>
+				</div>
+			</div>
+			<!-- 首页栏目导航 -->
+			<div class="all_nav">
+				<ul>
+					<li>
+						<div class="nav_li">
+							<a href="{:url('category/index')}">
+								<img src="__IMG__/icon_01.png" />
+								<span>全部分类</span>
+							</a>
+						</div>
+					</li>
+					<li>
+						<div class="nav_li">
+							<a href="{:url('order/index')}">
+								<img src="__IMG__/icon_02.png" />
+								<span>我的订单</span>
+							</a>
+						</div>
+					</li>
+					<li>
+						<div class="nav_li">
+							<a href="{:url('activity')}">
+								<img src="__IMG__/icon_03.png" />
+								<span>促销活动</span>
+							</a>
+						</div>
+					</li>
+					<li>
+						<div class="nav_li">
+							<a href="{:url('score')}">
+								<img src="__IMG__/icon_04.png" />
+								<span>积分商城</span>
+							</a>
+						</div>
+					</li>
+					<li>
+						<div class="nav_li">
+							<a href="{:url('index/tuan')}">
+								<img src="__IMG__/icon_05.png" />
+								<span>最新团购</span>
+							</a>
+						</div>
+					</li>
+					<li>
+						<div class="nav_li">
+							<a href="{:url('search/index')}">
+								<img src="__IMG__/icon_06.png" />
+								<span>热门搜索</span>
+							</a>
+						</div>
+					</li>
+					<li>
+						<div class="nav_li">
+							<a href="{:url('member/index')}">
+								<img src="__IMG__/icon_07.png" />
+								<span>个人中心</span>
+							</a>
+						</div>
+					</li>
+					<li>
+						<div class="nav_li">
+							<a href="{:url('cart/index')}">
+								<img src="__IMG__/icon_08.png" />
+								<span>购物车</span>
+							</a>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<!-- 广告栏目1 -->
+			<!--div class="in_con01">
+				<div class="in_con01_l fl">
+					<div class="in_con01_img">
+						<a href="{:url('shouji?id=176')}"><img src="__IMG__/in_ad01.jpg" /></a>
+					</div>
+				</div>
+				<div class="in_con01_r fr">
+					<div class="in_con01_img in_con01_img01">
+						<a href="{:url('index/shan?id=171')}"><img src="__IMG__/in_ad02.jpg" /></a>
+					</div>
+					<div class="in_con01_img in_con01_img02">
+						<a href="{:url('index/tuan')}"><img src="__IMG__/in_ad03.jpg" /></a>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+			</div-->
+			<!-- 广告栏目2 -->
+			<div class="in_con02">
+				<ul>
+					<li>
+						<a href="{:url('goods/lists?id=174')}"><img src="__IMG__/in_ad04.jpg" /></a>
+					</li>
+					<li class="fr">
+						<a href="{:url('goods/lists?id=118')}"><img src="__IMG__/in_ad05.jpg" /></a>
+					</li>
+					<li>
+						<a href="{:url('goods/lists?id=111')}"><img src="__IMG__/in_ad06.jpg" /></a>
+					</li>
+					<li class="fr">
+						<a href="{:url('goods/lists?id=106')}"><img src="__IMG__/in_ad07.jpg" /></a>
+					</li>
+				</ul>
+			</div>
+			<!-- 猜你喜欢 -->
+			<div class="in_con03_t">
+				<h1>猜你喜欢</h1>
+				<h2>实时推荐最适合您的宝贝</h2>
+			</div>
+			<div class="in_con03">
+				<ul>
+					{volist name="goodslist" id="vo" }
+					<li>
+						<div class="in_con03_main">
+							<div class="in_con03_img">
+								<a href="{:url('goods/detail?id='.$vo['id'])}"><img src="{$vo.cover_id|get_cover='path'}" /></a>
+							</div>
+							<div class="in_con03_text">
+								<a href="{:url('goods/detail?id='.$vo['id'])}">{$vo.title}</a>
+							</div>
+							<div class="in_con03_pri">￥{$vo.price}元</div>
+						</div>
+					</li>
+					{/volist}
+				</ul>
+			</div>
+
+		<div class="all_searchs" style="display:none;">
+				<div class="all_search1">
+					<div class="top_fh">
+					<a onclick="javascript&nbsp;:history.go(-1);"></a>
+				</div>
+					<div class="all_search_i1"><form id="form" action="{:url('search/lists')}" method="get">
+						<input type="text" name="keyword" placeholder="请输入您搜索的关键词！">
+						<a  onclick="$('#form').submit()">搜索</a></form>
+					</div>
+				</div>
+				<div class="search_main">
+					<div class="rnss_con">
+						<h1>热门搜索</h1>
+						<ul>
+								{volist name="slist" id="vo"  empty=''}
+						<li>
+							<a href="{:url('search/lists?keyword='.$vo['title'])}">{$vo.title}</a>
+						</li>
+					{/volist}
+						</ul>
+					</div>
+					<div class="zjss_con">
+						<div class="ser_close">
+							<a href="#"></a>
+						</div>
+						<h1>最近搜索</h1>
+						<ul>
+								{volist name="recent" id="vo" empty=''}
+						<li>
+							<a href="{:url('search/lists?keyword='.$vo['title'])}">{$vo.title}</a>
+						</li>
+					{/volist}
+						</ul>
+					</div>
+				</div>
+				<div class="search_close" id="h_ser">
+					<a href="#">点击关闭</a>
+				</div>
+			</div>
+
+			<!-- 底部栏目 -->
+			<footer>
+
+				<div class="bot_nav">
+					<ul>
+						<li class="active">
+							<div class="boot_nav_i boot_nav_i01">
+								<a href="{:url('index/index')}"><i></i><span>首页</span></a>
+							</div>
+						</li>
+						<li>
+							<div class="boot_nav_i boot_nav_i02">
+								<a href="{:url('category/index')}"><i></i><span>分类</span></a>
+							</div>
+						</li>
+						
+						<li>
+							<div class="boot_nav_i boot_nav_i04">
+								<a href="{:url('cart/index')}"><i></i><span>购物车</span></a>
+							</div>
+						</li>
+						<li>
+							<div class="boot_nav_i boot_nav_i05">
+								<a href="{:url('member/index')}"><i></i><span>我的</span></a>
+							</div>
+						</li>
+					</ul>
+				</div>
+
+			</footer>
+		</div>
+		<script type="text/javascript">
+			window.onload = function() {
+				var mySwiper2 = new Swiper('#banner', {
+					autoplay: 2000,
+					visibilityFullFit: true,
+					loop: true,
+					pagination: '.pagination',
+				});
+			}
+			$(document).ready(function() {
+
+				$("#s_ser").click(function() {
+					$(".all_searchs").show();
+				});
+				$("#h_ser").click(function() {
+					$(".all_searchs").hide();
+				});
+			});
+		</script>
+	</body>
+
+</html>

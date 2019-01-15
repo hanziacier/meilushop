@@ -1,0 +1,186 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>找回密码_{:C('WEB_SITE_TITLE')}</title> 
+ 
+		<link href="__CSS__/base.css" rel="stylesheet" type="text/css"/>
+	<link href="__CSS__/style.css" rel="stylesheet" type="text/css"/>  
+	<link rel="stylesheet" type="text/css" href="__CSS__/common.css">
+   	<script type="text/javascript" src="__JS__/jquery-1.7.2.min.js"></script>
+  </head>
+  <body>
+      <div class="login-head">
+        <div class="logo fl"><a href="{:url('index/index')}"><img src="{:C('LOGO')}" /></a></div>
+        <div class="sign-in fr">
+         
+        </div>
+      </div>
+
+      <div class="login">
+	                 <div class="hd">
+                                     
+					</div>
+	  <div class="img"><img src="__IMG__/login.jpg"></div>
+          <form name="" id="form">
+              <div class="info">
+                <ul><li>
+                  <p class="lable">手机号：</p><input type="text"id="phone" name="mobile"  value="" placeholder="请输入手机号" class="name"/>
+                    <a class="cle"></a>
+                  </li>
+				 <li><p class="lable">手机验证码：</p>
+                    <input type="text" name="send_code" id="send_code" value="输入6位手机动态码" onfocus="if (value =='输入6位手机动态码'){value =''}" onblur="if (value ==''){value='输入6位手机动态码'}" class="code" placeholder="请输入验证码"/><a onclick="sendsms(this)"class="smscode">获取手机验证码</a><i><img src="img/limg5.jpg"/></i>
+                  </li>
+
+                  <li> 
+					<p class="lable">新密码：</p>
+                    <input type="text" name="password" placeholder="请输入密码" class="password"/>
+                    </li>
+					
+				  <li> <p class="lable">确认密码：</p>
+                    <input type="text" name="repassword" placeholder="请输入密码" class="password"/>
+                  </li>
+
+               
+                </ul>
+              </div>
+                 <input type="hidden" name="code" value="{$code}" placeholder="请输入密码" class="password"/>
+            
+
+            <div class="submit">
+              <input type="button" id="login"  onclick="update()"name="" value="提交" />
+            </div> 
+         
+          </form>
+      </div>
+<script type="text/javascript">
+	 function sendsms(obj) {
+	 var s="{$code}";
+   if(checkPhone($('#phone').val())){
+			$.post('{:U("User/sendSms")}',{mobile:$('#phone').val(),send_code:s,verify:$('#verify').val()},function(data){
+				  if (data.code) {
+					  opensuccess(data);
+					  RemainTime(obj);           
+				  }
+                  else{
+					  openerror(data);
+					            
+				  }
+				 
+            });
+    }
+    else{
+       alert("手机号码格式不正确"); return false;
+    }
+}
+    // 手机号验证
+function checkPhone(phone) {
+            var res = !!phone.match(/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/);
+            return res;
+ }
+var wait=60;
+function RemainTime(obj) {
+        if (wait == 0) {     
+            obj.innerHTML="获取";
+            wait = 60;
+            $(obj).attr('onclick','sendSms(this);return false;');
+        } else {  
+			$(obj).attr('onclick','');
+					 obj.innerHTML= wait +"秒" ;
+					 wait--;
+					 setTimeout(function() {
+						RemainTime(obj)
+					 },
+					 1000)
+		   	
+        }
+    }
+
+
+function confirm(){	
+	 var c_url="{:U('user/confirm')}";var m=$('#phone').val();
+	 $.post(c_url,{mobile:m,send_code:$('#send_code').val()},function(data){
+					 if(data.status){  
+					    $(".wjmm_div_02").show();
+						$("#phone_num").val(m);
+					 }
+					 else{
+					      openerror(data);
+					 }
+              });
+	  
+	}
+function update(){	
+	 var self=$("#form"); var url="{:U('user/findpassword')}";
+	 $.post(url,self.serialize(),function(data){
+  
+					 if(data.code){  
+					    $(".wjmm_div_02").show();
+					 }
+					 else{
+					      openerror(data);
+					 }
+              });
+	  
+	}
+
+
+		var verifyimg = $(".verifyimg").attr("src");
+            $(".reloadverify,.verifyimg").click(function(){
+               if( verifyimg.indexOf('?')>0){
+                    $(".verifyimg").attr("src", verifyimg+'&random='+Math.random());
+                }else{
+                    $(".verifyimg").attr("src", verifyimg.replace(/\?.*$/,'')+'?'+Math.random());
+                }
+            });
+
+	$(function(){
+
+			//tip
+			$('.login_main .login_main_in .con .login_div .mima .jz .icon').click(function(){
+				if($(this).hasClass('current')){
+					$(this).removeClass('current');
+					$("input[name='remember']").val(0);					
+				}else{
+					$(this).addClass('current');
+					$("input[name='remember']").val(1);		
+				}
+			});
+			//input
+		})
+	
+	</script>		
+<script type="text/javascript">
+
+	$("#login").click(function(){
+    		var self =$('#form');
+			var url="{:url('register')}"
+    		$.post(url, self.serialize(), success, "json");
+    		return false;
+
+    		function success(data){
+    			if(data.code){
+    				window.location.href = data.url;
+    			} else {
+    				  openerror(data);
+    				//刷新验证码
+    				$(".reloadverify").click();
+    			}
+    		}
+    	});		
+
+$(function(){
+		var verifyimg = $(".reloadverify").attr("src");
+            $(".reloadverify,.reloadverify_a").click(function(){
+               if(verifyimg.indexOf('?')>0){
+                    $(this).attr("src", verifyimg+'&random='+Math.random());
+                }else{
+                    $(this).attr("src", verifyimg.replace(/\?.*$/,'')+'?'+Math.random());
+                }
+            });
+});
+	  </script>
+
+    	{include file='public/footer'}
+</html>

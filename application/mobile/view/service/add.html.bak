@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,maximum-scale=1, minimum-scale=1" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no" />
+    <title>商城——订单</title>
+	<link rel="stylesheet" href="__CSS__/swiper-3.4.2.min.css" />
+    <link rel="stylesheet" href="__CSS__/common_mobile.css" />
+    <link rel="stylesheet" href="__CSS__/return-goods.css" />
+    <script type="text/javascript" src="__JS__/jquery-3.1.1.min.js" ></script>
+</head>
+<body>
+	<div>
+		<header>
+			<div class="header">
+				<a href="Javascript:history.go(-1);void(0);"><i class="icon icon-return"></i></a>
+				<h1>商品退换货</h1>
+				<a href="#"><i class="icon icon-soso"></i></a>
+			</div>
+		</header>
+		<div style="height: 2.5rem;"></div>
+	</div>
+		
+	<div class="order-item">
+		<div class="order-top">
+			<div class="order-date">
+				<span>订单编号：5170914811102671</span>
+			</div>
+		</div>
+		<div class="order-center">
+			<img src="{$info.goods_id|get_path}"/>
+			<div class="food-info">
+				<p><a href="#">{$info.goods_id|get_goods="title"}</a></p>
+				<a href="#">调和油</a>
+				<p class="price"><strong>¥{$info.price}</strong>x{$info.num}</p>
+			</div>		
+		</div>
+	</div>
+	
+	<div class="service-type">
+		<h2>服务类型</h2>
+		<p>
+		<a href="#" class="active">退货</a>
+		<a href="#">换货</a>
+		<a href="#">退款</a>
+		</p>
+	</div>
+	
+	<div class="service-type reason">
+		<h2>退货理由</h2>
+		<textarea name="" rows="" cols="" placeholder="请详细描述退货理由"></textarea>
+	</div>
+	
+	<a href="#" class="application">提交申请</a>
+	
+	<div class="H5"></div>
+	<div class="bottom-menu order-bottom-menu">
+		<a id="home" href="#"><i></i><p>首页</p></a>
+		<a id="tel-consult" href="#"><i></i><p>咨询</p></a>
+		<a id="online-consult" href="#"><i></i><p>购物车</p></a>
+		<a id="mine" href="#"><i></i><p>分类</p></a>
+	</div>
+    <script>        
+		var mySwiper2 = new Swiper ('.swiper-container2', {
+		  loop: true,
+		  autoplay:3000,
+		  grabCursor:true,
+		  // 如果需要分页器
+		  pagination: '.swiper-pagination',
+		  paginationClickable: true,
+		  autoplayDisableOnInteraction : false
+		});    		 
+		var mySwiper = new Swiper('#topNav', {
+			freeMode: true,
+			freeModeMomentumRatio: 0.5,
+			slidesPerView: 'auto',
+		
+		});
+		
+		swiperWidth = mySwiper.container[0].clientWidth
+		maxTranslate = mySwiper.maxTranslate();
+		maxWidth = -maxTranslate + swiperWidth / 2
+		
+		$(".swiper-container").on('touchstart', function(e) {
+		//	e.preventDefault()
+		})
+		
+		mySwiper.on('tap', function(swiper, e) {
+		
+		//	e.preventDefault()
+		
+			slide = swiper.slides[swiper.clickedIndex]
+			slideLeft = slide.offsetLeft
+			slideWidth = slide.clientWidth
+			slideCenter = slideLeft + slideWidth / 2
+			// 被点击slide的中心点
+		
+			mySwiper.setWrapperTransition(300)
+		
+			if (slideCenter < swiperWidth / 2) {
+				
+				mySwiper.setWrapperTranslate(0)
+		
+			} else if (slideCenter > maxWidth) {
+				
+				mySwiper.setWrapperTranslate(maxTranslate)
+		
+			} else {
+		
+				nowTlanslate = slideCenter - swiperWidth / 2
+		
+				mySwiper.setWrapperTranslate(-nowTlanslate)
+		
+			}
+		
+			$("#topNav  .active").removeClass('active')
+		
+			$("#topNav .swiper-slide").eq(swiper.clickedIndex).addClass('active')
+		
+		})
+	</script>
+</body>
+</html>

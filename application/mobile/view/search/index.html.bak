@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,maximum-scale=1, minimum-scale=1" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no" />
+    <title>个人资料</title>
+    <link rel="stylesheet" href="__CSS__/common_mobile.css" />
+    <link rel="stylesheet" href="__CSS__/search.css" />
+    <script type="text/javascript" src="__JS__/jquery-3.1.1.min.js" ></script>
+</head>
+<body>
+	<div>
+		<header>
+			<div class="header" style="background:{$config['theme_color']}">
+				<a href="Javascript:history.go(-1);void(0);"><i class="icon icon-back"></i></a>
+				<input type="text" name="" id="" value="" placeholder="请输入关键词搜索"/>
+				<a href="#"><i class="icon icon-home"></i></a>
+			</div>
+		</header>
+		<div style="height: 2.5rem;"></div>
+	</div>
+		<div class="search-box">
+			<h2>热门搜索</h2>
+			<div class="search-tag clearfix">
+				<a href="#">粮油</a>
+				<a href="#">女包手提包新款</a>
+				<a href="#">手包男</a>				
+				<a href="#">女包手提包新款</a>
+				<a href="#">手包男</a>
+				<a href="#">保温杯新款</a>
+				<a href="#">保温杯新款</a>
+				<a href="#">粮油</a>
+				<a href="#">女包手提包新款</a>
+				<a href="#">手包男</a>
+				<a href="#">保温杯新款</a>
+				<a href="#">粮油</a>
+			</div>
+		</div>
+		<div class="search-box">
+			<h2>历史记录</h2>
+			<div class="search-tag clearfix">
+				<a href="#">可乐</a>
+				<a href="#">iphone</a>
+				<a href="#">手包男</a>				
+				<a href="#">生日蛋糕</a>
+				<a href="#">手包男</a>
+				<a href="#">保温杯新款</a>
+				<a href="#">保温杯新款</a>
+				<a href="#">粮油</a>
+				<a href="#">女包手提包新款</a>
+				<a href="#">手包男</a>
+				<a href="#">保温杯新款</a>
+				<a href="#">粮油</a>
+			</div>
+		</div>
+		<div  class="clear-history">
+			<a href="#">清除历史</a>
+		</div>
+	
+	
+	<div class="H5"></div>
+	<div class="bottom-menu order-bottom-menu">
+		<a id="home" href="#"><i></i><p>首页</p></a>
+		<a id="tel-consult" href="#"><i></i><p>咨询</p></a>
+		<a id="online-consult" href="#"><i></i><p>购物车</p></a>
+		<a id="mine" href="#"><i></i><p>分类</p></a>
+	</div>
+</body>
+</html>

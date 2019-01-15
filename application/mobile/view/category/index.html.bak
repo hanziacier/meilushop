@@ -1,0 +1,125 @@
+
+<html>
+<head>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+<title>所有分类__{:C('WEB_SITE_TITLE')}</title>
+
+<link rel="stylesheet" type="text/css" href="__CSS__/style.css">
+<link rel="stylesheet" type="text/css" href="__CSS__/iconfont/iconfont.css">
+ <link rel="stylesheet" href="__CSS__/common_mobile.css" />
+</head>
+<body>
+	<!--头部 header-->
+	<div class="default">
+		<header>
+			<div class="header" style="background:{$config['theme_color']}">
+				<a href="Javascript:history.go(-1);void(0);"><i class="icon icon-back"></i></a>
+				<h1>所有分类页</h1>	
+				<a onclick="toggle()"><i class="icon icon-search"></i></a>
+			</div>
+		</header>
+		<div style="height: 2.5rem;"></div>
+	</div>
+<div class="search-active" style="display:none;" >
+		<header>
+			<div class="header" style="background:{$config['theme_color']}">
+			     <form method="post" action="{:url('goods/search')}" name="searchForm" id="search">
+				    <input type="text" name="keyword" class="search" value="" placeholder="请输入关键词搜索"/>
+                 <a class="ipt-so" onclick="$('form').submit()"></a> </form>
+				<a onclick="toggle()"><i class="icon icon-close"></i></a>
+			</div>
+		</header>
+		<div style="height: 2.5rem;"></div>
+	</div>
+    <div class="tab_list">   
+        <ul>
+		{volist name="category" id="vo" key='k'}
+		    <li class="{if condition="$k eq 1"}current{/if}" >
+				<a href="Javascript:;">{$vo.title}</a>
+			</li>
+	   {/volist}
+		
+		</ul>
+	</div>
+
+	<div class="main_right">
+		{volist name="category" id="vo" key='k'}
+		<div class="{if condition="$k eq 1"}current_show{/if}">
+		  {volist name="vo['child']" id="vo1"}
+		  <h3 class=""><a href="{:url('goods/lists?id='.$vo1['id'])}">{$vo1.title}</a></h3>
+			<ul>
+			 {volist name="vo1['child']" id="vo2"}	
+				<li>
+					<a href="{:url('goods/lists?id='.$vo2['id'])}">{$vo2.title}</a>
+				</li>
+			{/volist}	
+			</ul>	
+	  {/volist}
+			</div> 
+{/volist}</div> 
+<script src="__COMMON__/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+		$(function(){
+			$('.tab_list ul li').click(function(){
+				$(this).addClass('current').siblings().removeClass('current');
+				var num = $(this).index();
+				$('.main_right div').eq(num).addClass('current_show').siblings().removeClass('current_show');
+			})
+		})
+	</script>
+<!--div class="category">
+  <ul>{volist name="category" id="vo" key='k'}
+        <li class="item wraps" id="{$vo.id}">
+      <div class="first_level" >
+        <div class="cover"></div>
+        <div class="tit">  <span>{$vo.title}</span>  </div>
+        <div class="arrow"><img src="__IMG__/ico_down.png"></div>
+        <div>&nbsp;</div>
+      </div>
+    </li>
+    <ul class="second_level_{$vo.id}" style="display:none;">
+      <li class="item"> 
+	  {volist name="vo['child']" id="vo1"}
+		  <div class="sub "> <a href="{:url('goods/lists?id='.$vo1['id'])}">	{$vo1.title}</a></div>
+			
+	  {/volist}	
+             
+         
+        <div class="sub"> <a href="{:url('goods/lists?id='.$vo['id'])}">全部商品</a> </div>
+      </li>
+    </ul>
+	{/volist}
+     
+      </ul>
+<div class="blank"></div>	
+</div>
+
+	<!-- 引入js资源 -->
+	<script type="text/javascript" src="__JS__/zepto.min.js"></script>
+	<script type="text/javascript">
+	function toggle(){
+	    $(".default").toggle();
+	    $(".search-active").toggle();
+	
+	}
+	$(".wraps").click(function(){
+    	 var id=$(this).attr("id");
+         $(".second_level_"+id).toggle();
+         if($(this).find(".arrow img").attr("src")=="__IMG__/ico_down.png"){
+		      $(this).find(".arrow img").attr("src","__IMG__/ico_up.png")
+		 }else{
+		      $(this).find(".arrow img").attr("src","__IMG__/ico_down.png")
+		 }
+    	});	
+	</script>
+<div class="H5"></div>
+	<div class="bottom-menu order-bottom-menu">
+		<a  href="{:url('index/index')}"><i class="iconfont home"></i><p>首页</p></a>
+		<a class="active" style="color:{$config['theme_color']}"href="{:url('category/index')}"><i class="iconfont category"></i><p>分类</p></a>
+		<a class="" href="{:url('cart/index')}"><i class="iconfont cart"></i><p>购物车</p></a>
+		<a class="" href="{:url('member/index')}"><i class="iconfont mine"></i><p>我的</p></a>
+	</div>
+</body>
+</html>

@@ -1,0 +1,111 @@
+﻿<html>
+<head>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ <meta charset="utf-8">
+<title>我的积分__{:C('WEB_SITE_TITLE')}</title>
+<link rel="stylesheet" href="__CSS__/main.css" />
+<link rel="stylesheet" type="text/css" href="__CSS__/style.css">
+<link rel="stylesheet" href="__CSS__/common_mobile.css" />
+<link rel="stylesheet" type="text/css" href="__CSS__/iconfont/iconfont.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+
+
+</head>
+
+
+<body >
+		<!--头部 header-->
+	<div>
+		<header>
+			<div class="header"style="background:{$config['theme_color']}">
+				<a href="Javascript:history.go(-1);void(0);"><i class="icon icon-back"></i></a>
+				<h1>我的积分</h1>
+			<a href="{:url('index/index')}"><i class="icon icon-home"></i></a>
+			</div>
+		</header>
+		<div style="height: 2.5rem;"></div>
+	</div>
+
+
+	<ul class="header_tab">
+		<li >
+			<a href="{:url('score/index')}">我的积分</a>
+		</li>
+		<li class="current">
+			<a href="{:url('score/lists')}">积分明细</a>
+		</li>
+	</ul>
+	<div class="header_tab_con">
+		
+		<div class="">
+			<div class="mingxi_header">
+				<ul>
+					<li class="time_01">时间</li>
+					<li class="xiangqing_02">详情</li>
+					<li class="mingxi_03">交易明细</li>
+					<li class="jifen_04">剩余积分</li>
+				</ul>
+			</div>
+			<div class="mingxi_list">
+			{empty name='list'}<p class="pinglun_no">对不起，您没有可查询的记录！</p> {else/}
+			{volist name="list" id="vo"}	
+			    <ul>
+					<li class="time_01">{$vo.create_time}</li>
+					<li class="xiangqing_02">{$vo.content}</li>
+					<li class="mingxi_03">{$vo.type}</li>
+					<li class="jifen_04">{$vo.total}</li>
+				</ul>
+			{/volist}	
+			 {/empty}</div>
+		</div>
+	</div>
+<div class="H5"></div>
+	<div class="bottom-menu order-bottom-menu">
+		<a  href="{:url('index/index')}"><i class="iconfont home"></i><p>首页</p></a>
+		<a href="{:url('category/index')}"><i class="iconfont category"></i><p>分类</p></a>
+		<a class="" href="{:url('cart/index')}"><i class="iconfont cart"></i><p>购物车</p></a>
+		<a class="active" style="color:{$config['theme_color']}" href="{:url('member/index')}"><i class="iconfont mine"></i><p>我的</p></a>
+	</div>
+</body>
+<script type="text/javascript" src="__JS__/zepto.min.js"></script>
+<script type="text/javascript"> 
+    $(document).ready(function(){  
+        var range =10;             //距下边界长度/单位px  
+        var maxnum ={$maxnum};            //设置加载最多次数  
+        var num = 2; 
+		var url="{:url('')}";
+        var totalheight = 0;//主体元素  
+		var stop=true;//触发开关，防止多次调用事件   
+		$(window).scroll(function(){  
+            var srollPos = $(window).scrollTop();    //滚动条距顶部距离(页面超出窗口的高度) 
+			var height=$(document).height()-range;
+            totalheight = parseFloat($(window).height()) + parseFloat(srollPos);  
+            if(height<= totalheight) {                  
+				 if(stop==true &&maxnum>=num){
+				    stop=false;  
+                    $('.loading').show();
+				    $.post(url,{p:num},function(data){
+					
+					if(data){
+						var html = '';
+						$.each(data, function(i,n){			
+							html=html+'<ul><li class="time_01">'+n.create_time+'</li><li class="xiangqing_02">'+n.content+'</li><li class="mingxi_03">'+n.type+'</li><li class="jifen_04">'+n.total+'</li></ul>';
+						 });
+						  $('.loading').hide(); 
+                          $(".mingxi_header ul").last().after(html);
+					 }
+					
+                    stop=true;  num=num+1;//当前要加载的页码  ;
+				 });  
+                  
+                }
+             }  
+        });  
+    });  
+
+ </script>
+
+</html>

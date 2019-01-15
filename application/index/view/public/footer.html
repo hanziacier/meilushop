@@ -1,0 +1,435 @@
+
+		<!--footer  start-->
+	<div class="footer w100">
+		<div class="footer_in in_width f14">
+			<div class="footer_title">
+				<ul>
+					<li class="qa">
+						<span class="left_icon">优</span>
+						<div class="right_div">
+							<div class="right_div_t_cn">品质保障</div>
+							<div class="right_div_t_en">Quality Assurance</div>
+						</div>
+					</li>
+					<li class="wr">
+						<span class="left_icon">七</span>
+						<div class="right_div">
+							<div class="right_div_t_cn">七天无理由退换货</div>
+							<div class="right_div_t_en">Without Reason</div>
+						</div>
+					</li>
+					<li class="csr">
+						<span class="left_icon">特</span>
+						<div class="right_div">
+							<div class="right_div_t_cn">特色服务体验</div>
+							<div class="right_div_t_en">Characteristic Service Experience</div>
+						</div>
+					</li>
+					<li class="hc">
+						<span class="left_icon">帮</span>
+						<div class="right_div">
+							<div class="right_div_t_cn">帮助中心</div>
+							<div class="right_div_t_en">Help Center</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="footer_site_info">
+				 {volist name="footer" id="vo"}
+				 <ul class="footer_site_info_ul">
+					<li><a href="{:U('help/index?id='.$vo['id'])}">{$vo.title}</a></li>
+					 {volist name="vo['ids']" id="vo1"} 
+					<li><a href="{:U('help/index?id='.$vo1['id'])}">{$vo1.title}</a></li>
+					{/volist}
+				</ul>
+               {/volist} 
+			   <ul class="footer_site_info_ul">
+					<img src="__IMG__/wx.jpg" WIDTH="100"><P>微信扫一扫关注</P>
+				</ul>
+				  <ul class="footer_site_info_ul">
+					<img src="__IMG__/alipay.png" WIDTH="100"><P>支付宝扫一扫关注</P>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!--/footer  end-->
+	<span class="copyright" style="">@2014-2017
+	   <a href="http://yershop.com">yershop</a> 版权所有</span>
+<script type="text/javascript" src="__COMMON__/layer/layer.js"></script>
+
+<script type="text/javascript">
+
+	function opensuccess(data){
+			  
+				   layer.alert(data.msg, {
+                            icon: 1,
+                             skin: 'layer-ext-moon' //该皮肤由layer.seaning.com友情扩展。关于皮肤的扩展规则，去这里查阅
+                     });
+				//$(".alert_success").parents(".mask").removeClass("none"); 
+			   setTimeout(function(){
+                        if (data.url) {
+                          location.href=data.url;
+                        }
+               },1000);
+				
+			}
+			function openerror(data){
+			      layer.alert(data.msg, {
+                            icon: 2,
+                             skin: 'layer-ext-moon' //该皮肤由layer.seaning.com友情扩展。关于皮肤的扩展规则，去这里查阅
+                     })  ; 
+					 setTimeout(function(){
+                        if (data.url) {
+                          location.href=data.url;
+                        }
+               },1000);
+			}
+</script>
+<div id="fullbg"></div>
+
+<div class="login_div" style="display:;"><span class="header">您尚未登录</span>
+						<i class="arrow" onclick="closeBg()"></i>
+						<form id="login_form">
+							<div class="list">
+								<div class="icon icon_02 fl"><div></div></div>
+								<input type="text" name="mobile" class="ipt_01 fl" placeholder="手机号/用户名/邮箱">
+							</div>
+							<div class="list">
+								<div class="icon icon_03 fl"><div></div></div>
+								 <input type="text" name="password" placeholder="密码" class="ipt_01 fl">
+							</div>
+							<div class="last">
+								<div class="list fl">
+									<div class="icon icon_04 fl"><div></div></div>
+									<input type="text" name="verify" placeholder="验证码" class="ipt_02 fl">
+								</div>
+								<div class="yzm fl"><img  class="verifyimg reloadverify" src="{:captcha_src()}" width="80"></div>
+							</div>
+							<p class="errmsg"></p> <input type="hidden" name="type" value="1" placeholder="密码" class="ipt_01 fl">
+							<input type="submit" id="submain" class="submit f14" value="登录">
+							<p  class="reg"><a href="{:url('user/register')}"class="f1">注册</a><a href="{:url('user/forget')}"class="fr">忘记密码?</a></p>
+						</form>
+					</div>
+<script type="text/javascript">
+
+	$("#submain").click(function(){
+    		var self =$('#login_form');
+			var url="{:url('user/login')}"
+    		$.post(url, self.serialize(), success, "json");
+    		return false;
+
+    		function success(data){
+    			if(data.code){
+    				  $(".errmsg").html(data.msg);window.location.reload();
+    			} else {
+    			     $(".errmsg").html(data.msg);$(".errmsg").css("visibility",'visible');
+    				//刷新验证码
+    				$(".reloadverify").click();
+    			}
+    		}
+    	});		
+
+//显示灰色 jQuery 遮罩层
+function showBg() { 
+	$(".login_div").fadeIn();
+    var bh = $("body").height();
+    var bw = $("body").width();
+	
+    $("#fullbg").css({
+        height:bh,
+        width:bw,
+        display:"block"
+    });
+  
+}
+var is_login="{:is_login()}";
+//关闭灰色 jQuery 遮罩
+function closeBg() {
+    $("#fullbg,.login_div").hide();
+}
+
+		    var verifyimg = $(".verifyimg").attr("src");
+            $(".reloadverify,.reloadverify_a").click(function(){
+			
+               if( verifyimg.indexOf('?')>0){
+                    $(".verifyimg").attr("src", verifyimg+'&random='+Math.random());
+                }else{
+                    $(".verifyimg").attr("src", verifyimg.replace(/\?.*$/,'')+'?'+Math.random());
+                }
+            });
+
+
+	  </script>
+{notpresent name="showsidebar"}
+<div class="sidebar">
+	<div class="quick_link_mian">
+		<div class="quick_links_panel">
+			<div id="quick_links" class="quick_links">
+					<li>
+					<a  class="my_qlinks"><i class="setting"></i></a>
+					{if condition="is_login()"}
+					<div id='status' class="ibar_login_box status_login">
+						<div class="avatar_box">
+							<p class="avatar_imgbox"><img src="{$UcenterMember.cover_id|get_cover='path'}" /></p>
+							<ul class="user_info">
+								<li>用户名：{:get_username()}</li>
+								<li>级&nbsp;别：普通会员</li>
+							</ul>
+						</div>
+						<div class="login_btnbox">
+							<a href="{:url('order/index')}" class="login_order">我的订单</a>
+							<a href="{:url('collect/index')}" class="login_favorite">我的收藏</a>
+						</div>
+						<i class="icon_arrow_white"></i>
+					</div>	<script>		
+			
+	   $(".my_qlinks").click(function(){
+	
+		$('#status').show();
+	});</script>
+					{else/}
+					<script>		
+			
+	   $(".my_qlinks").click(function(){
+	
+		showBg();
+	});</script>
+					{/if}
+				</li>
+				<li id="shopCart">
+					<a onclick='showbar(1)' class="message_list" ><i class="message"></i><div class="span">购物车</div><span class="cart_num">{$cart["total_num"]|default="0"}</span></a>
+				</li>
+			
+				<li>
+					<a onclick='showbar(2)' class="mpbtn_histroy"><i class="zuji"></i></a>
+					<div class="mp_tooltip">我的足迹<i class="icon_arrow_right_black"></i></div>
+				</li>
+				<li>
+					<a   onclick='showbar(3)'href="javascript:vod(0)" class="mpbtn_wdsc"><i class="wdsc"></i></a>
+					<div class="mp_tooltip">我的收藏<i class="icon_arrow_right_black"></i></div>
+				</li>
+				<li>
+					<a   onclick='showbar(4)' href="javascript:vod(0)" class="mpbtn_recharge"><i class="chongzhi"></i></a>
+					<div class="mp_tooltip">我要充值<i class="icon_arrow_right_black"></i></div>
+				</li>
+			</div>
+			<div class="quick_toggle">
+				<li>
+					<a  href="javascript:vod(0)"><i class="kfzx"></i></a>
+					<div class="mp_tooltip">客服中心<i class="icon_arrow_right_black"></i></div>
+				</li>
+				<li>
+					<a id='qr'href="#none"><i class="mpbtn_qrcode"></i></a>
+					<div id='qrcodeing' class="mp_qrcode" style="display:none;"><img src="__IMG__/code_pic.gif" width="148" height="175" /><i class="icon_arrow_white"></i></div>
+				</li>
+				<li><a href="#top" class="return_top"><i class="top"></i></a></li>
+			</div>
+		</div>
+		<div id="quick_links_pop" class="quick_links_pop hide"></div>
+	</div>
+</div>
+
+{/notpresent}
+
+
+<div id="cart quick_links_pop" class="quick_links_pop quick_message_list" style='display:none;'><a onclick='hidebar(this)' class="ibar_closebtn" title="关闭"></a><div class="ibar_plugin_title"><h3>购物车</h3></div><div class="pop_panel">
+<div class="ibar_plugin_content">
+
+    <div class="ibar_cart_group ibar_cart_product"><div class="ibar_cart_group_header"><span class="ibar_cart_group_title"></span><a href="">我的购物车</a></div><ul id='carthtml'>
+   
+
+{foreach name="cartlist" item="vo"} 
+
+<li class="cart_item item{$vo.id}"><div class="cart_item_pic"><a href="{:U('Goods/detail?id='.$vo['goodsid'])}"><img width="80" height="80" src="{$vo.goodsid|get_goods_cover}"></a></div><div class="cart_item_desc"><a href="{:U('Goods/detail?id='.$vo['goodsid'])}" class="cart_item_name">{$vo.goodsid|get_goods="title"}</a><div class="cart_item_sku"><span>规格：{$vo.specifications|default="无"}</span></div><div class="cart_item_price"><span class="cart_price">￥{$vo.price}*<em class="num{$vo.id}">{$vo.num|default="无"}</em></span></div></div>	
+
+</li>
+{/foreach}
+</ul></div><div class="cart_handler"><div class="cart_handler_header"><span class="cart_handler_left">共<span class="cart_price cart_num">{$cart["total_num"]|default="0"}</span>件商品</span><span class="cart_handler_right tSum">￥{$cart.total_money|default="0"}</span></div><a href="{:url('cart/index')}" class="cart_go_btn">去购物车结算</a></div>
+
+
+</div>
+
+</div><div class="arrow"><i></i></div><div class="fix_bg"></div></div>
+
+
+<div id="quick_links_pop" class="quick_links_pop quick_message_list" style=""><a href="javascript:;"onclick='hidebar(this)' class="ibar_closebtn" title="关闭"></a><div class="ibar_plugin_title"><h3>我的足迹</h3></div><div class="pop_panel">
+
+<div class="ibar_plugin_content"><div class="ibar-history-head">共{$historynum|default='0'}件产品<a onclick="clearhistory()">清空</a></div><div class="ibar-moudle-product">
+  {present name="history"} {volist name="history" id="vo"} 
+<div class="imp_item"><a href="{:U('Goods/detail?id='.$vo['goods_id'])}" class="pic"><img src="{$vo.image}" width="100" height="100" /></a><p class="tit"><a href="{:U('Goods/detail?id='.$vo['goods_id'])}">{$vo.title}</a></p><p class="price"><em>￥</em>{$vo.price}</p><a onclick="addcartlist(this,{$vo.goods_id})" class="btnCart imp-addCart">加入购物车</a></div>
+{/volist}
+{/present}
+
+</div>
+</div>
+	
+</div><div class="arrow"><i></i></div><div class="fix_bg"></div></div>
+	
+<div id="quick_links_pop" class="quick_links_pop quick_message_list" style="left: ;"><a onclick='hidebar(this)' class="ibar_closebtn" title="关闭"></a><div class="ibar_plugin_title"><h3>收藏的产品</h3></div><div class="pop_panel">
+<div class="ibar_plugin_content">
+
+    <div class="ibar_cart_group ibar_cart_product"><ul>
+	 
+
+	{present name="c"}
+  {foreach name="c" item="vo" empty="null"} 
+
+<li class="cart_item item{$vo.id}"><div class="cart_item_pic"><a href="{:U('Goods/detail?id='.$vo['goods_id'])}"><img width="80" height="80" src="{$vo.goods_id|get_goods_cover}"></a></div><div class="cart_item_desc"><a href="{:U('Goods/detail?id='.$vo['goods_id'])}" class="cart_item_name">{$vo.goods_id|get_goods="title"}</a><div class="cart_item_sku"><span></span></div><div class="cart_item_price"><span class="cart_price">￥{$vo.price}</span></div></div>	
+
+</li>
+	{/foreach}{/present}
+	</ul>
+
+</div>
+</div>
+</div><div class="arrow"><i></i></div><div class="fix_bg"></div></div>
+
+
+<div id="quick_links_pop" class="quick_links_pop quick_message_list" style="left:;"><a onclick='hidebar(this)'href="javascript:;" class="ibar_closebtn" title="关闭"></a><div class="ibar_plugin_title"><h3>账户充值</h3></div><div class="pop_panel">
+
+'<div class="ibar_plugin_content"><form target="_blank" class="ibar_recharge_form"><div class="ibar_recharge-field"><label>账户</label><div class="ibar_recharge-fl"><div class="ibar_recharge-iwrapper"><input type="text" name="19" placeholder="yershop"></div><i class="ibar_recharge-contact"></i></div></div><div class="ibar_recharge-field"><label>面值</label><div class="ibar_recharge-fl"><p class="ibar_recharge-mod"><span class="ibar_recharge-val">100</span>元</p><i class="ibar_recharge-arrow"></i><div class="ibar_recharge-vbox">
+<ul class="charge" style="display:none;"><li><span>10</span>元</li><li class="sanwe selected"><span>100</span>元</li><li><span>20</span>元</li><li class="sanwe"><span>200</span>元</li><li><span>30</span>元</li><li class="sanwe"><span>300</span>元</li><li><span>50</span>元</li><li class="sanwe"><span>500</span>元</li></ul></div></div></div><div class="ibar_recharge-btn"><input type="button" onclick="$('form.pay').submit()" value="立即充值"></div></form></div>
+  
+</div><div class="arrow"><i></i></div><div class="fix_bg"></div></div>
+ <script type="text/javascript" src="__JS__/parabola.js"></script>
+
+  <script>		
+
+	   $(".ibar_recharge-mod").click(function(){
+	
+		$('.charge').show()
+	});
+	  $(".charge li").click(function(){
+		  var num=$(this).find("span").html();
+	     $("input[name='money']").val(num);
+		$('.ibar_recharge-val').html(num);$('.charge').hide()
+	});
+	
+	var A= document.getElementById('qr');
+            var B= document.getElementById('qrcodeing');
+            var timerr = null;//定义定时器变量
+            //鼠标移入div1或div2都把定时器关闭了，不让他消失
+            A.onmouseover = B.onmouseover = function ()
+            {
+			
+               $("#qrcodeing").show();
+				//关闭定时执行
+                clearTimeout(timerr);
+            }
+			
+            //鼠标移出div1或div2都重新开定时器，让他延时消失
+            A.onmouseout = B.onmouseout = function ()
+            {
+				 //开定时器，每隔200微妙下拉框消失
+                timerr = setTimeout(function () { 
+                    $("#qrcodeing").hide(); }, 10);
+            }
+
+	</script>
+<script type="text/javascript">
+	 var html='<ul class="sc_goods_ul"><p class="sc_goods_none" >您的购物车还是空的，赶紧行动吧！</p>
+</script>
+</ul>
+<div class="sc_goods_foot" style="display:none;">
+<a  href="{:U('cart/index')}" class="my_shopping_cart_btn">查看我的购物车</a>
+</div>';
+<script>
+var is_login='{:is_login()}';
+ function showbar(n){
+ if(is_login<1&&n>2){
+      showBg();return false;
+ }
+ $('.status_login').hide();
+ $('.quick_links_pop').hide();
+ $('.quick_links_pop').eq(n).show().animate({right:"40px"});;
+
+ } 
+ function hidebar(obj){
+      $(obj).parents('.quick_links_pop').toggle();
+ 
+ }
+ function addcartlist(obj,goodsid){
+		  
+				var num =1;
+				var cart_url="{:url('cart/addlist')}";
+		       $.post(cart_url,{goodsid:goodsid,num:num},function(data){
+                     
+					 if(data.status){  
+					    
+					      if(data.isin>0){
+					          $('.span_r').text("¥"+data.price);
+						      $('.item_num_'+data.sku_id).text(data.num); 
+					     }
+                         else{					
+						    $('#carthtml ul').append(data.tpl);
+					    } 
+						
+						$('.tNum').text(data.count);
+						$('.cart_num').text(data.sum);
+						$('.tSum').text("¥"+data.total); 
+						addpaowuxian();
+					 }
+					 else{
+					     openerror(data);
+					 
+					 }
+                });
+		   
+		}
+	    // 元素以及其他一些变量
+var fly = document.querySelector("#flyItem"), 
+sidecart = document.querySelector("#shopCart");
+	
+var ni = 0;
+// 抛物线运动
+var fline = funParabola(fly, sidecart, {
+	speed: 400, //抛物线速度
+	curvature: 0.0008, //控制抛物线弧度
+	complete: function() {
+		fly.style.visibility = "hidden";
+		//sidecart.querySelector("span").innerHTML = ++ni;
+	}
+});		
+
+
+// 绑定点击事件
+if (fly && sidecart) {
+	
+	[].slice.call(document.getElementsByClassName("jr")).forEach(function(button) {
+		button.addEventListener("click", function(event) {
+       
+				// 滚动大小
+			var scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft || 0,
+			    scrollTop = document.documentElement.scrollTop || document.body.scrollTop || 0;
+		
+			var left=parseInt(event.clientX + scrollLeft);	
+		
+			fly.style.right =left + "px";
+			fly.style.top = event.clientY + scrollTop + "px";
+			fly.style.visibility = "visible";
+		
+			// 需要重定位
+			fline.position().move();		
+		});
+	});
+}
+function addpaowuxian(){
+
+dos();	
+
+}
+
+ $(window).scroll(function(event){
+      var height= $(document).scrollTop();
+	  if(height>100){
+		  $('.quick_links_panel .quick_toggle').addClass('quick_links_allow_gotop');
+	  }
+	  else{
+		 $('.quick_links_panel .quick_toggle').removeClass('quick_links_allow_gotop');
+	  }
+	 
+  });
+
+
+</script>
+<script type="text/javascript" src="__JS__/common.js"></script>

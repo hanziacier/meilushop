@@ -1,0 +1,105 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1  maximum-scale=1 user-scalable=no">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-touch-fullscreen" content="yes">
+		<meta name="HandheldFriendly" content="True">
+		<title>微商城</title>
+		<link href="__CSS__/swiper.min.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="__CSS__/style.css">
+		<script type="text/javascript" src="__JS__/jquery-1.10.1.min.js"></script>
+		<script type="text/javascript" src="__JS__/swiper.min.js"></script>
+	</head>
+
+	<body>
+
+<div class="all_content" style="max-width:100%;position:relative;">
+		<!--头部-->
+		<div class="top_con01">
+			<div class="fh_icon"><a onClick="javascript :history.go(-1);"></a></div>
+			<div class="yc_icon" id="s_ser"><a href="#"></a></div>
+			<div class="yc_icon bot_nav02" id="h_ser"><a href="#"></a></div>
+			<h1>闪购</h1>
+		</div>
+		
+			<div class="sg_con01">
+				<ul> 
+				
+				{volist name="list" id="vo" }
+		   		  <li >
+						<div style="margin:0 auto;width:50%"class="sg_con01_img"><a href="{$vo['url']}"><img width="20%" src="{$vo['image']}"/></a></div>
+						<div class="sg_con01_m">
+							<div class="sg_con01_text">{$vo['title']}</div>
+							<div class="sg_con01_pri">￥{$vo['price']}<span>￥{$vo['price']}</span></div>
+							<div class="sg_con01_time">距结束还有<span class="endtime" value="{$vo['end_time']}"></span>
+</div>
+						<div class="sc_con01_close04 sg_con01_btn"><a href="{$vo['url']}">{$vo['name']}</a></div>
+						</div>
+						
+					</li>
+				{/volist}
+	
+					
+				</ul>
+			</div>
+		
+			
+			
+<script type="text/javascript">
+var serverTime ={php}echo time();{/php} * 1000;
+$(function(){
+    var dateTime = new Date();
+    var difference = dateTime.getTime() - serverTime;
+	
+    setInterval(function(){
+      $(".endtime").each(function(){
+        var obj = $(this);
+        var endTime = new Date(parseInt(obj.attr('value')) * 1000);
+        var nowTime = new Date();
+        var nMS=endTime.getTime() - nowTime.getTime() + difference;
+        var myD=Math.floor(nMS/(1000 * 60 * 60 * 24));
+        var myH=Math.floor(nMS/(1000*60*60)) % 24;
+        var myM=Math.floor(nMS/(1000*60)) % 60;
+        var myS=Math.floor(nMS/1000) % 60;
+        var myMS=Math.floor(nMS/100) % 10;
+        if(myD>= 0){
+			var str = '<span>'+myD+'</span>天<span>'+myH+'</span>时<span>'+myM+'</span>分<span>'+myMS+'</span>秒';
+        }else{
+			var str = "0天！";	
+		}
+		obj.html(str);
+      });
+    }, 100);
+
+});
+</script>           		
+			
+			
+				</div>
+		
+<!-- 底部栏目 -->
+		
+		<script type="text/javascript">
+
+			$(document).ready(function() {
+				
+				$("#s_ser").click(function() {
+					$(".bot_nav01").show();
+					$(".bot_nav02").show();
+				});
+				$("#h_ser").click(function() {
+					$(".bot_nav01").hide();
+					$(".bot_nav02").hide();
+				});
+			});
+		</script>
+		
+
+</body>
+
+</html>

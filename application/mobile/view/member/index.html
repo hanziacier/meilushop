@@ -1,0 +1,168 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1  maximum-scale=1 user-scalable=no">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-touch-fullscreen" content="yes">
+		<meta name="HandheldFriendly" content="True">
+		<title>微商城</title>
+
+		<link rel="stylesheet" href="__CSS__/style.css">
+		<script type="text/javascript" src="__JS__/jquery-1.10.1.min.js"></script>
+
+	</head>
+
+	<body>
+		<!--会员头部-->
+		<div class="mem_con01 mem_bottom">
+			<div class="mem_con01_main">
+				<div class="mem_con01_sz"><a href="{:url('member/edit')}">设置</a></div>
+				<!--div class="mem_con01_mes"><a href="{:url('service/index')}"></a></div-->
+				<div class="mem_con01_l fl"><a href="{:url('member/edit')}"><img src="{$UcenterMember.cover_id|get_cover_path}"/></a></div>
+				<div class="mem_con01_r fl">
+					<h1>{:get_username()}</h1>
+					<h2>您的等级是<span>免费</span></h2>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			<div class="mem_con01_b">
+				<div class="mem_con01_bl fl">
+					<div class="mem_con01_sc">
+						<a href="{:url('Collect/index')}">
+					<h1>{$res['num3']|default="0"}</h1><h2>收藏</h2></a>
+					</div>
+				</div>
+				<div class="mem_con01_br fr">
+					<div class="mem_con01_xx">
+					<a href="{:url('service/index')}"><h1>{$res['num4']|default="0"}</h1><h2>消息</h2></a>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+			</div>			
+		</div>
+		<!--我的订单-->
+		<div class="mem_con02 mem_bottom">
+			<div class="mem_con02_t">
+				<a href="{:url('order/index')}">我的订单<span>全部订单</span></a>
+			</div>
+			<div class="mem_con02_m">
+				<ul>
+					<li>
+						<div class="mem_con02_img"><a href="{:U('order/on_pay?status=0')}"><img src="__IMG__/mem_icon05.png"/><span>{$res['num']|default="0"}</span></a></div>
+						<div class="mem_con02_text"><a href="{:U('order/on_pay?status=0')}">待付款</a></div>
+					</li>
+					<li>
+						<div class="mem_con02_img"><a href="{:U('order/index?status=2')}"><img src="__IMG__/mem_icon06.png"/><span>{$res['num1']|default="0"}</span></a></div>
+						<div class="mem_con02_text"><a href="{:U('order/index?status=2')}">待收货</a></div>
+					</li>
+					<li>
+						<div class="mem_con02_img"><a href="{:url('comment/index')}"><img src="__IMG__/mem_icon07.png"/><span>{$res['num2']|default="0"}</span></a></div>
+						<div class="mem_con02_text"><a href="{:url('comment/index')}">待评价</a></div>
+					</li>
+					<li>
+						<div class="mem_con02_img"><a href="{:url('drawback/index')}"><img src="__IMG__/mem_icon08.png"/></a></div>
+						<div class="mem_con02_text"><a href="#">退/换货</a></div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!--我的钱包-->
+		<div class="mem_con03 mem_bottom">
+			<div class="mem_con03_t">
+				<a href="{:url('account/index')}">我的钱包<span>资金管理</span></a>
+			</div>
+			<div class="mem_con03_m">
+				<ul>
+					<li>
+						<div class="mem_con03_img"><a href="#">{$UcenterMember.account|default='0'}</a></div>
+						<div class="mem_con03_text"><a href="#">余额</a></div>
+					</li>
+					<li>
+						<div class="mem_con03_img"><a href="{:url('bonus/index')}">0</a></div>
+						<div class="mem_con03_text"><a href="{:url('bonus/index')}">红包</a></div>
+					</li>
+					<li>
+						<div class="mem_con03_img"><a href="#">{$UcenterMember.score|default='0'}</a></div>
+						<div class="mem_con03_text"><a href="#">积分</a></div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	
+		
+		<!--我的订单-->
+		<div class="mem_con05 mem_bottom">
+			<div class="mem_con05_t">
+				<h1>浏览记录<a href="#">清空</a></h1>
+				
+			</div>
+			<div class="mem_con05_m">
+				<ul>  {empty name="log"}	
+        <div class="zhmx_con01">
+			<div class="ahmx_con01_none">亲，此处没有内容~！</div>
+		<div>
+         {else/}{foreach name="log" item="vo" offset="0" length="3"} 
+					<li>
+						<div class="mem_con05_main">
+						<div class="mem_con05_img">
+							<a href="{:U('goods/detail?id='.$vo)}"><img src="{$vo|get_goods_cover}" /></a>
+						</div>
+						<div class="mem_con05_text">
+							<a href="{:U('goods/detail?id='.$vo)}">{$vo|get_goods="title"}</a>
+						</div>
+		
+					</div>
+					</li>
+			{/foreach}
+		{/empty}			
+				</ul>
+			</div>
+		</div>
+
+		<!-- 底部栏目 -->
+		<!-- 底部栏目 -->
+			<footer>
+
+				<div class="bot_nav">
+					<ul>
+						<li>
+							<div class="boot_nav_i boot_nav_i01">
+								<a href="{:url('index/index')}"><i></i><span>首页</span></a>
+							</div>
+						</li>
+						<li>
+							<div class="boot_nav_i boot_nav_i02">
+								<a href="{:url('category/index')}"><i></i><span>分类</span></a>
+							</div>
+						</li>
+						
+						<li>
+							<div class="boot_nav_i boot_nav_i04">
+								<a href="{:url('cart/index')}"><i></i><span>购物车</span></a>
+							</div>
+						</li>
+						<li class="active">
+							<div class="boot_nav_i boot_nav_i05">
+								<a href="{:url('member/index')}"><i></i><span>我的</span></a>
+							</div>
+						</li>
+					</ul>
+				</div>
+
+			</footer>
+		<script type="text/javascript">
+			window.onload = function() {
+				var mySwiper2 = new Swiper('#banner', {
+					autoplay: 2000,
+					visibilityFullFit: true,
+					loop: true,
+					pagination: '.pagination',
+				});
+			}
+		</script>
+	</body>
+
+</html>

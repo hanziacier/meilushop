@@ -1,0 +1,84 @@
+<!-- 头部 -->
+	{include file='public/header'/}
+<!-- 头部 --> 
+	<!--crumb start-->
+	<div class="crumb w100">
+		<div class="crumb_in in_width">
+			<p>您现在的位置：<a href="{:url('order/index')}" class="index_a">个人中心</a> ><span>我的订单</span></p>
+		</div>
+	</div>
+	<!--/crumb end-->
+	<!--main start-->
+	<div class="main w100">
+		<div class="main_in in_width ddxq_main_in">
+			
+			<div class="ddxx">
+				<div class="fl ddxq">
+					<h3>订单信息</h3>
+					<div class="con">
+						<div class="xx">
+							<span class="fl">订单信息:</span>
+							<p class="fl">{$info.username|default=""}，{$info.mobile|default=""}，{$info.address|default=""}</p>
+						</div>
+						<div class="num">
+							<span class="fl">订单编号:</span>
+							<p class="fl span_02">{$info.order_sn|default=""}</p>
+						</div>
+					
+					</div>
+				</div>
+				<div class="fl ddzt">
+					<div class="zt f16">订单状态：{if condition="$info.status eq 0"}待支付{/if}
+										{if condition="$info.status eq 1"}待发货{/if}
+									    {if condition="$info.status eq 2"}已发货{/if}
+										{if condition="$info.status eq 3"}已确认{/if}
+									    {if condition="$info.status eq 4"}申请取消中{/if}
+										{if condition="$info.status eq 5"}取消订单被拒绝{/if}
+									    {if condition="$info.status eq 6"}订单已取消{/if}</div>
+					<a href="javascript:;"></a>
+				</div>
+			</div>
+			<div class="ddsp">
+				<ul class="tit_ul">
+					<li class="li_01">商品</li>
+					<li class="li_02">单价（元）</li>
+					<li class="li_03">数量</li>
+					<li class="li_04">总价（元）</li>
+					<li class="li_05">状态</li>
+					<li class="li_06">运费（元）</li>
+				</ul>
+				<p class="dd_num">订单编号: {$info.order_sn}</p>
+				<div class="ddxq_div">
+					<ul class="sp_list fl">
+						{volist name="list" id="vo"}
+						<li class="list_li">
+							<ul class="ul_01">
+								<li class="li_01">
+									<a href="{:url('Goods/detail?id='.$vo['goods_id'])}" class="pic fl"><img src="{$vo.goods_id|get_goods_cover}" width="80" height="80"/></a>
+									<div class="txt fl">
+										<a href="{:url('Goods/detail?id='.$vo['goods_id'])}">{$vo.title}</a>
+										<p>规格：{$vo.specifications}</p>
+									</div>
+								</li>
+								<li class="li_02">{$vo.price}</li>
+								<li class="li_03">{$vo.num}</li>
+								<li class="li_04">{$vo.total|default="0"}</li>
+								<li class="li_05">提交成功</li>
+								<li class="li_06">{$vo.spress|default="0"}</li>
+							</ul>						
+						</li>
+						{/volist}
+					</ul>
+					
+				</div>
+				<div class="price">
+					<p>运费：{$info.ship_price}元</p>
+					
+					<p>实付款：<span class="f20">￥{$info.total_money}</span></p>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--/main end-->	
+{include file="public/footer"/}

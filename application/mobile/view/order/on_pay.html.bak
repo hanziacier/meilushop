@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,maximum-scale=1, minimum-scale=1" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no" />
+    <title>{:C('WEB_SITE_TITLE')}——订单</title>
+    <link rel="stylesheet" href="__CSS__/swiper-3.4.2.min.css" />
+    <link rel="stylesheet" href="__CSS__/common_mobile.css" />
+    <link rel="stylesheet" href="__CSS__/dingdan.css" />
+    <script type="text/javascript" src="__JS__/jquery-3.1.1.min.js" ></script>
+    <script type="text/javascript" src="__JS__/swiper-3.4.2.jquery.min.js" ></script>
+    <script type="text/javascript" src="__JS__/swiper-3.4.2.jquery.min.js" ></script>
+</head>
+<body>
+	<div>
+		<header>
+			<div class="header">
+				<a href="Javascript:history.go(-1);void(0);"><i class="icon icon-back"></i></a>
+				<h1>订单列表</h1><a href="{:url('index/index')}"><i class="icon icon-home"></i></a>
+			</div>
+		</header>
+		<div style="height: 2.5rem;"></div>
+	</div>
+	<nav>
+		<div id="topNav" class="swiper-container">
+		  <div class="swiper-wrapper">
+		    <div class="swiper-slide "><a href="{:U('order/index')}">全部</a></div>
+		    <div class="swiper-slide active"><a href="{:U('order/on_pay')}">待付款</a></div>
+		    <div class="swiper-slide"><a href="{:U('order/index?status=1')}">待发货</a></div>
+		    <div class="swiper-slide"><a href="{:U('order/index?status=2')}">待收货</a></div>
+		    <div class="swiper-slide"><a href="{:U('order/index?status=3')}">已收货</a></div>		    
+		  </div>
+		</div>
+	</nav>
+	 {volist name="res.list" id="vo"} 
+	<div class="order-item">
+		<div class="order-top">
+			<div class="order-date">
+				<span>订单编号：{$vo.order_sn}</span>
+				<span class="status">
+				                        {if condition="$vo.status eq 0"}待支付{/if}
+										{if condition="$vo.status eq 1"}待发货{/if}
+									    {if condition="$vo.status eq 2"}已发货{/if}
+										{if condition="$vo.status eq 3"}已确认{/if}
+									    {if condition="$vo.status eq 4"}申请取消中{/if}
+										{if condition="$vo.status eq 5"}取消订单被拒绝{/if}
+									    {if condition="$vo.status eq 6"}订单已取消{/if}
+				</span>
+			</div>
+		</div>
+		 {volist name="vo['detail']" id="vo1"}
+		<div class="order-center">
+			<img src="{$vo1.path}" />
+			<div class="food-info">
+				<p><a href="#">{$vo1.goods_id|get_goods='title'}</a></p>
+				<a href="#">{$vo1.specifications}</a>
+				<p class="price"><strong>¥{$vo1.price}</strong>x{$vo1.num}</p>
+			</div>		
+		</div>
+		{/volist}
+		<div class="order-bottom">
+			<p>共计{$vo.num}件   合计：<strong>¥{$vo.total_money}元</strong></p>
+			<div class="order-btn">			
+			  <!-- /在线支付未支付 -->
+			{if condition="$vo['status'] eq 0 "}
+			<a  class="pay-now"  href="{:U('pay/index?id='.$vo['id'])}" class="btn">立即付款</a>
+			{/if}
+			
+			<!-- /已提交货到付款订单 -->	
+			{if condition="($vo['status'] eq 1) AND ($vo['ispay'] eq -1) "}
+			    <a class="pay-now" href="#">立即付款</a>	
+				<a class="cancel-order" href="#">取消订单</a>
+			 {/if}
+
+	          <!-- /已发货订单 -->		
+				{if condition="($vo['status'] eq 2) "}
+				<a href="javascript:void(0)" sid='{$vo.order_sn}'onclick='confirmOrder(obj);' class="cancel-order">确认收货</a>
+				{/if}
+
+             
+
+			
+			</div>			
+		</div>
+	</div>
+	{/volist}
+	
+	
+ <span style='' id='loading' >
+ <img src="__IMG__/loading.gif"/>	</span>
+<div class="H5"></div>
+	<div class="bottom-menu order-bottom-menu">
+		<a class="" href="{:url('index/index')}"><i class="home"></i><p>首页</p></a>
+		<a class="" href="{:url('category/index')}"><i class="category"></i><p>分类</p></a>
+		<a class="" href="{:url('cart/index')}"><i class="cart"></i><p>购物车</p></a>
+		<a class="active" href="{:url('member/index')}"><i class="mine"></i><p>我的</p></a>
+	</div>
+  <script type="text/javascript">
+   //取消订单
+	function cancel(obj){
+	
+		if(confirm("确定取消订单吗")){
+			  $.post("{:U('Cancel/add')}",{orderid:$(obj).attr('sid')},function(data){
+				  if(data.status=='1'){            
+				      alertlog('操作成功！'); 
+					  window.location.reload();
+                   }
+                   else if(data.status=='2'){            
+				      alertlog('操作成功，退款将按原路返回！'); 
+					  window.location.reload();
+                   }
+				   else{            
+				       alertlog('系统故障！');
+                   }	  
+		     });				 
+	    }
+	}  
+	  //确认收货
+	function confirmOrder(obj){
+		if(confirm("确定执行该操作吗")){
+			  $.post("{:U('Order/confirm')}",{orderid:$(obj).attr('sid')},function(data){
+				  if(data.status){            
+				      alertlog('确认成功！'); 
+					  window.location.reload();
+                   }
+				   else{            
+				      alertlog('系统故障！');
+                   }	  
+		     });				 
+	    }
+	} 
+	
+	$(function(){
+        var num = 2;//从第二页开始加载
+        var pageNum = {$res.num};//总页数
+        var stop = false;//禁止加载
+        $(window).scroll(function(){ 
+            totalheight = parseFloat($(window).height()) + parseFloat($(window).scrollTop()); 
+            if($(document).height() <= totalheight){
+                if(pageNum>1 && pageNum>=num){
+                    if(stop==false){
+                        loadPage(num);
+                    }
+                }else if(pageNum !=1){
+                    $('#loading').html('数据加载完毕');
+                }   
+            } 
+        });
+        //关闭顶部提示信息
+        $('.btn_notice_close').click(function(){
+            $(this).parent().remove();
+        })
+        
+        function loadPage(){
+            stop = true;//启动加载
+                //$('#loading').show();
+                var jsondata='{"p":"'+num+'"}';
+                jsondata=$.parseJSON(jsondata);
+		$.ajax({
+			url:" {:U('')}",
+			type:'POST',
+			dataType:'json',
+            data:{p:num},
+			success: function(data){
+                            var html = '';
+                            $(data).each(function(){
+                                  html = html+'<div class="order-item"><div class="order-top"><div class="order-date"><span>订单编号：'+$(this)[0]['order_sn']+'<span class="status">'
+								  +$(this)[0]['status']+
+								  '</span></div></div>';
+                                 var ret=$(this)[0]['detail'];
+				     for (var i = 0,len = ret.length; i < len; i++) {
+				  
+					   var thisItem = ret[i];
+						//alert(thisItem['id']);
+						
+						html = html+ '<div class="order-center"><img src="'+thisItem.path+' "/>'+
+						'<div class="food-info"><p><a href='+ thisItem.link +'>'+ thisItem.title +'</a><a>'+ thisItem.specifications
+						+'</a><p class="price"><strong>'+ thisItem.price + '</strong>x'+thisItem.num+'</p></div></div>';
+	  }
+html +=  '<div class="order-bottom"><p>共计 '+$(this)[0]['num']+'件   合计：<strong>¥'+$(this)[0]['total_money']+
+'元</strong></p><div class="order-btn">	'+ $(this)[0]['info']+'</div></div></div>';
+
+                            })
+                            num = num + 1;
+                            $('#loading').show();
+                            $('.order-item:last').after(html);
+                            stop = false;//禁止加载
+			},
+			error:function(){
+                           $('#loading').show();
+                           alert('数据加载失败');
+                            stop=false;
+			}
+		})
+	};
+})
+     
+		var mySwiper2 = new Swiper ('.swiper-container2', {
+		  loop: true,
+		  autoplay:3000,
+		  grabCursor:true,
+		  // 如果需要分页器
+		  pagination: '.swiper-pagination',
+		  paginationClickable: true,
+		  autoplayDisableOnInteraction : false
+		});    		 
+		var mySwiper = new Swiper('#topNav', {
+			freeMode: true,
+			freeModeMomentumRatio: 0.5,
+			slidesPerView: 'auto',
+		
+		});
+		
+		swiperWidth = mySwiper.container[0].clientWidth
+		maxTranslate = mySwiper.maxTranslate();
+		maxWidth = -maxTranslate + swiperWidth / 2
+		
+		$(".swiper-container").on('touchstart', function(e) {
+		//	e.preventDefault()
+		})
+		
+		mySwiper.on('tap', function(swiper, e) {
+		
+		//	e.preventDefault()
+		
+			slide = swiper.slides[swiper.clickedIndex]
+			slideLeft = slide.offsetLeft
+			slideWidth = slide.clientWidth
+			slideCenter = slideLeft + slideWidth / 2
+			// 被点击slide的中心点
+		
+			mySwiper.setWrapperTransition(300)
+		
+			if (slideCenter < swiperWidth / 2) {
+				
+				mySwiper.setWrapperTranslate(0)
+		
+			} else if (slideCenter > maxWidth) {
+				
+				mySwiper.setWrapperTranslate(maxTranslate)
+		
+			} else {
+		
+				nowTlanslate = slideCenter - swiperWidth / 2
+		
+				mySwiper.setWrapperTranslate(-nowTlanslate)
+		
+			}
+		
+			$("#topNav  .active").removeClass('active')
+		
+			$("#topNav .swiper-slide").eq(swiper.clickedIndex).addClass('active')
+		
+		})
+	</script>
+</body>
+</html>

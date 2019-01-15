@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1  maximum-scale=1 user-scalable=no">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-touch-fullscreen" content="yes">
+		<meta name="HandheldFriendly" content="True">
+		<title>微商城</title>
+
+		<link rel="stylesheet" href="__CSS__/style.css">
+		<script type="text/javascript" src="__JS__/jquery-1.10.1.min.js"></script>
+
+	</head>
+
+	<body>
+		<!--头部-->
+		<div class="top_con01">
+			<div class="fh_icon">
+				<a onClick="javascript :history.go(-1);"></a>
+			</div>
+			<div class="yc_icon" id="s_ser">
+				<a href="#"></a>
+			</div>
+			<div class="yc_icon fot_nav02" id="h_ser">
+				<a href="#"></a>
+			</div>
+			<h1>新增收货地址</h1>
+		</div>
+	{include file="public/menu"/}
+		<!--内容-->
+		<div class="shdz_con03">
+		    <ul><form  action="{:url('')}"  name="form" method="post">
+		    	<li>
+		    		<div class="shdz_con03_l fl">收货人姓名：</div>
+		    		<div class="shdz_con03_r fl"><input type="text"name="username" value="{$info.username|default=''}" placeholder="收货人姓名必填"/></div>
+		    		<div class="clearfix"></div>
+		    	</li>
+		    	<li>
+		    		<div class="shdz_con03_l fl">手机号：</div>
+		    		<div class="shdz_con03_r fl"><input type="text" name="mobile" value="{$info.mobile|default=''}" placeholder="手机号必填"/></div>
+		    		<div class="clearfix"></div>
+		    	</li>
+		    	<li>
+		    		<div class="shdz_con03_l fl">省/直辖市：</div>
+		    		<div class="shdz_con03_r fl"><select id="province" name="province" > 
+<option value="-1">选择省份</option>
+  {volist name="arealist" id="vo" }
+  <option  value="{$vo.id}" >{$vo.title}</option>  
+  {/volist}</select> </div>
+		    		<div class="clearfix"></div>
+		    	</li>
+		    	<li>
+		    		<div class="shdz_con03_l fl">城市：</div>
+		    		<div class="shdz_con03_r fl">   <select id="city" name="city"> <option value="-1">选择城市</option> </select></div>
+		    		<div class="clearfix"></div>
+		    	</li><li>
+		    		<div class="shdz_con03_l fl">区县：</div>
+		    		<div class="shdz_con03_r fl">    <select id="area" name="area"> <option value="-1">选择地区</option> </select></div>
+		    		<div class="clearfix"></div>
+		    	</li>
+		    	<li>
+		    		<div class="shdz_con03_l">详细地址：</div>
+		    		<div class="shdz_con03_r fn">
+		    			<textarea name="address" placeholder="详细地址必填">{$info.address|default=''}</textarea>
+		    		</div>
+		    		<div class="clearfix"></div>
+		    	</li>
+		    </ul>
+		</div>
+		    <input type="hidden" name="id" value="{$info.id|default=""}">
+		</form>
+<div class="grzl_con01_btn"><a onclick='javascript:document.form.submit();'>配送到这个地址</a></div>
+		<script>
+	$('#province').change(function(){
+					if(this.value==-1){
+						return;
+					}
+					$.post('{:url("address/change")}',{pid:this.value},
+					function(data,textStatus){
+						if(data){
+						    $('#city').empty();//清空原有的数据
+							$("<option value='-1'>选择城市</option>").appendTo("#city");
+								$.each(data, function(i,n){
+								$("<option value='"+n.id+"'>"+n.title+"</option>").appendTo("#city");
+								
+							});
+							
+						}else{
+							alert('没有子级了!');
+						}
+					},'json');
+				});
+                   $('#city').change(function(){
+					   if(this.value==-1){
+						  return;
+					   }
+				    $.post('{:url("address/change")}',{pid:this.value},
+					function(data,textStatus){
+						if(data){
+						
+					  $('#area').empty();//清空原有的数据
+					  $("<option value='-1'>选择区域</option>").appendTo("#area");
+							$.each(data, function(i,n){
+								$("<option value='"+n.id+"'>"+n.title+"</option>").appendTo("#area");
+								//$("#ltwo").append('<option value="'+n.region_id+'">'+n.region_name+'</option>');
+							});
+							$('#ltwo').show();
+						}else{
+							alert('没有子级了!');
+						}
+					},'json');
+				});
+   
+	$("select[name='province]").val("{$info.province|default='湖北'}");
+    $("select[name='city]").val("{$info.city|default='武汉'}");
+    $("select[name='area]").val("{$info.area|default='武昌区'}");
+				</script>
+	</body>
+<script>
+    $(function(){
+        $('#expressArea').click(function(){
+            $('.box').animate({left:'100px'}, 500);
+        });
+    });	
+//购物车删除
+ function submit(){  
+		     
+				var self =$('form');
+    		    $.post(self.attr("action"), self.serialize(),function(data){   
+					 if(data.code){ 
+						 var url = "{:U('order/orderPay')}"+'?aid='+data.id;
+						  window.location.href =url;
+					}
+					 else{
+					    alert(data.msg); 
+						if(data.url){
+						  window.location.href =data.url;
+						  }
+					 }
+                });
+	       
+	}	
+	function select(obj,id,pid){
+	   $(".list").hide();
+	   $.post('{:U("address/change")}',{pid:id},function(data,textStatus){
+						if(data){
+						   var html = "<ul class='list'>";
+                       
+								$.each(data, function(i,n){
+									  html = html+'<li onclick="select(this,'+$(this)[0]['id']+','+$(this)[0]['pid']+')">'+
+									  $(this)[0]['title']+'</li>';
+								
+							});
+							html +=  '</ul>';
+							$(".main").append(html);
+							if(pid==0){
+							  $(".nav li").removeClass("active").eq(1).addClass("active");
+							  $(obj).text();
+							  $("input[name='province']").val($(obj).text());
+							}else{
+							   $(".nav li").removeClass("active").eq(2).addClass("active"); 
+							   $("input[name='city']").val($(obj).text());
+							}
+							
+							
+						}else{
+						    $("input[name='area']").val($(obj).text());
+							 $(".mask").animate({left:"100%"});
+						}
+						var address=$("input[name='province']").val()+" "+$("input[name='city']").val()+" "+$("input[name='area']").val();
+						$("#expressArea").val(address);
+		  });
+	
+	
+	}
+   $(".addr").on('click', function(){
+       $(".mask").animate({left:"0"});;$(".nav li").removeClass("active").eq(0).addClass("active");
+	   $(".list").hide().eq(0).show();
+ });
+   $(".mask .icon").on('click', function(){
+       $(".mask").animate({left:"100%"});;
+ }); 
+ $(".tip,.close").on('click', function(){
+
+        $(".mobile-bottom-mask").animate({bottom:"-300px"});;
+	    $(".mobile-content").toggle();  
+ });
+	
+		function set(obj){
+           if(!$(obj).hasClass('checked')){
+	         $(obj).addClass('checked') ;
+			 $("input[name='status']").val(1);
+	      }
+		 else{
+		     $(obj).removeClass('checked') ;
+			 $("input[name='status']").val(0);
+	       }
+         
+     }</script>
+
+</html>

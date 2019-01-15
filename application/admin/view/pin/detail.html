@@ -1,0 +1,106 @@
+ <!-- 头部 -->
+	{include file='public/header'}
+<!-- 头部 --> 
+	
+	   <div class="content">
+	<div class="edit_title">订单管理/{$meta_title|default=""}</div>
+	        <div class="order_wrap">
+			
+				 
+
+			
+				     
+				<div class="order-info"> 
+				  <p>
+					    <span class="item"> <strong>订单状态:</strong>  {if condition="$info.status eq -1"}无效订单{/if}
+					                     {if condition="$info.status eq 0"}待支付{/if}
+										{if condition="$info.status eq 1"}待发货{/if}
+									    {if condition="$info.status eq 2"}已发货{/if}
+										{if condition="$info.status eq 3"}已确认{/if}
+									    {if condition="$info.status eq 4"}申请取消中{/if}
+										{if condition="$info.status eq 5"}取消订单被拒绝{/if}
+									    {if condition="$info.status eq 6"}订单已取消{/if}
+										{if condition="$info.status eq -2"}拼团订单退款{/if}
+									</span>
+					  
+					
+					</p>
+				    <p>
+					    <span class="item"> <strong>订单编号:</strong>{$info.order_sn|default=''}</span>
+					    <span class="item"> <strong>订单来源:</strong>{$info.order|default='pc'}</span>
+					    <span class="item"> <strong>订单时间:</strong>{$info.update_time|time_format}</span>
+					
+					</p>
+
+                     <p>
+					    <span class="item"> <strong>支付方式:</strong>  {if condition="$info['paytype'] eq 0"}未支付{/if}
+					                {if condition="$info['paytype'] eq 1"}余额支付{/if}
+									{if condition="$info['paytype'] eq 2"}微信支付{/if}
+									{if condition="$info['paytype'] eq 3"}支付宝wap付款{/if}
+									{if condition="$info['paytype'] eq 4"}支付宝在线支付{/if}
+									{if condition="$info['paytype'] eq 5"}货到付款{/if}
+									{if condition="$info['paytype'] eq 6"}微信扫码支付{/if}
+									</span>
+					    <span class="item"> <strong>客户姓名:</strong>{$info.username|default=''}</span>
+					    <span class="item"> <strong>联系方式:</strong>{$info.mobile|default=''}</span>
+					</p>
+                     
+					 <p>
+					    <span class="item"> <strong>地址:</strong>{$info.address|default=''}</span>
+					  
+					</p>
+
+				    
+                     <p>  <span class="item"> <strong>留言：</strong>{$info.message}<p>
+					
+				  
+				      <p> 快递名称：{$info.express|default=''}<p>
+                      <p> 快递单号：{$info.express_code|default=''}<p>
+				</div>
+				
+				
+	           <div class="order_list">
+					<table>
+					    <tr>
+							<th>图片</th>                                
+							<th>商品名称</th>
+							<th>规格</th>
+							<th>单价</th>
+							<th>数量</th>
+							<th>小计</th>
+				       </tr>
+				       {volist name="list" id="vo"}
+                            <tr>
+								<td><img src="{$vo.goods_id|get_goods_cover}" class="thumb"> </td>
+								<td class="tit">{$vo.goods_id|get_goods='title'}</td>
+								<td >{$vo.specifications|default=""}</td>
+								<td class="">{$vo.price}</td>
+								<td>{$vo.num}</td>
+								<td class="">
+								{$vo.total}            
+								</td>
+                           </tr>
+					    {/volist}
+					</table>
+					<p>商品总金额<span class="fr ">￥{$info.total|default='0'}</span></p>
+					<p>运费<span class="fr ">￥{$info.ship_price|default='0'}</span></p>
+					<p>积分抵消<span class="fr ">￥{$info.score_money|default='0'}</span></p>
+					<p>总金额<span class="fr ">￥{$info.total_money|default='0'}</span></p>
+				</div>
+            
+            </div>
+		</div>
+	   <script src="__JS__/style.js"></script> 
+       <script>
+	          $(".tab").click(function(){
+			            $(this).addClass("on").siblings().removeClass("on");
+						var index = $(this).index();
+						$(".order-info").hide();
+						$(".order-info").eq(index).show();
+					
+					
+			}); 
+		</script>
+	<!-- 尾部 -->
+	{include file='public/footer'}
+    <!-- 尾部 --> 

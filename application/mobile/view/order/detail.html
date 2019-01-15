@@ -1,0 +1,140 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1  maximum-scale=1 user-scalable=no">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-touch-fullscreen" content="yes">
+		<meta name="HandheldFriendly" content="True">
+		<title>微商城</title>
+
+		<link rel="stylesheet" href="__CSS__/style.css">
+		<script type="text/javascript" src="__JS__/jquery-1.10.1.min.js"></script>
+
+	</head>
+
+	<body>
+		<!--头部-->
+		<div class="top_con01">
+			<div class="fh_icon">
+				<a onClick="javascript :history.go(-1);"></a>
+			</div>
+			<div class="yc_icon" id="s_ser">
+				<a href="#"></a>
+			</div>
+			<div class="yc_icon bot_nav02" id="h_ser">
+				<a href="#"></a>
+			</div>
+			<h1>订单详情</h1>
+		</div>
+		<div class="bot_nav bot_nav01">
+			<ul>
+				<li>
+					<div class="boot_nav_i boot_nav_i01">
+						<a href="{:url('index/index')}"><i></i><span>首页</span></a>
+					</div>
+				</li>
+				<li>
+					<div class="boot_nav_i boot_nav_i02">
+						<a href="{:url('category/index')}"><i></i><span>分类</span></a>
+					</div>
+				</li>
+				<li>
+					<div class="boot_nav_i boot_nav_i06">
+						<a href="{:url('cart/index')}"><i></i><span>搜索</span></a>
+					</div>
+				</li>
+				<li>
+					<div class="boot_nav_i boot_nav_i04">
+						<a href="{:url('cart/index')}"><i></i><span>购物车</span></a>
+					</div>
+				</li>
+				<li>
+					<div class="boot_nav_i boot_nav_i05">
+						<a href="{:url('member/index')}"><i></i><span>我的</span></a>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<!--内容-->
+		<div class="orde_con01">
+		<div class="orde_con01_t">
+		<div class="order_con01_text">
+								<a href="#">
+								<p>订单号：{$info.order_sn}</p>
+<p>订单状态：{if condition="$info.status eq 0"}待支付{/if}
+										{if condition="$info.status eq 1"}待发货{/if}
+									    {if condition="$info.status eq 2"}已发货{/if}
+										{if condition="$info.status eq 3"}已确认{/if}
+									    {if condition="$info.status eq 4"}申请取消中{/if}
+										{if condition="$info.status eq 5"}取消订单被拒绝{/if}
+									    {if condition="$info.status eq 6"}订单已取消{/if}</p>
+<p>订单总金额：<span>￥{$info.total_money|default=""}元</span></p>
+<p>下单时间：{$info.create_time|date='Y-m-d H:i:s'}</p></a>
+							</div>
+					
+		</div>
+		{if condition="$info.status eq 0"}<div class="grzl_con01_btn"><a href="{:U('pay/index?id='.$info['id'])}">立即付款</a></div>{/if}
+		<div class="orde_con01_m">
+		<ul> {volist name="list" id="vo"} 
+		<li>
+		<div class="wdpj_con01_main">
+
+							<div class="wdpj_con01_img">
+								<a href="{:U('goods/detail?id='.$vo['goods_id'])}"><img src="{$vo.goods_id|get_goods_cover}"></a>
+							</div>
+							<div class="order_con01_text">
+								<a href="{:U('goods/detail?id='.$vo['goods_id'])}">
+								<p> {$vo.goods_id|get_goods="title"}</p>
+
+<p>小计：<span>￥{$vo.price}*{$vo.num}元</span>  数量：{$vo.num}</p>
+</a>
+							</div>
+					
+						</div>
+		</li>
+		{/volist}
+		</ul>
+		</div>
+		
+		</div>
+		
+		<div class="orde_con02">
+		<div class="orde_con02_t">
+		<ul>
+		<li>收货人：<span> {$info.username} </span></li>
+		<li>手机号：<span> {$info.mobile}</span></li>
+		<li>详细地址：<span>{$info.address}</span></li>
+		</ul>
+		</div>
+		<div class="orde_con02_tip">
+		<p>商品总价：<span>￥{$info.total_money|default=""}元</span><br/>折扣：<span>￥0.00元</span><br/>应付款金额：<span>￥202.00元</span></p>
+		</div>
+		<div class="orde_con02_m">
+		<ul>
+		<li>所选支付方式：<span>支付宝</span></li>
+		<li>应付款金额：<span style="color:#1aba7e;">￥202.00元</span></li>
+		</ul>
+		</div>
+		
+		</div>
+
+		<script type="text/javascript">
+			$(document).ready(function() {
+
+				$("#s_ser").click(function() {
+					$(".bot_nav01").show();
+					$(".bot_nav02").show();
+				});
+				$("#h_ser").click(function() {
+					$(".bot_nav01").hide();
+					$(".bot_nav02").hide();
+				});
+			});
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,342 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1  maximum-scale=1 user-scalable=no">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-touch-fullscreen" content="yes">
+		<meta name="HandheldFriendly" content="True">
+		<title>微商城</title>
+		<link rel="stylesheet" href="css/style.css">
+		<script type="text/javascript" src="js/jquery-1.10.1.min.js"></script>
+		<script type="text/javascript" src="js/common.js"></script>
+
+	</head>
+
+	<body>
+
+		<nav class="sidenav" data-sidenav data-sidenav-toggle="#sidenav-toggle">
+			<div class="t_H">价格</div>
+			<div class="price-dd-choose">
+				<div id="price-range" class="price-range">
+					<div class="price-range-slider">
+						<div class="bg-darkgrey"></div>
+						<div class="bg-darkgrey-hand"></div>
+
+					</div>
+					<div class="slide-selected"></div>
+					<i class="btn-price btn-left"></i>
+					<i class="btn-price btn-right"></i>
+					<div class="tip">
+						<div class="tip-content"></div>
+						<span class="tip-top tip-arrow"></span>
+					</div>
+
+				</div>
+			</div>
+			<ul class="sidenav-menu">
+				<li>
+					<a href="javascript:;" data-sidenav-dropdown-toggle class="active">
+
+						<span class="sidenav-link-title">品牌</span>
+						<span class="sidenav-dropdown-icon show" data-sidenav-dropdown-icon>全部<img src="images/s_jt.png"/></span>
+						<span class="sidenav-dropdown-icon" data-sidenav-dropdown-icon>全部<img src="images/x_jt.png"/></span>
+					</a>
+
+					<ul class="sidenav-dropdown" data-sidenav-dropdown>
+						<li>
+							<a href="javascript:;">全部</a>
+						</li>
+						<li>
+							<a href="javascript:;">裙子信息</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+			<div class="nav_btn">
+				<div class="nav_btn_con fl"><a href="#">清空选项</a></div>
+				<div class="nav_btn_con01 fr"><a href="#">确定</a></div>
+				<div class="clearfix"></div>
+			</div>
+
+		</nav>
+
+		<div class="all_content">
+			<!--搜索框-->
+			<div class="top_search top_search01" id="s_ser">
+				<div class="top_search_i">
+					<a href="#">请输入您搜索得关键词！</a>
+				</div>
+				<div class="top_fh">
+					<a onClick="javascript :history.go(-1);"></a>
+				</div>
+				<div class="top_cate">
+					<a href="#" id="grid" class="cat_i01"><img src="images/twlb_icon01.png" /></a>
+					<a href="#" id="list" class="cat_i02"><img src=" images/twlb_icon02.png " /></a>
+					<a href="# " id="big" class="cat_i03"><img src="images/twlb_icon03.png" /></a>
+				</div>
+			</div>
+			<!--导航-->
+			<div class="top_menu">
+				<ul>
+					<li class="{eq name='order' value='2'}current{/eq}">
+						<a href="{:url('Goods/lists',array('id'=>$cate['id'],'order'=>2,'sort'=>$see))}">默认</a>
+					</li>
+					<li class="{eq name='order' value='4'}current{/eq}">
+						<a href="{:url('Goods/lists',array('id'=>$cate['id'],'order'=>4,'sort'=>$see))}">销量<img src="images/u_jt.png" /></a>
+					</li>	{php} 
+			if($order==3){
+		      switch($see) { 
+		        case 'desc': 
+				     $class="current";
+                break;
+				case 'asc':
+				    $class="active";
+                  break;				
+		       }  	
+	        }
+      {/php}
+					<li {eq name='order' value='1'}class="current"{/eq}>
+						<a href="{:url('Goods/lists',array('id'=>$cate['id'],'order'=>1,'sort'=>$see))}">评分<img src="images/u_jt.png" /></a>
+					</li>
+					<li class="{$class|default=""}">
+						<a href="{:url('Goods/lists',array('id'=>$cate['id'],'order'=>3,'sort'=>$see))}">价格<img src="images/u_jt.png" /></a>
+					</li>
+					<li>
+						<a href="#" id="sidenav-toggle">筛选</a>
+					</li>
+				</ul>
+			</div>
+			<div id="products" class="list_con01">
+				<ul>
+					<li class="item">
+						<div class="in_con03_main">
+							<div class="in_con03_img">
+								<a href="#"><img src="images/sp_ad01.jpg" /></a>
+							</div>
+							<div class="in_con03_text">
+								<a href="#">子牧棉麻2018春季新品 民族风女装双层</a>
+							</div>
+							<div class="in_con03_pri">￥168元</div>
+						</div>
+					</li>
+					<li class="item">
+						<div class="in_con03_main">
+							<div class="in_con03_img">
+								<a href="#"><img src="images/sp_ad01.jpg" /></a>
+							</div>
+							<div class="in_con03_text">
+								<a href="#">子牧棉麻2018春季新品 民族风女装双层</a>
+							</div>
+							<div class="in_con03_pri">￥168元</div>
+						</div>
+					</li>
+					<li class="item">
+						<div class="in_con03_main">
+							<div class="in_con03_img">
+								<a href="#"><img src="images/sp_ad01.jpg" /></a>
+							</div>
+							<div class="in_con03_text">
+								<a href="#">子牧棉麻2018春季新品 民族风女装双层</a>
+							</div>
+							<div class="in_con03_pri">￥168元</div>
+						</div>
+					</li>
+					<li class="item">
+						<div class="in_con03_main">
+							<div class="in_con03_img">
+								<a href="#"><img src="images/sp_ad01.jpg" /></a>
+							</div>
+							<div class="in_con03_text">
+								<a href="#">子牧棉麻2018春季新品 民族风女装双层</a>
+							</div>
+							<div class="in_con03_pri">￥168元</div>
+						</div>
+					</li>
+					<li class="item">
+						<div class="in_con03_main">
+							<div class="in_con03_img">
+								<a href="#"><img src="images/sp_ad01.jpg" /></a>
+							</div>
+							<div class="in_con03_text">
+								<a href="#">子牧棉麻2018春季新品 民族风女装双层</a>
+							</div>
+							<div class="in_con03_pri">￥168元</div>
+						</div>
+					</li>
+					<li class="item">
+						<div class="in_con03_main">
+							<div class="in_con03_img">
+								<a href="#"><img src="images/sp_ad01.jpg" /></a>
+							</div>
+							<div class="in_con03_text">
+								<a href="#">子牧棉麻2018春季新品 民族风女装双层</a>
+							</div>
+							<div class="in_con03_pri">￥168元</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+
+		</div>
+<div class="all_searchs">
+			<div class="all_search1">
+				<div class="return">
+					<a href="#"></a>
+				</div>
+				<div class="all_search_i1">
+					<input type="text" placeholder="请输入您搜索的关键词！" />
+					<a href="#">搜索</a>
+				</div>
+			</div>
+			<div class="search_main">
+				<div class="rnss_con">
+					<h1>热门搜索</h1>
+					<ul>
+						<li><a href="#">裙子</a></li>
+						<li><a href="#">连衣裙</a></li>
+						<li><a href="#">睡衣</a></li>
+						<li><a href="#">裙子</a></li>
+						<li><a href="#">裙子</a></li>
+						<li><a href="#">裙子</a></li>
+					</ul>
+				</div>
+				<div class="zjss_con">
+					<div class="ser_close"><a href="#"></a></div>
+					<h1>最近搜索</h1>
+					<ul>
+						<li><a href="#">夏天连衣裙</a></li>
+						<li><a href="#">超短裙</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="search_close" id="h_ser"><a href="#">点击关闭</a></div>
+		</div>
+		<script type="text/javascript">
+			$(document).ready(function() {
+
+				$("#s_ser").click(function() {
+					$(".all_searchs").show();
+				});
+				$("#h_ser").click(function() {
+					$(".all_searchs").hide();
+				});
+			});
+		</script>
+		<script src="js/bootstrap.min.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('#grid').click(function(event) {
+					event.preventDefault();
+					$('#products .item').addClass('grid-group-item');
+					$(".cat_i02").show();
+					$(".cat_i01").hide();
+				});
+				$('#list').click(function(event) {
+					event.preventDefault();
+					$('#products .item').removeClass('grid-group-item');
+					$('#products .item').addClass('list-group-item');
+					$(".cat_i03").show();
+					$(".cat_i02").hide();
+
+				});
+				$('#big').click(function(event) {
+					event.preventDefault();
+					$('#products .item').removeClass('list-group-item');
+					$('#products .item').addClass('big-group-item');
+					$(".cat_i01").show();
+					$(".cat_i03").hide();
+				});
+			});
+		</script>
+		<script src="js/sidenav.min.js"></script>
+		<script>
+			$('[data-sidenav]').sidenav();
+		</script>
+		<script type="text/javascript" src="js/slider.js"></script>
+		<script type="text/javascript">
+			$(function() {
+				$("#price-range").slider({
+						unit: "元",
+						beyondMax: true,
+						beyondMin: true,
+						firstWidth: 34,
+						lastWidth: 23,
+						scale: [{
+								key: 0,
+								value: [1, 1, 1]
+							},
+							{
+								key: 5,
+								value: [1, 1, 1, 1, 1]
+							},
+							{
+								key: 10,
+								value: [1, 1, 1, 1, 1]
+							},
+							{
+								key: 15,
+								value: [1, 1, 1, 1, 1]
+							},
+							{
+								key: 20,
+								value: [1, 1, 1, 1, 1]
+							},
+							{
+								key: 25,
+								value: [1, 1, 1, 1, 1]
+							},
+							{
+								key: 30,
+								value: [1, 1, 1, 1, 1]
+							},
+							{
+								key: 35,
+								value: [3, 2, 5, 3, 2]
+							},
+							{
+								key: 50,
+								value: [5, 5, 5, 5]
+							},
+							{
+								key: 70,
+								value: [10, 10, 10]
+							},
+							{
+								key: 100,
+								value: 0.5
+							},
+							{
+								key: 110
+							}
+						]
+					})
+					.on("changed", function(e, args) {
+						var min = args.value.leftValue,
+							max = args.value.rightValue;
+						// if (min == 0) min = 1;
+						// if (6680 > 110) {
+						//     if (max == 6680) max = 1;
+						// } else {
+						//     if (max == 110) max = 1;
+						// }
+						// if (max == 10000) max = 1;
+						// if (min + '_' + max == '2_6680') {
+						//     min = 0;
+						//     max = 0;
+						// }
+						console.log(min, max);
+						// location.href = '/car/' + min + '_' + max + '-0.0_0.0-0-0-0-0-0-0-0-0/';
+					});
+				$("#price-range").data("slider").setRange({
+					leftValue: 0,
+					rightValue: 110
+				});
+			});
+		</script>
+	</body>
+
+</html>

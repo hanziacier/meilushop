@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<title>我的评价</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<meta http-equiv="Content-Type" content="text/html; charset=GBK">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="format-detection" content="telephone=no">
+	<meta http-equiv="Expires" content="-1">
+	<meta http-equiv="Cache-Control" content="no-cache">
+	<meta http-equiv="Pragma" content="no-cache">
+    <link rel="stylesheet" href="__CSS__/common.css" type="text/css">
+	<link rel="stylesheet" href="__CSS__/base.css" type="text/css">
+	<link rel="stylesheet" href="__CSS__/main.css" type="text/css">	   
+	<script src="__JS__/jquery-2.0.3.min.js" type="text/javascript"></script>
+	<script src="__JS__/rem.js" type="text/javascript"></script>
+	
+</head>
+
+<body style="background-color:#F2F0F1" class="pingjia_bd">
+	<header style="background-color:#F8515B" class="pingjia_header_con">
+	<a href="Javascript:history.go(-1);void(0);"class="lft">
+			<i class="icon icon-back"></i>
+		</a>
+		<h5>我的评价</h5>
+		<a class="rt down_list_con"><img src="__IMG__/down_list.png"/></a>
+	</header>
+
+	<ul class="header_tab pingjia_tab">
+		<li class="current">
+			<a href="Javascript:;">待评价</a>
+		</li>
+		<li>
+			<a href="Javascript:;">已评价</a>
+		</li>
+	</ul>
+	<div class="header_tab_con pingjia_tab_con">
+		<!-- 无评论 -->
+		<p class="pinglun_no">对不起，您没有可评论的订单！</p> 
+		
+
+<div class="display_none" style='display:none'>
+			<ul>
+				<li>
+					<a href="Javascript:;">
+						<img class="left_pic" src="__IMG__/pro_pic.gif"/>
+						<div class="right_con">
+							<p class="pic_txt">手机手机手机手机手机手机手机手机手机手手机手机手机手机</p>  
+						</div>
+						<div class="ping_con">
+							<p class="ping_tit">好正品好正品好正品好正品</p>
+							<div class="ping_bo">
+								<ul class="ping_icon_list">
+									<li><img src="__IMG__/ping_icon_01.gif"/></li>
+									<li><img src="__IMG__/ping_icon_01.gif"/></li>
+									<li><img src="__IMG__/ping_icon_01.gif"/></li>
+									<li><img src="__IMG__/ping_icon_01.gif"/></li>
+									<li><img src="__IMG__/ping_icon_02.gif"/></li>
+								<ul>
+								<div>2016-03-10 20:18</div>
+							</div>
+						</div>
+					</a>
+				</li>
+				
+		   </ul>
+		</div>
+	</div>
+<script type="text/javascript">
+		$(function(){
+			
+			$('.down_nav ul li').click(function(){
+				$(this).addClass('current').siblings().removeClass('current');
+			})			
+			//nav 切换
+			$('.header_tab li').click(function(){
+				$(this).addClass('current').siblings().removeClass('current');
+				var tab_index = $(this).index();
+				$('.header_tab_con').children().eq(tab_index).css('display','block').siblings().css('display','none');
+			})			
+		})
+	</script>
+
+</body>
+
+</html>

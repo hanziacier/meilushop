@@ -1,0 +1,164 @@
+﻿
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1  maximum-scale=1 user-scalable=no">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-touch-fullscreen" content="yes">
+		<meta name="HandheldFriendly" content="True">
+		<title>微商城</title>
+
+		<link rel="stylesheet" href="css/style.css">
+		<script type="text/javascript" src="js/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="js/jquery.js"></script>
+	</head>
+
+	<body>
+		<!--头部-->
+		<div class="top_con01">
+			<div class="fh_icon">
+				<a onClick="javascript :history.go(-1);"></a>
+			</div>
+			<div class="yc_icon" id="s_ser">
+				<a href="#"></a>
+			</div>
+			<div class="yc_icon bot_nav02" id="h_ser">
+				<a href="#"></a>
+			</div>
+			<h1>发布评价</h1>
+		</div>
+		<div class="bot_nav bot_nav01">
+			<ul>
+				<li>
+					<div class="boot_nav_i boot_nav_i01">
+						<a href="index.html"><i></i><span>首页</span></a>
+					</div>
+				</li>
+				<li>
+					<div class="boot_nav_i boot_nav_i02">
+						<a href="category.html"><i></i><span>分类</span></a>
+					</div>
+				</li>
+				<li>
+					<div class="boot_nav_i boot_nav_i06">
+						<a href="#"><i></i><span>搜索</span></a>
+					</div>
+				</li>
+				<li>
+					<div class="boot_nav_i boot_nav_i04">
+						<a href="shopcart.html"><i></i><span>购物车</span></a>
+					</div>
+				</li>
+				<li>
+					<div class="boot_nav_i boot_nav_i05">
+						<a href="member.html"><i></i><span>我的</span></a>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<!--内容-->
+		<div class="fbpj_con01">
+			<form action="{:U('add')}" name="form" id="form" method="post" >
+		  <div class="wdpj_con01_t">订单编号：2018022516521820512<span></div>
+										<div class="wdpj_con01_main">
+
+											<div class="wdpj_con01_img">
+												<a href="#"><img src="images/sp_ad01.jpg" /></a>
+											</div>
+											<div class="wdpj_con01_text">
+												<div class="sc_con01_t">
+													<a href="#">春装2017新款女春款名媛蕾丝连 裙春秋韩版小清新显瘦
+													</a>
+												</div>
+												<div class="sc_con01_pri">￥202.00元</div>
+
+											</div>
+										</div>
+		
+		</div>
+		<div class="fbpj_con02">
+			<div class="fbpj_con02_t">
+				<div class="fbpj_con02_tl fl">发布评价</div>
+				<div class="fbpj_con02_tr fr">
+					<div class="fbpj_title fr">非常好</div>
+					<div class="fbpj_star fr">
+						<ul>
+							<li></li>
+							<li></li>
+							<li></li>
+							<li></li>
+							<li></li>
+						</ul>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			<div class="fbpj_con02_m">
+				<textarea placeholder="宝贝满足你的期待吗？说说它的优点和美中不足的地方吧"></textarea>
+				<div class="fbpj_con02_ph"><a href="#">添加图片</a></div>
+			</div>
+			<div class="fbpj_con02_b"><input type="radio"/>匿名<span>你的评价能帮助其他小伙伴哟</span></div>
+			
+		</div><input type="hidden" name="id" value="{$info.id|default=''}"/>
+<div class="grzl_con01_btn"><a class="fabu_btn">发布评价</a></div></form>
+		<script type="text/javascript">
+			$(document).ready(function() {
+
+				$("#s_ser").click(function() {
+					$(".bot_nav01").show();
+					$(".bot_nav02").show();
+				});
+				$("#h_ser").click(function() {
+					$(".bot_nav01").hide();
+					$(".bot_nav02").hide();
+				});
+			
+			});
+		</script><script>
+ 
+
+ $(".fabu_btn").click(function(){
+	  var arr=new Array();
+	  $('li img').each(function(index, element) {
+				   if($(this).attr('src')=='__IMG__/ping_icon_01.gif'){
+						arr.push(index); 				
+				   }	 
+	   });
+       $('#score').val(arr.length);
+	   document.form.submit();
+ });
+</script>
+		<script type="text/javascript">
+$(".fbpj_star ul li").click(
+    function(){
+        var num = $(this).index()+1;
+        var len = $(this).index();
+        var thats = $(this).parent(".fbpj_star ul").find("li");
+        if($(thats).eq(len).attr("class")=="on"){
+            if($(thats).eq(num).attr("class")=="on"){
+                $(thats).removeClass();
+                for (var i=0 ; i<num; i++) {
+                    $(thats).eq(i).addClass("on");
+                }
+            }else{
+                $(thats).removeClass();
+                for (var k=0 ; k<len; k++) {
+                    $(thats).eq(k).addClass("on");
+                }
+            }
+        }else{
+            $(thats).removeClass();
+            for (var j=0 ; j<num; j++) {
+                $(thats).eq(j).addClass("on");
+            }
+        }
+    }
+);
+</script>
+	</body>
+
+</html>

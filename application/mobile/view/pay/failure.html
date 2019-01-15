@@ -1,0 +1,74 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1  maximum-scale=1 user-scalable=no">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-touch-fullscreen" content="yes">
+		<meta name="HandheldFriendly" content="True">
+		<title>微商城</title>
+
+		<link rel="stylesheet" href="__CSS__/style.css">
+		<script type="text/javascript" src="__JS__/jquery-1.10.1.min.js"></script>
+
+	</head>
+
+	<body>
+		<!--头部-->
+		<div class="top_con01">
+			<div class="fh_icon">
+				<a onClick="javascript :history.go(-1);"></a>
+			</div>
+			<div class="yc_icon" id="s_ser">
+				<a href="#"></a>
+			</div>
+			<div class="yc_icon bot_nav02" id="h_ser">
+				<a href="#"></a>
+			</div>
+			<h1>订单支付</h1>
+		</div>
+		{include file="public/menu"/}
+		<!--内容-->
+		<div class="order_con02 order_con04">
+			<div class="order_con02_icon"><img src="__IMG__/error.jpg"/></div>
+			<div class="order_con02_text">
+<p>订单号：<span style="color:#1cbb7f;">{$info.out_trade_no}</span></p>
+<p>您选定的配送方式为：<span style="color:#333;">{$order.express}</span></p>
+<p>您的应付款金额为：<span style="color: #333;">￥{$info.total_money}元</span></p>
+			</div>
+			
+			
+		</div>
+		<!--div class="order_con03">
+			<div class="order_con03_t">支付遇到了问题，请再次选择支付方式</div>
+			<div class="order_con03_tip">支付方式</div>
+			<div class="order_con03_m">
+				<ul>
+					<li><input type="radio"/>微信支付 [￥ 0.00元]</li>
+					<li><input type="radio"/>支付宝 [￥ 0.00元]</li>
+					<li><input type="radio"/>余额支付 [￥ 0.00元]</li>
+				</ul>
+			</div>
+		</div>
+		
+		<div class="grzl_con01_btn"><a href="#">立即付款</a></div-->
+
+		<script type="text/javascript">
+			$(document).ready(function() {
+
+				$("#s_ser").click(function() {
+					$(".bot_nav01").show();
+					$(".bot_nav02").show();
+				});
+				$("#h_ser").click(function() {
+					$(".bot_nav01").hide();
+					$(".bot_nav02").hide();
+				});
+			});
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1  maximum-scale=1 user-scalable=no">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-touch-fullscreen" content="yes">
+		<meta name="HandheldFriendly" content="True">
+		<title>微商城</title>
+		<link rel="stylesheet" href="__CSS__/style.css">
+<script type="text/javascript" src="__JS__/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="__JS__/common.js"></script>
+	</head>
+
+	<body>
+		
+		<div class="all_content">
+		<!--搜索框-->
+		<div class="top_search" id="s_ser">
+			<div class="top_search_i">
+				<a href="#">请输入您搜索得关键词！</a>
+			</div>
+		</div>
+		<!--分类-->
+		<div class="Z_con2_2">
+			<div class="F_wd_top_con2">
+				<div class="F_wd_top_con2_l" id="wrapper">
+					<div>
+						<ul class="sy">{volist name="category" id="vo" key='k'}
+							<li class="{if condition="$k eq 1"}current{/if}">{$vo.title}</li>
+							 {/volist}	
+					
+						</ul>
+					</div>
+				</div>
+				<div class="F_wd_top_con2_r" id="wrapper1">
+				{volist name="category" id="vo" key='k'}
+					<div class="content by " {if condition="$k eq 1"}style='display: block;'{/if}>
+						<div class="cate_t">{$vo.title}</div>
+						<div class="cate_main">
+							<ul> {volist name="vo['child']" id="vo1"}
+								<li>
+									 <a href="{:url('goods/lists?id='.$vo1['id'])}">
+										<img src="{$vo1.cover_id|get_cover='path'}" />
+										<span>{$vo1.title}</span>
+									</a>
+								</li>
+								 {/volist}	
+							</ul>
+						</div>
+					</div> {/volist}	
+					
+					
+
+				</div>
+			</div>
+		</div>
+
+		<div class="all_searchs" style="display:none;">
+				<div class="all_search1">
+					<div class="top_fh">
+					<a onclick="javascript&nbsp;:history.go(-1);"></a>
+				</div>
+					<div class="all_search_i1"><form id="form" action="{:url('search/lists')}" method="get">
+						<input type="text" name="keyword" placeholder="请输入您搜索的关键词！">
+						<a  onclick="$('#form').submit()">搜索</a></form>
+					</div>
+				</div>
+				<div class="search_main">
+					<div class="rnss_con">
+						<h1>热门搜索</h1>
+						<ul>
+								{volist name="slist" id="vo"  empty=''}
+						<li>
+							<a href="{:url('search/lists?keyword='.$vo['title'])}">{$vo.title}</a>
+						</li>
+					{/volist}
+						</ul>
+					</div>
+					<div class="zjss_con">
+						<div class="ser_close">
+							<a href="#"></a>
+						</div>
+						<h1>最近搜索</h1>
+						<ul>
+								{volist name="recent" id="vo" empty=''}
+						<li>
+							<a href="{:url('search/lists?keyword='.$vo['title'])}">{$vo.title}</a>
+						</li>
+					{/volist}
+						</ul>
+					</div>
+				</div>
+				<div class="search_close" id="h_ser">
+					<a href="#">点击关闭</a>
+				</div>
+			</div>
+
+	
+			<!-- 底部栏目 -->
+			<footer>
+
+				<div class="bot_nav">
+					<ul>
+						<li>
+							<div class="boot_nav_i boot_nav_i01">
+								<a href="{:url('index/index')}"><i></i><span>首页</span></a>
+							</div>
+						</li>
+						<li class="active">
+							<div class="boot_nav_i boot_nav_i02">
+								<a href="{:url('category/index')}"><i></i><span>分类</span></a>
+							</div>
+						</li>
+						
+						<li>
+							<div class="boot_nav_i boot_nav_i04">
+								<a href="{:url('cart/index')}"><i></i><span>购物车</span></a>
+							</div>
+						</li>
+						<li>
+							<div class="boot_nav_i boot_nav_i05">
+								<a href="{:url('member/index')}"><i></i><span>我的</span></a>
+							</div>
+						</li>
+					</ul>
+				</div>
+
+			</footer>
+
+</div>
+<script type="text/javascript">
+
+			$(document).ready(function() {
+				
+				$("#s_ser").click(function() {
+					$(".all_searchs").show();
+				});
+				$("#h_ser").click(function() {
+					$(".all_searchs").hide();
+				});
+			});
+		</script>
+	</body>
+
+</html>

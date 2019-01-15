@@ -1,0 +1,155 @@
+﻿
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1  maximum-scale=1 user-scalable=no">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-touch-fullscreen" content="yes">
+		<meta name="HandheldFriendly" content="True">
+		<title>微商城</title>
+
+			<link rel="stylesheet" href="__CSS__/style.css">
+		<script type="text/javascript" src="__JS__/jquery-1.10.1.min.js"></script>
+
+	</head>
+
+	<body>
+		<!--头部-->
+		<div class="top_con01">
+			<div class="fh_icon">
+				<a onClick="javascript :history.go(-1);"></a>
+			</div>
+
+
+			<h1>退货管理</h1>
+		</div>
+
+		<!--内容-->
+		<div class="wd_con01">
+		<ul>
+		<li class="wd_act">
+		<div class="wd_con01_line"></div>
+		<div class="wd_con01_num"><span>1</span></div>
+		<div class="wd_con01_text">申请退货</div>
+		</li>
+		<li  {if condition="$info['status'] gt 1"}class="wd_act"{/if}>
+		<div class="wd_con01_line"></div>
+		<div class="wd_con01_num"><span>2</span></div>
+		<div class="wd_con01_text">退货中</div>
+		</li>
+		<li  {if condition="$info['status'] gt 5"}class="wd_act"{/if}>
+		<div class="wd_con01_line"></div>
+		<div class="wd_con01_num"><span>3</span></div>
+		<div class="wd_con01_text">完成</div>
+		</li>
+		</ul>
+		</div>
+		<div class="shdz_con03 zhcz_con01 wd_con02">
+		    <div class="wd_con03s">
+		      <div class="wd_con03">
+		          <div class="wd_con03_t">退货状态：</div>
+	
+				<div class="wd_con03_text">
+				<p>{$info.msg|default=''}</p>
+				</div>
+		     </div>
+		  </div>
+
+		</div>
+		{if condition="$info['status'] eq 2"}	
+			<form action="{:url('update')}" name="form" id="form" method="post" >
+		<div class="ddqr_con02" style="padding-bottom:0;">
+		<div class="ddqr_ad" id="s_ps"></div>
+		<div class="ddqr_ad01" id="h_ps"></div>
+		<div class="ddqr_con02_t">快递公司<span style="font-size:1.2rem;color:#999;background:none;">请选择快递公司</span></div>
+		<div class="ddqr_con02_m">
+		<ul>
+		  <li><label class="radio">
+                <input type="radio" name="express" checked value="顺丰速递">
+                <i class="icon-radio"></i>
+            </label>顺丰速递[￥0.00元]</li>
+		<li><label class="radio">
+                <input type="radio" name="express" value="申通速递">
+                <i class="icon-radio"></i>
+            </label>申通速递[￥0.00元]</li>
+		<li><label class="radio">
+                <input type="radio" name="express" value="邮政EMS">
+                <i class="icon-radio"></i>
+            </label>邮政EMS[￥0.00元]</li>
+		</ul>
+		</div>
+		</div>
+
+	<div class="ddqr_con04">
+
+		<div class="ddqr_con02_t">快递单号</div>
+		<div class="ddqr_con04_text">
+
+		<div class="ddqr_con04_input" style="display:block;"><input type="text" name="express_code" value="{$info.express_code|default=''}" placeholder="请填写快递单号"/></div>
+		</div>
+		</div><input type="hidden" name="id"  value="{$info.id|default=''}"/>
+		<div class="grzl_con01_btn"><a onclick="document.form.submit();">发货</a></div>	</form>
+     {/if}
+
+	</body>
+<script type="text/javascript">
+			$(document).ready(function() {
+
+				$("#s_ser").click(function() {
+					$(".bot_nav01").show();
+					$(".bot_nav02").show();
+				});
+				$("#h_ser").click(function() {
+					$(".bot_nav01").hide();
+					$(".bot_nav02").hide();
+				});
+				$("#h_ps").click(function() {
+					$(".ddqr_con02 .ddqr_con02_m").show();
+					$("#s_ps").show();
+					$("#h_ps").hide();
+				});
+				$("#s_ps").click(function() {
+					$(".ddqr_con02 .ddqr_con02_m").hide();
+					$("#h_ps").show();
+					$("#s_ps").hide();
+				});
+				$("#h_ps01").click(function() {
+					$(".ddqr_con03 .ddqr_con02_m").show();
+					$("#s_ps01").show();
+					$("#h_ps01").hide();
+				});
+				$("#s_ps01").click(function() {
+					$(".ddqr_con02 .ddqr_con02_m").hide();
+					$("#h_ps01").show();
+					$("#s_ps01").hide();
+				});
+				$("#h_ps02").click(function() {
+					$(".ddqr_con04 .ddqr_con04_input").show();
+					$("#s_ps02").show();
+					$(".ddqr_con04_text h1").show();
+					$("#h_ps02").hide();
+				});
+				$("#s_ps02").click(function() {
+					$(".ddqr_con04 .ddqr_con04_input").hide();
+					$("#h_ps02").show();
+					$("#s_ps02").hide();
+					$(".ddqr_con04_text h1").hide();
+				});
+				$("#h_ps03").click(function() {
+					$(".ddqr_con05 .ddqr_con04_input").show();
+					$("#s_ps03").show();
+					$("#h_ps03").hide();
+				});
+				$("#s_ps03").click(function() {
+					$(".ddqr_con05 .ddqr_con04_input").hide();
+					$("#h_ps03").show();
+					$("#s_ps03").hide();
+				});
+			
+			});
+		</script>
+
+</html>

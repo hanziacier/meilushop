@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,maximum-scale=1, minimum-scale=1" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no" />
+    <title>搜索</title>
+ 	<link rel="stylesheet" href="__CSS__/style.css">
+	<script type="text/javascript" src="__JS__/jquery-1.10.1.min.js"></script>
+</head>
+<body>
+	<div class="all_searchs" style="display:block">
+				<div class="all_search1">
+					<div class="top_fh">
+					<a onclick="javascript&nbsp;:history.go(-1);"></a>
+				</div><form id="form" action="{:url('search/lists')}" method="get">
+					<div class="all_search_i1">
+						<input type="text" name="keyword"placeholder="请输入您搜索的关键词！" />
+						<a onclick="$('#form').submit()">搜索</a>
+					</div></form>
+				</div>
+				<div class="search_main">
+					<div class="rnss_con">
+						<h1>热门搜索</h1>
+						<ul>
+						{volist name="slist" id="vo"  empty=''}
+						<li>
+							<a href="{:url('search/lists?keyword='.$vo['title'])}">{$vo.title}</a>
+						</li>
+					{/volist}
+						</ul>
+					</div>
+					<div class="zjss_con">
+						<div class="ser_close">
+							<a onclick="clearsearch(this)"></a>
+						</div>
+						<h1>最近搜索</h1>
+						<ul  class="search-recent">
+							{volist name="recent" id="vo" empty=''}
+						<li>
+							<a href="{:url('search/lists?keyword='.$vo['title'])}">{$vo.title}</a>
+						</li>
+					{/volist}
+						</ul>
+					</div>
+				</div>
+				
+			</div>
+	<script type="text/javascript">
+           function clearsearch(obj){
+			   $('.search-recent').empty();
+				  var url="{:url('search/clear')}"
+				  $.post(url,{},function(data){
+					if(data){
+					}
+					
+                    
+				 }); 
+			   } 
+	$(document).ready(function() {
+
+				$("#s_ser").click(function() {
+					$(".all_searchs").show();
+				});
+				$("#h_ser").click(function() {
+					$(".all_searchs").hide();
+				});
+			});
+		</script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1  maximum-scale=1 user-scalable=no">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-touch-fullscreen" content="yes">
+		<meta name="HandheldFriendly" content="True">
+		<title>微商城</title>
+
+		<link rel="stylesheet" href="css/style.css">
+		<script type="text/javascript" src="js/jquery-1.10.1.min.js"></script>
+
+	</head>
+
+	<body>
+		<!--头部-->
+		<div class="top_con01">
+			<div class="fh_icon">
+				<a onClick="javascript :history.go(-1);"></a>
+			</div>
+			<div class="yc_icon" id="s_ser">
+				<a href="#"></a>
+			</div>
+			<div class="yc_icon bot_nav02" id="h_ser">
+				<a href="#"></a>
+			</div>
+			<h1>收货人信息</h1>
+		</div>
+		<div class="bot_nav bot_nav01">
+			<ul>
+				<li>
+					<div class="boot_nav_i boot_nav_i01">
+						<a href="index.html"><i></i><span>首页</span></a>
+					</div>
+				</li>
+				<li>
+					<div class="boot_nav_i boot_nav_i02">
+						<a href="category.html"><i></i><span>分类</span></a>
+					</div>
+				</li>
+				<li>
+					<div class="boot_nav_i boot_nav_i06">
+						<a href="#"><i></i><span>搜索</span></a>
+					</div>
+				</li>
+				<li>
+					<div class="boot_nav_i boot_nav_i04">
+						<a href="shopcart.html"><i></i><span>购物车</span></a>
+					</div>
+				</li>
+				<li>
+					<div class="boot_nav_i boot_nav_i05">
+						<a href="member.html"><i></i><span>我的</span></a>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<!--内容-->
+		<div class="shdz_con01">
+			<ul>{volist name="list" id="vo" key='k'}
+				<li >
+					<div class="shdz_con01_main">
+						<div class="shdz_con01_t">
+							<div class="shdz_con01_tl fl">
+								<input type="radio" onclick="select(this)" attr-url="{:url('order/orderPay',array('aid'=>$vo['id']))}"/>设为默认
+							</div>
+							<div class="shdz_con01_tr fr">
+								<a href="{$vo.edit_url}" class="shdz_con01_bj">编辑</a>
+								<a href="{$vo.del_url}" class="shdz_con01_sc">删除</a>
+							</div>
+							<div class="clearfix"></div>
+						</div>
+						<div class="shdz_con01_m">
+							<h1>{$vo.username}<span>{$vo.mobile}</span></h1>
+							<h2>{$vo.province}{$vo.city}{$vo.area}{$vo.address}</h2>
+						</div>
+					</div>
+				</li>
+				{/volist}
+			</ul>
+		
+		</div>
+<div class="grzl_con01_btn"><a href="{:url('choose/add',array('id'=>input('id')))}">新增收货地址</a></div>
+		<script type="text/javascript">
+			$(document).ready(function() {
+
+				$("#s_ser").click(function() {
+					$(".bot_nav01").show();
+					$(".bot_nav02").show();
+				});
+				$("#h_ser").click(function() {
+					$(".bot_nav01").hide();
+					$(".bot_nav02").hide();
+				});
+			
+			});
+		</script><script type="text/javascript" src="__JS__/zepto.min.js"></script>
+<script>
+ $(".add_dizhi_btn").click(function(){
+       window.location.href =url;
+		
+ });
+ function select(obj){		
+       $(obj).toggleClass('checked');
+	   // window.location.href =url;
+       var url=$(obj).attr("attr-url");
+	     setTimeout(function(){
+                           location.href=url;
+             },1000);
+	}
+
+
+</script>	
+	</body>
+
+</html>

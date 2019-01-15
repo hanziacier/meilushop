@@ -1,0 +1,96 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1  maximum-scale=1 user-scalable=no">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-touch-fullscreen" content="yes">
+		<meta name="HandheldFriendly" content="True">
+		<title>微商城</title>
+
+		<link rel="stylesheet" href="css/style.css">
+<script type="text/javascript" src="js/jquery-1.10.1.min.js"></script>
+
+	</head>
+
+	<body>
+		<!--头部-->
+		<div class="top_con01">
+			<div class="fh_icon"><a onClick="javascript :history.go(-1);"></a></div>
+			<div class="yc_icon" id="s_ser"><a href="#"></a></div>
+			<div class="yc_icon bot_nav02" id="h_ser"><a href="#"></a></div>
+			<h1>消息中心</h1>
+		</div>
+		<div class="bot_nav bot_nav01">
+				<ul>
+					<li>
+					<div class="boot_nav_i boot_nav_i01">
+						<a href="index.html"><i></i><span>首页</span></a>
+					</div>
+				</li>
+				<li>
+					<div class="boot_nav_i boot_nav_i02">
+						<a href="category.html"><i></i><span>分类</span></a>
+					</div>
+				</li>
+				<li>
+					<div class="boot_nav_i boot_nav_i06">
+						<a href="#"><i></i><span>搜索</span></a>
+					</div>
+				</li>
+				<li>
+					<div class="boot_nav_i boot_nav_i04">
+						<a href="shopcart.html"><i></i><span>购物车</span></a>
+					</div>
+				</li>
+				<li>
+					<div class="boot_nav_i boot_nav_i05">
+						<a href="member.html"><i></i><span>我的</span></a>
+					</div>
+				</li>
+				</ul>
+			</div>
+		<!--内容-->
+		<div class="mes_con01">
+		   <div class="mes_con01_main">
+		<ul>
+			<li>
+				<div class="sc_con01_close"><a href="#"></a></div>
+				<h1>投诉：</h1>
+				<h2>2018-03-20 09;44；02</h2>
+				<h3>45675756</h3>
+				<h2>5675756</h2>
+			</li>
+			<li>
+				<div class="sc_con01_close"><a href="#"></a></div>
+				<h1>留言：</h1>
+				<h2>2018-03-20 09;44；02</h2>
+				<h3>2342</h3>
+			
+			</li>
+		</ul>
+		   </div>
+		 
+		</div>
+		
+
+		<script type="text/javascript">
+
+			$(document).ready(function() {
+				
+				$("#s_ser").click(function() {
+					$(".bot_nav01").show();
+					$(".bot_nav02").show();
+				});
+				$("#h_ser").click(function() {
+					$(".bot_nav01").hide();
+					$(".bot_nav02").hide();
+				});
+			});
+		</script>
+	</body>
+
+</html>

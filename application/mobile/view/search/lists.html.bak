@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>商品列表 </title>
+	<link rel="stylesheet" href="__CSS__/base.css" type="text/css">
+	<link rel="stylesheet" href="__CSS__/main.css" type="text/css">
+	<script src="__JS__/jquery-2.0.3.min.js" type="text/javascript"></script>	
+	<script type="text/javascript">
+		$(function(){
+			//点击导航切换
+			$('.tab_list ul li').click(function(e) {
+				$(this).addClass('current').siblings().removeClass('current');
+			});
+			
+						
+			//回到顶部
+			$(window).scroll(function(e) {
+				if($(window).scrollTop() > $(window).height()){
+					$('.to_top').show();		
+				}else{
+					$('.to_top').hide();		
+				}
+			});	
+			$('.to_top').click(function(e) {
+				$('body,html').animate({'scrollTop':'0'},500);
+			});
+					
+		})
+	</script>
+</head>
+
+<body>
+	<header style="background-color:#{$shop_config.color}" class="header_pro_con">
+	<a href="Javascript:history.go(-1);void(0);"class="lft">
+			<i class="icon icon-back"></i>
+		</a>
+		<input class="search_ipt" style="text" placeholder="搜索你想要的商品"/>
+		<span class="search_icon"><img src="__IMG__/search.gif"/></span>
+		<a class="rt">
+			搜索
+		</a>
+	</header>
+    <div class="pro_tab_list">   
+       <ul>
+			<li class="<eq name='order' value='2'>current</eq>">
+				<a href="{:U('search/lists',array('keyword'=>I('keyword'),'order'=>2,'sort'=>$see))}">默认</a>
+			</li>
+			<li class="<eq name='order' value='4'>current</eq>">
+				<a href="{:U('search/lists',array('keyword'=>I('keyword'),'order'=>4,'sort'=>$see))}">销量</a>
+			</li>
+			<php> 
+			if($order==3){
+		      switch($see) { 
+		        case 'desc': 
+				     $class="current";
+                break;
+				case 'asc':
+				    $class="active";
+                  break;				
+		       }  	
+	        }
+      </php>
+			<li class="{$class}">
+				<a href="{:U('search/lists',array('keyword'=>I('keyword'),'order'=>3,'sort'=>$see))}" class="price_tit">
+					价格
+					<div class="price_icon">
+					<span class="price_up"></span>
+					<span class="price_down"></span>
+					</div>
+				</a>
+			</li>
+			<li <eq name='order' value='1'>class="current"</eq>>
+				<a href="{:U('search/lists',array('keyword'=>I('keyword'),'order'=>1,'sort'=>$see))}">评分</a>
+			</li>
+	   </ul>
+	</div>
+    <div class="pro_j_list">   
+       <ul>
+		 <volist name="list" id="vo">	
+			 <li>
+				<a  href="Javascript:;" class="left_pic" href="{:U('Article/detail?id='.$vo['id'])}">
+                	<img  src="{$vo.cover_id|get_cover='path'}"/>
+                    <div class="right_con">
+                    	<a href="{:U('Article/detail?id='.$vo['id'])}" class="pic_txt"><php>echo substr_cut($vo[title]);</php></a>  
+                    </div>
+                   	<div class="bottom_div_con">
+					
+				       <div class="num_con">
+                        <p class="good_num"><span class="price_num">¥{$vo.price}</span>（{$vo.id|get_comment_rows}人评）</p>
+                     </div>
+					 <a href="Javascript:;"></a>
+                   </div>	
+			</li>
+		</volist>	
+	   </ul>
+       <div class="to_top"><a href="Javascript:;"></a></div>
+	</div>
+ <span style='bottom:10px;z-index:999;display:none;margin:0 40%;position:absolute' class="loading"><img src="__IMG__/loading.gif"/></div>
+ <script type="text/javascript"> 
+    $(document).ready(function(){  
+        var range =10;             //距下边界长度/单位px  
+        var maxnum ={$maxnum};            //设置加载最多次数  
+        var num = 2; 
+		var obj=$('li').hasClass('current');
+		var url=$(obj).find('a').attr('href');
+        var totalheight = 0;//主体元素  
+		var stop=true;//触发开关，防止多次调用事件   
+		$(window).scroll(function(){  
+            var srollPos = $(window).scrollTop();    //滚动条距顶部距离(页面超出窗口的高度) 
+			var height=$(document).height()-range;
+            totalheight = parseFloat($(window).height()) + parseFloat(srollPos);  
+            if(height<= totalheight) {                  
+				 if(stop==true &&maxnum>=num){
+				    stop=false;  
+                    $('.loading').show();
+				    $.getJSON(url,{p:num},function(data){
+					var html = '';
+					$.each(data, function(i,n){			
+						html=html+'<li> <a href="'+n.url+'" class="left_pic" title="'+n.title+'"> <img src="'+n.image+'"> </a><div class="right_con"><p class="pic_txt">'+n.title+'</p>  </div>	<div class="bottom_div_con"> <div class="num_con"><p class="good_num"><span class="price_num">￥'+n.price+'</span>（'+n.comment+'人评）</p></div><a href="Javascript:;"></a></div> ';
+					 });
+					 $('.loading').hide(); 
+                     $(".pro_j_list ul").append(html);
+                    stop=true;  num=num+1;//当前要加载的页码  ;
+				 });  
+                  
+                }
+             }  
+        });  
+    });  
+
+ $(".rt").click(function(){
+		 window.location.href ="{:U('search/lists')}"+'&keyword='+$("input").val();;
+ });
+
+</script>  </body>
+
+</html>

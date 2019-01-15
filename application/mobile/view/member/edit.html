@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1  maximum-scale=1 user-scalable=no">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-touch-fullscreen" content="yes">
+		<meta name="HandheldFriendly" content="True">
+		<title>微商城</title>
+
+		<link rel="stylesheet" href="__CSS__/style.css">
+<script type="text/javascript" src="__JS__/jquery-1.10.1.min.js"></script>
+
+	</head>
+
+	<body>
+		<!--头部-->
+		<div class="top_con01">
+			<div class="fh_icon"><a onClick="javascript :history.go(-1);"></a></div>
+			<div class="yc_icon" id="s_ser"><a href="#"></a></div>
+			<div class="yc_icon fot_nav02" id="h_ser"><a href="#"></a></div>
+			<h1>个人资料</h1>
+		</div>
+		{include file="public/menu"/}
+		<!--内容--><form  action="{:url('update')}" id="member"  name="form" method="post">
+		<div class="grzl_con01">
+			<div class="grzl_con01_t">
+				<div class="grzl_con01_tl fl">头像</div>
+				<div class="grzl_con01_tr fr"><a  style="position:relative;"><img  class="upload_img" style="z-index:2;" src="{$UcenterMember.cover_id|get_cover_path}"/>
+				<input type="file" id="cover_id"style="display:;top:0;opacity: 0;position:absolute;width: 6.3rem; height: 6.3rem;border-radius: 50% 50%;z-index:1" class="upload_file" /></a></div>
+				<div class="clearfix"></div>
+
+			</div> 
+			<script type="text/javascript">  
+						                 	var upload_url = "{:url('uploads/picture')}";	
+											  window.onload = function(){  
+
+												document.getElementById('cover_id').onchange = function(event){  
+													var img = event.target.files[0];   
+													if(!img){  
+														return false;  
+													}  
+													if(!(img.type.indexOf('image')==0 && img.type && /\.(?:jpg|png|gif)$/.test(img.name)) ){  
+														alert('图片只能是jpg,gif,png');  
+														return ;  
+													}  
+													var reader = new FileReader();  
+													reader.readAsDataURL(img);  
+											  
+													reader.onload = function(e){  
+														$.post(upload_url, { img: e.target.result},function(ret){  
+															if(ret){  
+															   $("input[name='cover_id']").val(ret.id);
+																   $('.upload_img').attr('src',ret.src);  
+															}else{  
+																alert('upload fail');  
+															}  
+														},'json');  
+													} 
+												}  
+											  
+                               }  
+                          </script>		
+			<div class="grzl_con01_m">
+				<ul>
+					<li>	<input type="hidden" name="cover_id"  value="{$UcenterMember.cover_id|default=''}"	>
+						<div class="grzl_con01_ml fl">用户名</div>
+				<div class="grzl_con01_mr fr"><input type="text" name="username" value="{$UcenterMember.username|default=""}"/></div>
+				<div class="clearfix"></div>
+					</li>
+					<li>
+						<div class="grzl_con01_ml fl">邮箱</div>
+				<div class="grzl_con01_mr fr"><input type="text"value="{$UcenterMember.email|default=""}" /></div>
+				<div class="clearfix"></div>
+					</li>
+					<li>
+						<div class="grzl_con01_ml fl">手机号</div>
+				<div class="grzl_con01_mr fr"><input type="text"  name="mobile" value="{$UcenterMember.mobile|default=""}"/></div>
+				<div class="clearfix"></div>
+					</li>
+				</ul>
+			</div>
+			<div class="grzl_con01_btn"><a class="save">确认修改</a></div>
+			<div class="grzl_con01_b">
+				<ul>
+					<li>
+						<a href="{:url('user/modify')}">修改密码</a>
+					</li>
+					<li>
+						<a href="{:url('Address/index')}">收货地址</a>
+					</li>
+					<li>
+						<a href="{:url('user/logout')}">退出</a>
+					</li>
+				</ul>
+			</div></form>
+		</div>
+		<script>	
+		   $(".save").click(function(){
+    	      $("#member").submit();
+    		$.post(self.attr("action"),self.serialize(),success,"json");
+    		return false;
+
+    		function success(data){
+    			if(data.code){
+    					window.location.reload();
+    			} else {
+				    	alert(data.msg);
+    			}
+    		}
+    	});
+		</script>
+	</body>
+
+</html>

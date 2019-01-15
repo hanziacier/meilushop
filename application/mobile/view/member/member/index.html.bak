@@ -1,0 +1,139 @@
+﻿
+<html>
+<head>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+<title>会员中心__{:C('WEB_SITE_TITLE')}</title>
+
+<link rel="stylesheet" type="text/css" href="__CSS__/style.css">
+<link rel="stylesheet" type="text/css" href="__CSS__/base.css">
+<link rel="stylesheet" type="text/css" href="__CSS__/main.css">
+ <link rel="stylesheet" href="__CSS__/common_mobile.css" />
+</head>
+
+<body><!-- 已登录 -->
+    <div class="huiyuan_bg">
+		<div class="touxiang">{if condition="isWeixinBrowser()"}<img src="{$user.headimgurl}" alt="">	
+				{else/}<img src="{$UcenterMember.cover_id|get_cover_path}"/>{/if}</div>
+		<div class="huiyuan_name">
+			<p>昵称：{:get_username()}</p>
+			<p>等级：{$info2.mobile|default='v0'}</p>
+		</div>
+	</div>
+	
+	
+    <ul class="zt_list">
+		<li>
+			<a href="Javascript:;">
+				<p class="num_top">{$member.account|default='0'}</p>
+				<p class="zt_bot">余额</p>
+			</a>
+		</li>
+		<li class="border_dou">
+			<a href="{:U('Member/index')}">
+				<p class="num_top">{$member.score|default='0'}</p>
+				<p class="zt_bot">积分</p>
+			</a>
+		</li>
+		
+</ul>
+	<ul class="dingdan_list" style='display:'>
+		<li>
+			<a href="{:U('Order/index')}">
+				<span class="icon_left"><img src="__IMG__/m1.png">
+				
+			我的订单 
+		</span>
+				<span class="icon_right"><img src="__IMG__/icon_10.gif"/></span>
+			</a>
+		</li>
+		
+		</ul>
+     <ul class="order_list">
+		<li>
+			<a href="{:U('order/on_pay?status=0')}">
+				<p class="num_top"><img src="__IMG__/s1.png"></p>
+				<p class="zt_bot">待付款</p>
+			</a>
+		</li>
+		<li class="border_dou">
+			<a href="{:U('order/index?status=1')}">
+				<p class="num_top"><img src="__IMG__/s2.png"></p>
+				<p class="zt_bot">待发货</p>
+			</a>
+		</li>
+	<li>
+			<a href="{:U('order/index?status=2')}">
+				<p class="num_top"><img src="__IMG__/s3.png"></p>
+				<p class="zt_bot">待收货</p>
+			</a>
+		</li>
+		<li class="border_dou">
+			<a href="{:U('order/index?status=3')}">
+				<p class="num_top"><img src="__IMG__/s4.png"></p>
+				<p class="zt_bot">已确认</p>
+			</a>
+		</li>
+		
+</ul>
+		<ul class="dingdan_list" style='display:'>
+		<li>
+			<a href="{:U('Collect/index')}">
+				<span class="icon_left"><img src="__IMG__/m2.png">我的关注</span>
+				<span class="icon_right"><img src="__IMG__/icon_10.gif"/></span>
+			</a>
+		</li>
+	
+	
+		<li>
+			<a href="{:U('Comment/lists')}">
+				<span class="icon_left"><img src="__IMG__/m3.png"/>我的评价</span>
+				<span class="icon_right"><img src="__IMG__/icon_10.gif"/></span>
+			</a>
+		</li>
+		<li >
+			<a href="{:url('Address/index')}">
+				<span class="icon_left"><img src="__IMG__/m4.png"/>收货地址</span>
+				<span class="icon_right"><img src="__IMG__/icon_10.gif"/></span>
+			</a>
+		</li>
+	
+		<li >
+			<a href="Javascript:;">
+				<span class="icon_left"><img src="__IMG__/m6.png"/>修改密码</span>
+				<span class="icon_right"><img src="__IMG__/icon_10.gif"/></span>
+			</a>
+		</li>
+		<!--li>
+			<a href="{:U('user/logout')}">
+				<span class="icon_left"><img src="__IMG__/m_08.png"/>关于我们</span>
+				<span class="icon_right"><img src="__IMG__/icon_10.gif"/></span>
+			</a>
+		</li>
+		<li>
+			<a href="{:U('user/logout')}">
+				<span class="icon_left"><img src="__IMG__/m_05.png"/>留言</span>
+				<span class="icon_right"><img src="__IMG__/icon_10.gif"/></span>
+			</a>
+		</li-->
+         <li>
+			<a href="{:U('user/logout')}">
+				<span class="icon_left"><img src="__IMG__/m7.png"/>退出</span>
+				<span class="icon_right"><img src="__IMG__/icon_10.gif"/></span>
+			</a>
+		</li>
+	</ul>
+	
+
+	
+	<!-- footer 底部菜单 -->
+<div class="H5"></div>
+	<div class="bottom-menu order-bottom-menu">
+		<a  href="{:url('index/index')}"><i  class="home"></i><p>首页</p></a>
+		<a class="" href="{:url('category/index')}"><i class="category"></i><p>分类</p></a>
+		<a  href="{:url('cart/index')}"><i class="cart"></i><p>购物车</p></a>
+		<a class="active"style="color:{$config['theme_color']}" href="{:url('member/index')}"><i style="background-color:{$config['theme_color']}" class="mine"></i><p>我的</p></a>
+	</div>
+
+</body></html>

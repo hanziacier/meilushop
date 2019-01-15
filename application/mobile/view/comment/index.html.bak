@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,maximum-scale=1, minimum-scale=1" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no" />
+    <title>评论——会员中心</title>
+  <link rel="stylesheet" href="__CSS__/base.css" />
+	  <link rel="stylesheet" href="__CSS__/swiper-3.4.2.min.css" />
+    <link rel="stylesheet" href="__CSS__/common_mobile.css" />
+    <link rel="stylesheet" href="__CSS__/comment.css" />  
+    <script type="text/javascript" src="__JS__/jquery-3.1.1.min.js" ></script>
+
+</head>
+<body>
+	<div>
+		<header>
+			<div class="header"style="background:{$config['theme_color']}">
+				<a href="Javascript:history.go(-1);void(0);"><i class="icon icon-back"></i></a>
+				<h1>我的评价</h1>
+				<a href="{:url('index/index')}"><i class="icon icon-home"></i></a>
+			</div>
+		</header>
+		<div style="height: 2.5rem;"></div>
+	</div>
+	<nav>
+		<div id="topNav" class="swiper-container">
+		  <div class="swiper-wrapper">
+		 
+		    <div class="swiper-slide active"><a href="{:url('index')}">待评价商品</a></div>
+		    <div class="swiper-slide"><a href="{:url('lists')}">已评价商品</a></div>		   
+		  </div>
+		</div>
+	</nav>
+		<div class="header_tab_con pingjia_tab_con">
+		<!-- 无评论 -->
+		{empty name='list'}<p class="pinglun_no">对不起，您没有可评论的订单！</p> {else/}
+		<!-- 有评论 -->
+		<div>
+			<ul>
+				{volist name="list" id="vo"}
+				<li>
+				<a class="pro_pic" href="Javascript:;">
+						<img src="{$vo.goods_id|get_path}"/>
+				</a>
+					<div class="pro_top">	
+						<a class="pic_txt" href="{$vo.url}"> {$vo.goods_id|get_goods="title"}</a> 
+						<p class="pic_txt_01">总价：{$vo.price} 数量：{$vo.num}</p>		
+												
+					</div>	
+					<div class="pro_bottom"><a href="{:U('comment/add?id='.$vo['id'])}" class="pingjia_btn">评价</a></div>									
+				</li>
+			{/volist}    
+			</ul>           
+		</div>
+      {/empty}
+		<div class="display_none">
+			<ul>
+			
+		   </ul>
+		</div>
+	</div>
+</body>
+	<script type="text/javascript">
+		$(function(){
+			
+			
+			//nav 切换
+			$('.header_tab li').click(function(){
+				$(this).addClass('current').siblings().removeClass('current');
+				var tab_index = $(this).index();
+				$('.header_tab_con').children().eq(tab_index).css('display','block').siblings().css('display','none');
+			})			
+		})
+	</script>
+	<script type="text/javascript"> 
+    $(document).ready(function(){  
+        var range =10;             //距下边界长度/单位px  
+        var maxnum ={$maxnum};            //设置加载最多次数  
+        var num = 2; 
+		var obj=$('li').hasClass('current');
+		var url="{:url('')}";
+        var totalheight = 0;//主体元素  
+		var stop=true;//触发开关，防止多次调用事件   
+		$(window).scroll(function(){  
+            var srollPos = $(window).scrollTop();    //滚动条距顶部距离(页面超出窗口的高度) 
+			var height=$(document).height()-range;
+            totalheight = parseFloat($(window).height()) + parseFloat(srollPos);  
+            if(height<= totalheight) {                  
+				 if(stop==true &&maxnum>=num){
+				    stop=false;  
+                    $('.loading').show();
+				    $.post(url,{p:num},function(data){
+					if(data){
+						var html = '';
+						$.each(data, function(i,n){			
+							html=html+'<li><a class="pro_pic" href="Javascript:;"><img src="'+n.image+'"/></a><div class="pro_top">	<a class="pic_txt" href="'+n.url+'"> {$vo.goods_id|get_goods="title"}</a> <p class="pic_txt_01">总价：'+n.price+' 数量：'+n.num+'</p></div>	<div class="pro_bottom"><a href="'+n.c_url+'" class="pingjia_btn">评价</a></div></li>';
+						 });
+						  $('.loading').hide(); 
+                          $("li").last().after(html);
+					 }
+					
+                    stop=true;  num=num+1;//当前要加载的页码  ;
+				 });  
+                  
+                }
+             }  
+        });  
+    });  
+
+function hidden(){
+				$('.znx_toast_div').fadeOut();
+			}	</script>
+
+    
+</body>
+</html>
