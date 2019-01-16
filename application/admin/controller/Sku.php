@@ -16,8 +16,10 @@ class Sku extends Home{
     public function index(){     
         if($_POST){
 			foreach ($_POST as $key=>$value){
-				if($value){
-					$map[]  = [$key,'like', '%'.$value.'%'];
+				if(is_numeric($value)){
+					$map[$key] = $value;
+				}elseif($value){
+					$map[$key]  = ['like', '%'.$value.'%'];
 				 }
 			}
         }
@@ -71,7 +73,8 @@ class Sku extends Home{
 		  cookie("__forward__",input('server.HTTP_REFERER'));
 		    /*$typelist =db('models')->select();
 		    $this->assign('typelist',$typelist);*/
-		    
+		    $goods_id = input("goods_id");
+		  $this->assign("info",array('goods_id'=>$goods_id));
 	        return $this->fetch("sku/edit");
 	  }
 	}
