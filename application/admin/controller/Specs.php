@@ -21,7 +21,7 @@ class Specs extends Home{
 				 }
 			}
         }
-		$map=isset($map)?$map:'';
+		$map=isset($map)?$map:[];
 		if(input('pid')){
             $map[]=['pid','=',input('pid')];
         }else{
