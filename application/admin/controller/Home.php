@@ -78,6 +78,14 @@ class Home extends Controller{
 		$sidebar =getforeach($sidebar);
         $this->assign('sidebar', $sidebar);
 		}else{
+	   //侧栏
+            $sidebar=db("category")->field("id,title,pid")->select();
+            foreach ($sidebar as & $value){
+                $value["name"]  =   $value['title'];
+                $value["url"]  =url('goods/index',array('pid'=>$value["id"]));
+            }
+
+            $this->assign('sidebar', getforeach( $sidebar));
            $now['id']=0;
            $this->assign('now', $now);
          }

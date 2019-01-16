@@ -1,4 +1,4 @@
-<?php /*a:2:{s:61:"/data/wwwroot/yershop/application/admin/view/index/index.html";i:1541426438;s:63:"/data/wwwroot/yershop/application/admin/view/public/dialog.html";i:1520503620;}*/ ?>
+<?php /*a:2:{s:61:"/data/wwwroot/yershop/application/admin/view/index/index.html";i:1547548023;s:63:"/data/wwwroot/yershop/application/admin/view/public/dialog.html";i:1520503620;}*/ ?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -177,7 +177,7 @@
 				</tbody></table>
 	
 </div>
-<div class="item">
+<!--<div class="item">
 			<div class="tit soft"><img class="icon-soft" src="/public/admin/images/soft.png">软件信息</div>
 				<table>
 					<tbody>
@@ -204,8 +204,8 @@
 						<td><a href="http://wpa.qq.com/msgrd?v=3&uin=1010422715&site=qq&menu=yes" target="_blank">技术支持</a></td>
 					</tr>
 				</tbody></table>
-			</div>
+			</div>-->
 
 	</div>
-<div class="footer"><p> Powered by <a href="http://www.yershop.com/" style="color:blue" target="_blank">yershop</a>@2014-2018武汉贝云网络科技有限公司 </p></div>
-
+<!--<div class="footer"><p> Powered by <a href="http://www.yershop.com/" style="color:blue" target="_blank">yershop</a>@2014-2018武汉贝云网络科技有限公司 </p></div>
+-->

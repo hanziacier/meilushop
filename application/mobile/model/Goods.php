@@ -30,9 +30,11 @@ class Goods extends Model{
         $cid =  $Category->getChildrenId($cate_id);
             //查询商品并分类处理
         $map['category_id'] = array('in',$cid);
-        $data['count'] = db('goods')->where($map)->count();
+        #$data['count'] = db('goods')->where($map)->count();
+	$data['count'] = db('goods')->whereIn('category_id', $cid)->count();
         $data['num'] = ceil($data['count']/$num);
-        $result =db('goods')->where($map)->field($field)->order($order)->page($page,$num)->select();
+        #$result =db('goods')->where($map)->field($field)->order($order)->page($page,$num)->select();
+        $result =db('goods')->whereIn('category_id', $cid)->field($field)->order($order)->page($page,$num)->select();
         $res['list'] = $result;
         $res['page'] = $data;
         return $res;

@@ -1,5 +1,5 @@
 <?php
-namespace app\mobile\Controller;
+namespace app\mobile\controller;
 use think\Controller;
 /**
 * 文档模型控制器

@@ -1,0 +1,17 @@
+document.writeln("  <li class=\'tpl-left-nav-item\'>");
+document.writeln("                     ");
+document.writeln("                  ");
+document.writeln("                      <a href=\'http://www.websoft9.com/xdocs/lnmp-image-guide' target=\'_blank\' \' class=\'nav-link tpl-left-nav-link-list\'>");
+document.writeln("                            <i class=\'am-icon-book\'></i><span>LNMP镜像手册</span>");
+document.writeln("");
+document.writeln("                        </a>");
+document.writeln("                     ");
+document.writeln("                    </li>");
+document.writeln("");
+document.writeln("                    <li class=\'tpl-left-nav-item\'>");
+document.writeln("                        <a href=\'http://www.websoft9.com/support/faq\' target=\'_blank\' class=\'nav-link tpl-left-nav-link-list\'>");
+document.writeln("                            <i class=\'am-icon-question\'></i>");
+document.writeln("                            <span>FAQ</span>");
+document.writeln("");
+document.writeln("                        </a>");
+document.writeln("                    </li>");

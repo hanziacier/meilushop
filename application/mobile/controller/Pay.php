@@ -4,7 +4,7 @@
 // +----------------------------------------------------------------------
 // | Copyright (c) 2014 http://www.yershop.com All rights reserved.
 // +----------------------------------------------------------------------
-namespace app\mobile\Controller;
+namespace app\mobile\controller;
 use think\Db;
     //微信支付控制器                  
 class Pay extends Home {

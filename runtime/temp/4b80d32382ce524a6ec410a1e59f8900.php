@@ -1,4 +1,4 @@
-<?php /*a:2:{s:61:"/data/wwwroot/yershop/application/index/view/index/index.html";i:1546182892;s:63:"/data/wwwroot/yershop/application/index/view/public/footer.html";i:1546783818;}*/ ?>
+<?php /*a:2:{s:61:"/data/wwwroot/yershop/application/index/view/index/index.html";i:1546182892;s:63:"/data/wwwroot/yershop/application/index/view/public/footer.html";i:1547545240;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -357,18 +357,12 @@ catch (e) {
 					<?php endforeach; endif; else: echo "" ;endif; ?>
 				</ul>
                <?php endforeach; endif; else: echo "" ;endif; ?> 
-			   <ul class="footer_site_info_ul">
-					<img src="/public/index/images/wx.jpg" WIDTH="100"><P>微信扫一扫关注</P>
-				</ul>
-				  <ul class="footer_site_info_ul">
-					<img src="/public/index/images/alipay.png" WIDTH="100"><P>支付宝扫一扫关注</P>
-				</ul>
 			</div>
 		</div>
 	</div>
 	<!--/footer  end-->
 	<span class="copyright" style="">@2014-2017
-	   <a href="http://yershop.com">yershop</a> 版权所有</span>
+	   <a href="">meilu</a> 版权所有</span>
 <script type="text/javascript" src="/public/common/layer/layer.js"></script>
 
 <script type="text/javascript">

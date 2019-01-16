@@ -121,7 +121,7 @@ class Attachment extends Home{
             $this->error('参数错误！');
         }
       // 移动到框架应用根目录/uploads/ 目录下
-        $info =$file->validate(['size'=>300*1024*1024,'ext'=>'zip,rar,mp4,MP4,mp3,flv,jpg,png,gif,doc,pdf,excel,ppt'])->move(ROOT_PATH  . DS . 'public/uploads/'.$model);
+        $info =$file->validate(['size'=>300*1024*1024,'ext'=>'zip,rar,mp4,MP4,mp3,flv,jpg,png,gif,doc,pdf,excel,ppt'])->move('public/uploads/'.$model);
         if($info){
             // 成功上传后 获取上传信息
               $path="public/uploads/".$model."/".$info->getSaveName();

@@ -11,6 +11,7 @@
 
 // [ 应用入口文件 ]
 namespace think;
+//error_reporting(0);
 if(version_compare(PHP_VERSION,'5.7.0','<'))  die('require PHP >= 7.0!');
 $INSTALL_PATH = str_replace('\\','/',dirname($_SERVER['SCRIPT_NAME']));
 if($INSTALL_PATH==="/"){

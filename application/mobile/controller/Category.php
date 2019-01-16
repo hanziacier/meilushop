@@ -4,7 +4,7 @@
 // +----------------------------------------------------------------------
 // | Copyright (c) 2014 http://www.yershop.com All rights reserved.
 // +----------------------------------------------------------------------
-namespace app\mobile\Controller;
+namespace app\mobile\controller;
 use think\Db;
 /**
  * 取消订单模型控制器

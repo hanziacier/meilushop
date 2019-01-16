@@ -17,9 +17,9 @@ use think\Db;
 class Brand extends Model{
    
     public function getlist($ids){
-	   $map['category_id']=array("in",$ids); 
-	   $data=Db::name("brand")->where($map)->select();
-	 
+	   #$map['category_id']=array("in",$ids); 
+	   #$data=Db::name("brand")->where($map)->select();
+	   $data = Db::name('brand')->whereIn('category_id', $ids)->select();
 		return $data;
    }
    

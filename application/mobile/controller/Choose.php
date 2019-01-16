@@ -1,5 +1,5 @@
 <?php
-namespace app\mobile\Controller;
+namespace app\mobile\controller;
 use think\Controller;
 use think\Db;                  
 class Choose extends Home{
