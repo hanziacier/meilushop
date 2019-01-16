@@ -22,7 +22,7 @@
 								 <div class="form-item">
 									 <label>商品ID<span>(goods_id)</span></label>
 									 <div class="form-input">
-										 <input type="text" name="goods_id" value="{$info.goods_id|default="0"}">
+										 <input type="text" name="goods_id" value="{$info.goods_id|default=0}">
 									 </div>
 								 </div>
 								   <div class="form-item">
@@ -31,27 +31,30 @@
 									       <input type="text" name="path" value="{$info.path|default=""}">
 								      </div>
 								  </div>
+
+								  <!--->
 								 <div class="form-item">
-									    <label>图片<span>(封面图片)</span></label> 
-									    <div class="form-input">
-									      <input type="hidden" name="cover_id"  value="{$info.cover_id|default=""}"	>
-									 	  <div class="uploader">
-									        <span class="uploader-files">上传图片</span>
-									        <input type="file" class="uploader_btn" id="cover_id"/>  
-								          </div> 
-									       <div class="uploader_preview">
-									            {notempty name="info['cover_id']"}
-							                      <div class="uploader-pre-item"> <img src="{$info.cover_id|get_cover_path}"/>
-						                         </div>
-										       {/notempty}
-									        </div>
-											 <script type="text/javascript">  
-								             var field="cover_id";
-						     	             	upload(field);
-                                             </script>
-										</div>
-								  </div> 
-								  
+									 <label>图片<span>(图片名称)</span></label>
+									 <div id="cover_id" class="container">
+										 <div id="file_cover_id">你的浏览器不支持flash,Silverlight或者HTML5！</div>
+										 <input type="hidden" name="cover_id"  value="{$info.cover_id|default=''}">
+										 <a id="select_cover_id" href="javascript:void(0);" class='btn'>选择文件</a>
+										 <a id="post_cover_id" href="javascript:void(0);" class='btn'>开始上传</a>
+									 </div>
+
+									 <div class="uploader_preview">
+										 {notempty name="info['cover_id']"}
+										 <div class="uploader-pre-item"> <img src="{$info.cover_id|get_cover_path}"/>
+										 </div>
+										 {/notempty}
+									 </div>
+
+									 <script type="text/javascript">
+										 var field="cover_id";
+										 upload(field);
+									 </script>
+								 </div>
+								 <!--->
 								  <div class="form-item">
 									   <label>价格<span>(价格)</span></label>
 									   <div class="form-input">
