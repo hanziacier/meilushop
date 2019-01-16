@@ -69,8 +69,8 @@ class Sku extends Home{
 	   }
 	  else{
 		  cookie("__forward__",input('server.HTTP_REFERER'));
-		    $typelist =db('models')->select();
-		    $this->assign('typelist',$typelist);
+		    /*$typelist =db('models')->select();
+		    $this->assign('typelist',$typelist);*/
 		    
 	        return $this->fetch("sku/edit");
 	  }
