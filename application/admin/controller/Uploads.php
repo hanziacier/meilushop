@@ -76,7 +76,7 @@ class Uploads extends Home{
 			$EDITOR_UPLOAD=config('EDITOR_UPLOAD');
 			$url = $EDITOR_UPLOAD['rootPath'].$info['imgFile']['savepath'].$info['imgFile']['savename'];
 			$url = str_replace('./', '/', $url);
-			$info['fullpath'] =INSTALL_PATH.$url;
+			$info['fullpath'] ='/public/uploads/editor/'.INSTALL_PATH.$url;
 		}
 		//session('upload_error', $this->uploader->getError());
 		return $info;
